@@ -18,4 +18,7 @@ public final class Constants {
 
     public static final int WORKER_MAX_AP = 4;
     public static final int WORKER_VISION_RADIUS = 1;
+
+    public static final int BORDER_EXPANDER_MAX_AP = 4;
+    public static final int BORDER_EXPANDER_VISION_RADIUS = 1;
 }
