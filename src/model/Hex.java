@@ -1,8 +1,5 @@
 package model;
 
-import model.ResourceType;
-import model.TerrainType;
-
 public class Hex {
     private final int q;
     private final int r;
