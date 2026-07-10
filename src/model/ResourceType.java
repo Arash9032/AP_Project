@@ -1,3 +1,5 @@
+package model;
+
 public enum ResourceType {
     WOOD,
     FOOD,

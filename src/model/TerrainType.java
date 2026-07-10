@@ -1,3 +1,5 @@
+package model;
+
 public enum TerrainType {
     FOREST(2),
     PLAIN(1),
