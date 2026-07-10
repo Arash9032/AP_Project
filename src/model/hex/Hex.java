@@ -1,4 +1,4 @@
-package model;
+package model.hex;
 
 public class Hex {
     private final int q;

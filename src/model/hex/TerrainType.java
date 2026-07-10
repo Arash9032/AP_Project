@@ -1,4 +1,4 @@
-package model;
+package model.hex;
 
 public enum TerrainType {
     FOREST(2),
