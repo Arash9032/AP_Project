@@ -1,10 +1,12 @@
 package model.hex;
 
+import config.Constants;
+
 public enum TerrainType {
-    FOREST(2),
-    PLAIN(1),
-    MOUNTAIN(4),
-    MEADOW(1);
+    FOREST(Constants.FOREST_MOVEMENT_COST),
+    PLAIN(Constants.PLAIN_MOVEMENT_COST), // dasht (heyvun dare)
+    MOUNTAIN(Constants.MOUNTAIN_MOVEMENT_COST),
+    MEADOW(Constants.MEADOW_MOVEMENT_COST); // sabze sar
 
     private final int movementCost;
 
