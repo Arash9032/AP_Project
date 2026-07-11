@@ -22,4 +22,14 @@ public class Builder extends Unit {
     public boolean isConsumed() {
         return charges <= 0;
     }
+
+    @Override
+    public int getTurnCost() {
+        return Constants.BUILDER_TURN_COST;
+    }
+
+    @Override
+    public String getName() {
+        return "Builder";
+    }
 }

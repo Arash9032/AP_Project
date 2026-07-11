@@ -1,8 +1,9 @@
 package model.unit;
 
+import model.Producible;
 import model.hex.Hex;
 
-public abstract class Unit {
+public abstract class Unit implements Producible {
     protected Hex currentHex;
     protected final int maxAP;
     protected int currentAP;

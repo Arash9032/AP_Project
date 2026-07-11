@@ -1,4 +1,4 @@
-package model.building;
+package model;
 
 public class ProductionTask {
     private final Producible item;

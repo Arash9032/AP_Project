@@ -18,4 +18,14 @@ public class BorderExpander extends Unit {
     public boolean isConsumed() {
         return isConsumed;
     }
+
+    @Override
+    public int getTurnCost() {
+        return Constants.BORDER_EXPANDER_TURN_COST;
+    }
+
+    @Override
+    public String getName() {
+        return "Border Expander";
+    }
 }

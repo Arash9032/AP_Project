@@ -1,4 +1,4 @@
-package model.building;
+package model;
 
 public interface Producible {
     int getTurnCost();
