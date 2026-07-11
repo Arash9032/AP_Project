@@ -2,7 +2,7 @@ package model.hex;
 
 public enum ResourceType {
     WOOD,
-    FOOD,
+    FOOD, //animals and crops
     STONE,
     IRON,
     NONE
