@@ -2,8 +2,7 @@ package config;
 
 public final class Constants {
 
-    private Constants() {
-    }
+    private Constants() {}
 
     public static final int FOREST_MOVEMENT_COST = 2;
     public static final int PLAIN_MOVEMENT_COST = 1;
