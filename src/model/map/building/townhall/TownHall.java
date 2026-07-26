@@ -1,9 +1,7 @@
 package model.map.building;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 import config.Constants;
 import model.ProductionTask;
 import model.map.hex.Hex;
@@ -15,15 +13,13 @@ public class TownHall extends Building {
     private int storageCapacity;
     private int unitCap;
 
-    private final Queue<ProductionTask> productionQueue;
+    private ProductionTask activeTask;
 
     public TownHall(Hex location) {
         super(location, 0, new HashMap<>(), new HashMap<>());
         this.resources = new HashMap<>();
         this.storageCapacity = Constants.INITIAL_STORAGE_CAPACITY;
         this.unitCap = Constants.INITIAL_UNIT_CAP;
-
-        this.productionQueue = new LinkedList<>();
 
         resources.put(ResourceType.CROPS, Constants.INITIAL_CROPS);
         resources.put(ResourceType.WOOD, Constants.INITIAL_WOOD);
@@ -51,21 +47,26 @@ public class TownHall extends Building {
         addResource(ResourceType.CROPS, Constants.SAFEGUARD_CROPS_PRODUCTION);
     }
 
-    public void addToQueue(ProductionTask task) {
-        productionQueue.add(task);
+    public ProductionTask getActiveTask() {
+        return activeTask;
     }
 
-    public void processQueue() {
-        ProductionTask currentTask = productionQueue.peek();
-        if (currentTask != null) {
-            currentTask.advanceTurn();
-            if (currentTask.isComplete()) {
-                productionQueue.poll();
+    public void setActiveTask(ProductionTask activeTask) {
+        this.activeTask = activeTask;
+    }
+
+    public void cancelActiveTask(){
+        this.activeTask = null;
+    }
+
+    public void processActiveTask() {
+        if (activeTask != null) {
+            activeTask.advanceTurn();
+            if (activeTask.isComplete()) {
+                activeTask = null;
             }
         }
     }
-
-    public Queue<ProductionTask> getProductionQueue() { return productionQueue; }
 
     public int getResourceAmount(ResourceType type) { return resources.getOrDefault(type, 0); }
 
@@ -85,5 +86,10 @@ public class TownHall extends Building {
 
     public void setUnitCap(int unitCap) {
         this.unitCap = unitCap;
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        return false;
     }
 }
