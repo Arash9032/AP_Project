@@ -1,50 +1,37 @@
-package model.map.building;
+package model.map.building.townhall;
 
 import java.util.HashMap;
-import java.util.Map;
 import config.Constants;
 import model.ProductionTask;
+import model.map.building.Building;
 import model.map.hex.Hex;
-import model.map.hex.ResourceType;
 
 public class TownHall extends Building {
 
-    private final Map<ResourceType, Integer> resources;
-    private int storageCapacity;
+    private final TownHallInventory inventory;
+    private int level;
     private int unitCap;
 
     private ProductionTask activeTask;
 
     public TownHall(Hex location) {
-        super(location, 0, new HashMap<>(), new HashMap<>());
-        this.resources = new HashMap<>();
-        this.storageCapacity = Constants.INITIAL_STORAGE_CAPACITY;
+        super(location, 0, new HashMap<>(), new HashMap<>(), Constants.TOWN_HALL_INITIAL_HP);
+        this.level = 1;
         this.unitCap = Constants.INITIAL_UNIT_CAP;
-
-        resources.put(ResourceType.CROPS, Constants.INITIAL_CROPS);
-        resources.put(ResourceType.WOOD, Constants.INITIAL_WOOD);
-        resources.put(ResourceType.STONE, Constants.INITIAL_STONE);
-        resources.put(ResourceType.IRON, Constants.INITIAL_IRON);
+        this.inventory = new TownHallInventory(Constants.INITIAL_STORAGE_CAPACITY);
     }
 
-    public void addResource(ResourceType type, int amount) {
-        int current = resources.getOrDefault(type, 0);
-        int newAmount = Math.min(current + amount, storageCapacity);
-        resources.put(type, newAmount);
+    public void addResource(InventoryResource resource, int amount) {
+        inventory.addResource(resource, amount);
     }
 
-    public boolean consumeResource(ResourceType type, int amount) {
-        int current = resources.getOrDefault(type, 0);
-        if (current >= amount) {
-            resources.put(type, current - amount);
-            return true;
-        }
-        return false;
+    public boolean consumeResource(InventoryResource resource, int amount) {
+        return inventory.consumeResource(resource, amount);
     }
 
     public void applySafeguardProduction() {
-        addResource(ResourceType.WOOD, Constants.SAFEGUARD_WOOD_PRODUCTION);
-        addResource(ResourceType.CROPS, Constants.SAFEGUARD_CROPS_PRODUCTION);
+        inventory.addResource(InventoryResource.WOOD, Constants.SAFEGUARD_WOOD_PRODUCTION);
+        inventory.addResource(InventoryResource.FOOD, Constants.SAFEGUARD_CROPS_PRODUCTION);
     }
 
     public ProductionTask getActiveTask() {
@@ -55,7 +42,7 @@ public class TownHall extends Building {
         this.activeTask = activeTask;
     }
 
-    public void cancelActiveTask(){
+    public void cancelActiveTask() {
         this.activeTask = null;
     }
 
@@ -68,20 +55,28 @@ public class TownHall extends Building {
         }
     }
 
-    public int getResourceAmount(ResourceType type) { return resources.getOrDefault(type, 0); }
-
-    public int getStorageCapacity() { return storageCapacity; }
-    public void increaseStorageCapacity(int amount) { this.storageCapacity += amount; }
-
-    public int getUnitCap() { return unitCap; }
-    public void increaseUnitCap(int amount) { this.unitCap += amount; }
-
-    public Map<ResourceType, Integer> getResources() {
-        return resources;
+    public int getResourceAmount(InventoryResource resource) {
+        return inventory.getResourceAmount(resource);
     }
 
-    public void setStorageCapacity(int storageCapacity) {
-        this.storageCapacity = storageCapacity;
+    public TownHallInventory getInventory() {
+        return inventory;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getUnitCap() {
+        return unitCap;
+    }
+
+    public void increaseUnitCap(int amount) {
+        this.unitCap += amount;
     }
 
     public void setUnitCap(int unitCap) {
