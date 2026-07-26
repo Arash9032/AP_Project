@@ -1,11 +1,11 @@
-package model.building;
+package model.map.building;
 
 import java.util.HashMap;
 import java.util.Map;
 import config.Constants;
-import model.hex.Hex;
-import model.hex.ResourceType;
-import model.hex.TerrainType;
+import model.map.hex.Hex;
+import model.map.hex.ResourceType;
+import model.map.hex.TerrainType;
 
 public class Stable extends Building {
 

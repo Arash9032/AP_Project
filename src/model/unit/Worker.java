@@ -1,7 +1,7 @@
 package model.unit;
 
 import config.Constants;
-import model.hex.Hex;
+import model.map.hex.Hex;
 
 public class Worker extends Unit {
     private boolean isStationed;

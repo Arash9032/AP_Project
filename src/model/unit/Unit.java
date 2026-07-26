@@ -1,7 +1,7 @@
 package model.unit;
 
 import model.Producible;
-import model.hex.Hex;
+import model.map.hex.Hex;
 
 public abstract class Unit implements Producible {
     protected Hex currentHex;

@@ -1,4 +1,4 @@
-package model.building;
+package model.map.building;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Queue;
 import config.Constants;
 import model.ProductionTask;
-import model.hex.Hex;
-import model.hex.ResourceType;
+import model.map.hex.Hex;
+import model.map.hex.ResourceType;
 
 public class TownHall extends Building {
 

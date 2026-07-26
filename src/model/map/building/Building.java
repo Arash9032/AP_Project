@@ -1,7 +1,7 @@
-package model.building;
+package model.map.building;
 
-import model.hex.Hex;
-import model.hex.ResourceType;
+import model.map.hex.Hex;
+import model.map.hex.ResourceType;
 
 import java.util.Map;
 

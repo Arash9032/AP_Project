@@ -1,4 +1,4 @@
-package model.hex;
+package model.map.hex;
 
 public enum ResourceType {
     WOOD,
