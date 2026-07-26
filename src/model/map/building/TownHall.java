@@ -25,7 +25,7 @@ public class TownHall extends Building {
 
         this.productionQueue = new LinkedList<>();
 
-        resources.put(ResourceType.FOOD, Constants.INITIAL_FOOD);
+        resources.put(ResourceType.CROPS, Constants.INITIAL_CROPS);
         resources.put(ResourceType.WOOD, Constants.INITIAL_WOOD);
         resources.put(ResourceType.STONE, Constants.INITIAL_STONE);
         resources.put(ResourceType.IRON, Constants.INITIAL_IRON);
@@ -48,7 +48,7 @@ public class TownHall extends Building {
 
     public void applySafeguardProduction() {
         addResource(ResourceType.WOOD, Constants.SAFEGUARD_WOOD_PRODUCTION);
-        addResource(ResourceType.FOOD, Constants.SAFEGUARD_FOOD_PRODUCTION);
+        addResource(ResourceType.CROPS, Constants.SAFEGUARD_CROPS_PRODUCTION);
     }
 
     public void addToQueue(ProductionTask task) {
@@ -74,4 +74,16 @@ public class TownHall extends Building {
 
     public int getUnitCap() { return unitCap; }
     public void increaseUnitCap(int amount) { this.unitCap += amount; }
+
+    public Map<ResourceType, Integer> getResources() {
+        return resources;
+    }
+
+    public void setStorageCapacity(int storageCapacity) {
+        this.storageCapacity = storageCapacity;
+    }
+
+    public void setUnitCap(int unitCap) {
+        this.unitCap = unitCap;
+    }
 }

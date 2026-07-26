@@ -26,13 +26,13 @@ public final class Constants {
 
     public static final int INITIAL_STORAGE_CAPACITY = 500;
     public static final int INITIAL_UNIT_CAP = 10;
-    public static final int INITIAL_FOOD = 100;
+    public static final int INITIAL_CROPS = 100;
     public static final int INITIAL_WOOD = 100;
     public static final int INITIAL_STONE = 50;
     public static final int INITIAL_IRON = 0;
 
-    public static final int SAFEGUARD_WOOD_PRODUCTION = 5;
-    public static final int SAFEGUARD_FOOD_PRODUCTION = 5;
+    public static final int SAFEGUARD_WOOD_PRODUCTION = 1;
+    public static final int SAFEGUARD_CROPS_PRODUCTION = 1;
 
     public static final int LUMBER_MILL_AP_COST = 1;
     public static final int LUMBER_MILL_WOOD_COST = 20;
