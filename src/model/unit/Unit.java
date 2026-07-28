@@ -3,16 +3,18 @@ package model.unit;
 import model.map.hex.Hex;
 
 public abstract class Unit {
-    protected Hex currentHex;
-    protected final int maxAP;
-    protected int currentAP;
-    protected final int visionRadius;
+    private final UnitType unitType;
+    private Hex currentHex;
+    private final int maxAP;
+    private int currentAP;
+    private final int visionRadius;
 
-    public Unit(Hex startingHex, int maxAP, int visionRadius) {
+    public Unit(Hex startingHex, int maxAP, int visionRadius , UnitType unitType) {
         this.currentHex = startingHex;
         this.maxAP = maxAP;
         this.currentAP = maxAP;
         this.visionRadius = visionRadius;
+        this.unitType = unitType;
     }
 
     public boolean move(Hex destination) {
@@ -38,11 +40,19 @@ public abstract class Unit {
         return currentAP;
     }
 
+    public void setCurrentAP(int currentAP) {
+        this.currentAP = currentAP;
+    }
+
     public int getMaxAP() {
         return maxAP;
     }
 
     public int getVisionRadius() {
         return visionRadius;
+    }
+
+    public UnitType getUnitType() {
+        return unitType;
     }
 }

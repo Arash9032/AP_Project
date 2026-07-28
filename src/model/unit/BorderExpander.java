@@ -7,7 +7,7 @@ public class BorderExpander extends Unit {
     private boolean isConsumed;
 
     public BorderExpander(Hex startingHex) {
-        super(startingHex, Constants.BORDER_EXPANDER_MAX_AP, Constants.BORDER_EXPANDER_VISION_RADIUS);
+        super(startingHex, Constants.BORDER_EXPANDER_MAX_AP, Constants.BORDER_EXPANDER_VISION_RADIUS, UnitType.BORDER_EXPANDER);
         this.isConsumed = false;
     }
 
@@ -17,13 +17,5 @@ public class BorderExpander extends Unit {
 
     public boolean isConsumed() {
         return isConsumed;
-    }
-
-    public int getTurnCost() {
-        return Constants.BORDER_EXPANDER_PRODUCTION_TURN_COST;
-    }
-
-    public String getName() {
-        return "Border Expander";
     }
 }

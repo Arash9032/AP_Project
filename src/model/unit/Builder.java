@@ -7,7 +7,7 @@ public class Builder extends Unit {
     private int charges;
 
     public Builder(Hex startingHex) {
-        super(startingHex, Constants.BUILDER_MAX_AP, Constants.BUILDER_VISION_RADIUS);
+        super(startingHex, Constants.BUILDER_MAX_AP, Constants.BUILDER_VISION_RADIUS, UnitType.BUILDER);
         this.charges = Constants.BUILDER_INITIAL_CHARGES;
     }
 
@@ -21,13 +21,5 @@ public class Builder extends Unit {
 
     public boolean isConsumed() {
         return charges <= 0;
-    }
-
-    public int getTurnCost() {
-        return Constants.BUILDER_PRODUCTION_TURN_COST;
-    }
-
-    public String getName() {
-        return "Builder";
     }
 }

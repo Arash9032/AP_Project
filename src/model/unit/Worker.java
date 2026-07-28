@@ -7,7 +7,7 @@ public class Worker extends Unit {
     private boolean isStationed;
 
     public Worker(Hex startingHex) {
-        super(startingHex, Constants.WORKER_MAX_AP, Constants.WORKER_VISION_RADIUS);
+        super(startingHex, Constants.WORKER_MAX_AP, Constants.WORKER_VISION_RADIUS, UnitType.WORKER);
         this.isStationed = false;
     }
 
@@ -17,13 +17,5 @@ public class Worker extends Unit {
 
     public boolean isStationed() {
         return isStationed;
-    }
-
-    public int getTurnCost() {
-        return Constants.WORKER_PRODUCTION_TURN_COST;
-    }
-
-    public String getName() {
-        return "Worker";
     }
 }
