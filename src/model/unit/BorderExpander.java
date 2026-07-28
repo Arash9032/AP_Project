@@ -19,12 +19,10 @@ public class BorderExpander extends Unit {
         return isConsumed;
     }
 
-    @Override
     public int getTurnCost() {
-        return Constants.BORDER_EXPANDER_TURN_COST;
+        return Constants.BORDER_EXPANDER_PRODUCTION_TURN_COST;
     }
 
-    @Override
     public String getName() {
         return "Border Expander";
     }

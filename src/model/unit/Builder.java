@@ -23,12 +23,10 @@ public class Builder extends Unit {
         return charges <= 0;
     }
 
-    @Override
     public int getTurnCost() {
-        return Constants.BUILDER_TURN_COST;
+        return Constants.BUILDER_PRODUCTION_TURN_COST;
     }
 
-    @Override
     public String getName() {
         return "Builder";
     }

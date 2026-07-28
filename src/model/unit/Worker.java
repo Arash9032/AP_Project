@@ -19,12 +19,10 @@ public class Worker extends Unit {
         return isStationed;
     }
 
-    @Override
     public int getTurnCost() {
-        return Constants.WORKER_TURN_COST;
+        return Constants.WORKER_PRODUCTION_TURN_COST;
     }
 
-    @Override
     public String getName() {
         return "Worker";
     }

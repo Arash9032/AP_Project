@@ -8,12 +8,10 @@ public class Explorer extends Unit {
         super(startingHex, Constants.EXPLORER_MAX_AP, Constants.EXPLORER_VISION_RADIUS);
     }
 
-    @Override
     public int getTurnCost() {
-        return Constants.EXPLORER_TURN_COST;
+        return Constants.EXPLORER_PRODUCTION_TURN_COST;
     }
 
-    @Override
     public String getName() {
         return "Explorer";
     }
