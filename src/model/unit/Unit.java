@@ -27,6 +27,14 @@ public abstract class Unit {
         return true;
     }
 
+    public boolean undoMove(Hex previousHex){
+        int cost = currentHex.getTerrain().getMovementCost();
+        if(!this.currentHex.isAdjacentTo(previousHex)) return false;
+        this.currentAP += cost;
+        this.currentHex = previousHex;
+        return true;
+    }
+
     public void resetAP() {
         this.currentAP = maxAP;
     }

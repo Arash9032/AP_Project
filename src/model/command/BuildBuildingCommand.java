@@ -21,7 +21,7 @@ public class BuildBuildingCommand implements Command {
     }
 
     @Override
-    public boolean execute() {
+    public void execute() {
         if (builder.getCharges() <= 0) {
             throw new IllegalStateException("Builder has no remaining charges.");
         }
@@ -35,7 +35,6 @@ public class BuildBuildingCommand implements Command {
         Building newBuilding = buildingType.createBuilding(targetHex);
         // TODO:
 
-        return false;
     }
 
     public Builder getBuilder() {
