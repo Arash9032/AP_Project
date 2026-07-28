@@ -18,7 +18,7 @@ public final class Constants {
     public static final int BUILDER_MAX_AP = 4;
     public static final int BUILDER_VISION_RADIUS = 2;
     public static final int BUILDER_INITIAL_CHARGES = 3;
-    public static final int BUILDER_PRODUCTION_TURN_COST = 3;
+    public static final int BUILDER_PRODUCTION_TURN_COST = 2;
 
     public static final int WORKER_MAX_AP = 4;
     public static final int WORKER_VISION_RADIUS = 1;
