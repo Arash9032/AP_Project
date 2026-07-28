@@ -9,7 +9,7 @@ public abstract class Unit {
     private int currentAP;
     private final int visionRadius;
 
-    public Unit(Hex startingHex, int maxAP, int visionRadius , UnitType unitType) {
+    public Unit(Hex startingHex, int maxAP, int visionRadius, UnitType unitType) {
         this.currentHex = startingHex;
         this.maxAP = maxAP;
         this.currentAP = maxAP;
@@ -18,14 +18,13 @@ public abstract class Unit {
     }
 
     public boolean move(Hex destination) {
-        int cost = destination.getTerrain().getMovementCost();
 
-        if (this.currentAP >= cost && this.currentHex.isAdjacentTo(destination)) {
-            this.currentAP -= cost;
-            this.currentHex = destination;
-            return true;
-        }
-        return false;
+        int cost = destination.getTerrain().getMovementCost();
+        if (this.currentAP < cost || !this.currentHex.isAdjacentTo(destination)) return false;
+
+        this.currentAP -= cost;
+        this.currentHex = destination;
+        return true;
     }
 
     public void resetAP() {
