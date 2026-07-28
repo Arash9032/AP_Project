@@ -22,6 +22,7 @@ public abstract class ProductionCommand implements Command{
     public void decrementTurn() {
         remainingTurns--;
     }
+
     public boolean isDone(){
         return remainingTurns <= 0;
     }
