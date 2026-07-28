@@ -50,8 +50,15 @@ public class Hex {
         return resourceCapacity;
     }
 
-    public void depleteResource(int amount) {
-        this.resourceCapacity = Math.max(0, this.resourceCapacity - amount);
+    public int depleteResource(int amount) {
+        if (amount <= 0 || this.resourceCapacity <= 0) {
+            return 0;
+        }
+
+        int actualExtracted = Math.min(this.resourceCapacity, amount);
+        this.resourceCapacity -= actualExtracted;
+
+        return actualExtracted;
     }
 
     public boolean isDepleted() {
