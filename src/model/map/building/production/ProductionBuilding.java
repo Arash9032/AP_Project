@@ -1,7 +1,7 @@
 package model.map.building;
 
 import model.map.hex.Hex;
-import model.map.hex.ResourceType;
+import model.map.hex.HexResource;
 import model.unit.Worker;
 
 import java.util.Map;
@@ -12,10 +12,10 @@ public abstract class ProductionBuilding extends Building {
     protected final int workerCapacity;
     protected List<Worker> stationedWorkers;
     protected int baseProductionRate;
-    protected final ResourceType producedResource;
+    protected final HexResource producedResource;
 
-    public ProductionBuilding(Hex location, int constructionAPCost, Map<ResourceType, Integer> constructionCost, Map<ResourceType, Integer> upkeepCost, int workerCapacity, int baseProductionRate, ResourceType producedResource) {
-        super(location, constructionAPCost, constructionCost, upkeepCost);
+    public ProductionBuilding(Hex location, int constructionAPCost, Map<HexResource, Integer> constructionCost, Map<HexResource, Integer> upkeepCost, int workerCapacity, int baseProductionRate, HexResource producedResource , int HP) {
+        super(location, constructionAPCost, constructionCost, upkeepCost , HP);
         this.workerCapacity = workerCapacity;
         this.baseProductionRate = baseProductionRate;
         this.producedResource = producedResource;
@@ -63,7 +63,7 @@ public abstract class ProductionBuilding extends Building {
         return stationedWorkers;
     }
 
-    public ResourceType getProducedResource() {
+    public HexResource getProducedResource() {
         return producedResource;
     }
 }

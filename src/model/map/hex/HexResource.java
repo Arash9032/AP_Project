@@ -1,6 +1,6 @@
 package model.map.hex;
 
-public enum ResourceType {
+public enum HexResource {
     WOOD,
     STONE,
     IRON,

@@ -4,20 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 import config.Constants;
 import model.map.hex.Hex;
-import model.map.hex.ResourceType;
+import model.map.hex.HexResource;
 import model.map.hex.TerrainType;
 
 public class Stable extends Building {
 
-    private static Map<ResourceType, Integer> createConstructionCost() {
-        Map<ResourceType, Integer> cost = new HashMap<>();
-        cost.put(ResourceType.WOOD, Constants.STABLE_WOOD_COST);
+    private static Map<HexResource, Integer> createConstructionCost() {
+        Map<HexResource, Integer> cost = new HashMap<>();
+        cost.put(HexResource.WOOD, Constants.STABLE_WOOD_COST);
         return cost;
     }
 
-    private static Map<ResourceType, Integer> createUpkeepCost() {
-        Map<ResourceType, Integer> upkeep = new HashMap<>();
-        upkeep.put(ResourceType.WOOD, Constants.STABLE_WOOD_UPKEEP);
+    private static Map<HexResource, Integer> createUpkeepCost() {
+        Map<HexResource, Integer> upkeep = new HashMap<>();
+        upkeep.put(HexResource.WOOD, Constants.STABLE_WOOD_UPKEEP);
         return upkeep;
     }
 
@@ -29,7 +29,7 @@ public class Stable extends Building {
                 createUpkeepCost()
         );
 
-        if (location.getTerrain() != TerrainType.PLAIN || location.getResource() != ResourceType.FOOD) {
+        if (location.getTerrain() != TerrainType.PLAIN || location.getResource() != HexResource.LIVESTOCK) {
             throw new IllegalArgumentException("Stable requires a PLAIN hex containing FOOD (Cows/Sheep).");
         }
     }

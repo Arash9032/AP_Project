@@ -5,20 +5,20 @@ import java.util.Map;
 
 import config.Constants;
 import model.map.hex.Hex;
-import model.map.hex.ResourceType;
+import model.map.hex.HexResource;
 import model.map.hex.TerrainType;
 
 public class LumberMill extends ProductionBuilding {
 
-    private static Map<ResourceType, Integer> createConstructionCost() {
-        Map<ResourceType, Integer> cost = new HashMap<>();
-        cost.put(ResourceType.WOOD, Constants.LUMBER_MILL_WOOD_COST);
+    private static Map<HexResource, Integer> createConstructionCost() {
+        Map<HexResource, Integer> cost = new HashMap<>();
+        cost.put(HexResource.WOOD, Constants.LUMBER_MILL_WOOD_COST);
         return cost;
     }
 
-    private static Map<ResourceType, Integer> createUpkeepCost() {
-        Map<ResourceType, Integer> upkeep = new HashMap<>();
-        upkeep.put(ResourceType.WOOD, Constants.LUMBER_MILL_WOOD_UPKEEP);
+    private static Map<HexResource, Integer> createUpkeepCost() {
+        Map<HexResource, Integer> upkeep = new HashMap<>();
+        upkeep.put(HexResource.WOOD, Constants.LUMBER_MILL_WOOD_UPKEEP);
         return upkeep;
     }
 
@@ -30,7 +30,8 @@ public class LumberMill extends ProductionBuilding {
                 createUpkeepCost(),
                 Constants.LUMBER_MILL_CAPACITY,
                 Constants.LUMBER_MILL_RATE,
-                ResourceType.WOOD
+                HexResource.WOOD,
+                Constants.LUMBER_MILL_HP
         );
 
         if (location.getTerrain() != TerrainType.FOREST) {

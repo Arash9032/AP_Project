@@ -5,13 +5,13 @@ public class Hex {
     private final int r;
 
     private final TerrainType terrain;
-    private final ResourceType resource;
+    private final HexResource resource;
     private int resourceCapacity;
 
     private boolean isExplored;
     private boolean isWithinBorder;
 
-    public Hex(int q, int r, TerrainType terrain, ResourceType resource, int resourceCapacity) {
+    public Hex(int q, int r, TerrainType terrain, HexResource resource, int resourceCapacity) {
         this.q = q;
         this.r = r;
         this.terrain = terrain;
@@ -42,7 +42,7 @@ public class Hex {
         return terrain;
     }
 
-    public ResourceType getResource() {
+    public HexResource getResource() {
         return resource;
     }
 
