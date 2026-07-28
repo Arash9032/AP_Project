@@ -1,8 +1,9 @@
-package model.map.building;
+package model.map.building.production;
 
 import java.util.HashMap;
 import java.util.Map;
 import config.Constants;
+import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
 import model.map.hex.HexResource;
 import model.map.hex.TerrainType;
@@ -29,7 +30,7 @@ public class Farm extends ProductionBuilding {
                 createUpkeepCost(),
                 Constants.FARM_CAPACITY,
                 Constants.FARM_RATE,
-                HexResource.CROPS,
+                InventoryResource.FOOD,
                 Constants.FARM_HP
 
         );

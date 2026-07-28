@@ -1,13 +1,15 @@
-package model.map.building;
+package model.map.building.production;
 
 import java.util.HashMap;
 import java.util.Map;
 import config.Constants;
+import model.map.building.Building;
+import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
 import model.map.hex.HexResource;
 import model.map.hex.TerrainType;
 
-public class Stable extends Building {
+public class Stable extends ProductionBuilding {
 
     private static Map<HexResource, Integer> createConstructionCost() {
         Map<HexResource, Integer> cost = new HashMap<>();
@@ -26,7 +28,11 @@ public class Stable extends Building {
                 location,
                 Constants.STABLE_AP_COST,
                 createConstructionCost(),
-                createUpkeepCost()
+                createUpkeepCost(),
+                Constants.STABLE_CAPACITY,
+                Constants.STABLE_RATE,
+                InventoryResource.FOOD,
+                Constants.STABLE_HP
         );
 
         if (location.getTerrain() != TerrainType.PLAIN || location.getResource() != HexResource.LIVESTOCK) {

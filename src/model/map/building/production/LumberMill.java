@@ -1,9 +1,10 @@
-package model.map.building;
+package model.map.building.production;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import config.Constants;
+import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
 import model.map.hex.HexResource;
 import model.map.hex.TerrainType;
@@ -30,7 +31,7 @@ public class LumberMill extends ProductionBuilding {
                 createUpkeepCost(),
                 Constants.LUMBER_MILL_CAPACITY,
                 Constants.LUMBER_MILL_RATE,
-                HexResource.WOOD,
+                InventoryResource.WOOD,
                 Constants.LUMBER_MILL_HP
         );
 
