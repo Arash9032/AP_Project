@@ -4,24 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 import config.Constants;
+import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
-import model.map.hex.ResourceType;
+import model.map.hex.HexResource;
 
 public class Town extends Building {
 
-    private static Map<ResourceType, Integer> createConstructionCost() {
-        Map<ResourceType, Integer> cost = new HashMap<>();
-        cost.put(ResourceType.WOOD, Constants.TOWN_WOOD_COST);
-        cost.put(ResourceType.STONE, Constants.TOWN_STONE_COST);
-        cost.put(ResourceType.IRON, Constants.TOWN_IRON_COST);
+    private static Map<InventoryResource, Integer> createConstructionCost() {
+        Map<InventoryResource, Integer> cost = new HashMap<>();
+        cost.put(InventoryResource.WOOD, Constants.TOWN_WOOD_COST);
+        cost.put(InventoryResource.STONE, Constants.TOWN_STONE_COST);
+        cost.put(InventoryResource.IRON, Constants.TOWN_IRON_COST);
         return cost;
     }
 
-    private static Map<ResourceType, Integer> createUpkeepCost() {
-        Map<ResourceType, Integer> upkeep = new HashMap<>();
-        upkeep.put(ResourceType.WOOD, Constants.TOWN_WOOD_UPKEEP);
-        upkeep.put(ResourceType.STONE, Constants.TOWN_STONE_UPKEEP);
-        upkeep.put(ResourceType.IRON, Constants.TOWN_IRON_UPKEEP);
+    private static Map<InventoryResource, Integer> createUpkeepCost() {
+        Map<InventoryResource, Integer> upkeep = new HashMap<>();
+        upkeep.put(InventoryResource.WOOD, Constants.TOWN_WOOD_UPKEEP);
+        upkeep.put(InventoryResource.STONE, Constants.TOWN_STONE_UPKEEP);
+        upkeep.put(InventoryResource.IRON, Constants.TOWN_IRON_UPKEEP);
         return upkeep;
     }
 
@@ -30,7 +31,8 @@ public class Town extends Building {
                 location,
                 Constants.TOWN_AP_COST,
                 createConstructionCost(),
-                createUpkeepCost()
+                createUpkeepCost(),
+                Constants.TOWN_HP
         );
     }
 }

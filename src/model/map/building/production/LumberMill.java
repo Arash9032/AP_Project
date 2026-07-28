@@ -11,15 +11,15 @@ import model.map.hex.TerrainType;
 
 public class LumberMill extends ProductionBuilding {
 
-    private static Map<HexResource, Integer> createConstructionCost() {
-        Map<HexResource, Integer> cost = new HashMap<>();
-        cost.put(HexResource.WOOD, Constants.LUMBER_MILL_WOOD_COST);
+    private static Map<InventoryResource, Integer> createConstructionCost() {
+        Map<InventoryResource, Integer> cost = new HashMap<>();
+        cost.put(InventoryResource.WOOD, Constants.LUMBER_MILL_WOOD_COST);
         return cost;
     }
 
-    private static Map<HexResource, Integer> createUpkeepCost() {
-        Map<HexResource, Integer> upkeep = new HashMap<>();
-        upkeep.put(HexResource.WOOD, Constants.LUMBER_MILL_WOOD_UPKEEP);
+    private static Map<InventoryResource, Integer> createUpkeepCost() {
+        Map<InventoryResource, Integer> upkeep = new HashMap<>();
+        upkeep.put(InventoryResource.WOOD, Constants.LUMBER_MILL_WOOD_UPKEEP);
         return upkeep;
     }
 

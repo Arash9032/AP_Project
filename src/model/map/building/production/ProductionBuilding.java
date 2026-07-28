@@ -19,8 +19,8 @@ public abstract class ProductionBuilding extends Building {
     public ProductionBuilding(
             Hex location,
             int constructionAPCost,
-            Map<HexResource, Integer> constructionCost,
-            Map<HexResource, Integer> upkeepCost,
+            Map<InventoryResource, Integer> constructionCost,
+            Map<InventoryResource, Integer> upkeepCost,
             int workerCapacity,
             int baseProductionRate,
             InventoryResource producedResource,

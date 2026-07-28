@@ -34,6 +34,15 @@ public final class Constants {
     public static final int SAFEGUARD_WOOD_PRODUCTION = 1;
     public static final int SAFEGUARD_CROPS_PRODUCTION = 1;
 
+    public static final int TOWN_HALL_INITIAL_HP = 200;
+    public static final int LUMBER_MILL_HP = 80;
+    public static final int FARM_HP = 60;
+    public static final int STONE_MINE_HP = 100;
+    public static final int IRON_MINE_HP = 120;
+    public static final int STABLE_HP = 100;
+    public static final int VILLAGE_HP = 150;
+    public static final int TOWN_HP = 250;
+
     public static final int LUMBER_MILL_AP_COST = 1;
     public static final int LUMBER_MILL_WOOD_COST = 20;
     public static final int LUMBER_MILL_WOOD_UPKEEP = 2;
@@ -61,6 +70,8 @@ public final class Constants {
     public static final int STABLE_AP_COST = 2;
     public static final int STABLE_WOOD_COST = 50;
     public static final int STABLE_WOOD_UPKEEP = 5;
+    public static final int STABLE_CAPACITY = 2;
+    public static final int STABLE_RATE = 8;
 
     public static final int VILLAGE_AP_COST = 2;
     public static final int VILLAGE_WOOD_COST = 50;

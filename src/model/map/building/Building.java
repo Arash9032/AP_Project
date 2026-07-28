@@ -1,24 +1,26 @@
 package model.map.building;
 
+import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
-import model.map.hex.ResourceType;
+import model.map.hex.HexResource;
 
 import java.util.Map;
 
 public abstract class Building {
     protected Hex location;
     protected final int constructionAPCost;
-    protected final Map<ResourceType, Integer> constructionCost;
-    protected final Map<ResourceType, Integer> upkeepCost;
+    protected final Map<InventoryResource, Integer> constructionCost;
+    protected final Map<InventoryResource, Integer> upkeepCost;
     protected int consecutiveUnpaidUpkeep;
-    protected int HP = 100;
+    protected int HP;
 
-    public Building(Hex location, int constructionAPCost, Map<ResourceType, Integer> constructionCost, Map<ResourceType, Integer> upkeepCost) {
+    public Building(Hex location, int constructionAPCost, Map<InventoryResource, Integer> constructionCost, Map<InventoryResource, Integer> upkeepCost , int HP) {
         this.location = location;
         this.constructionAPCost = constructionAPCost;
         this.constructionCost = constructionCost;
         this.upkeepCost = upkeepCost;
         this.consecutiveUnpaidUpkeep = 0;
+        this.HP = HP;
     }
 
     public void processUpkeep(boolean isPaid) {
@@ -30,7 +32,7 @@ public abstract class Building {
     }
 
     public boolean isDestroyed() {
-        return consecutiveUnpaidUpkeep >= 3;
+        return (consecutiveUnpaidUpkeep >= 3 || HP <= 0);
     }
 
     public Hex getLocation() {
@@ -41,11 +43,11 @@ public abstract class Building {
         return constructionAPCost;
     }
 
-    public Map<ResourceType, Integer> getConstructionCost() {
+    public Map<InventoryResource, Integer> getConstructionCost() {
         return constructionCost;
     }
 
-    public Map<ResourceType, Integer> getUpkeepCost() {
+    public Map<InventoryResource, Integer> getUpkeepCost() {
         return upkeepCost;
     }
 
