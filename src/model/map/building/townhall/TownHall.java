@@ -9,16 +9,18 @@ import model.map.hex.Hex;
 public class TownHall extends Building {
 
     private final TownHallInventory inventory;
-    private int level;
+    private TownHallLevel level;
     private int unitCap;
+    private int maximumHP;
 
     private ProductionCommand activeTask;
 
     public TownHall(Hex location) {
         super(location, 0, new HashMap<>(), new HashMap<>(), Constants.TOWN_HALL_INITIAL_HP);
-        this.level = 1;
+        this.level = TownHallLevel.LEVEL_1;
         this.unitCap = Constants.INITIAL_UNIT_CAP;
-        this.inventory = new TownHallInventory(Constants.INITIAL_STORAGE_CAPACITY);
+        this.inventory = new TownHallInventory(level.getStorageCapacity());
+        maximumHP = Constants.TOWN_HALL_INITIAL_HP;
     }
 
     public void addResource(InventoryResource resource, int amount) {
@@ -50,11 +52,11 @@ public class TownHall extends Building {
         return inventory;
     }
 
-    public int getLevel() {
+    public TownHallLevel getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(TownHallLevel level) {
         this.level = level;
     }
 
@@ -70,12 +72,25 @@ public class TownHall extends Building {
         this.unitCap = unitCap;
     }
 
+    public int getMaximumHP() {
+        return maximumHP;
+    }
+
+    public void setMaximumHP(int maximumHP) {
+        this.maximumHP = maximumHP;
+    }
+
     @Override
     public boolean isDestroyed() {
         return false;
     }
 
     public void upgrade(){
-
+        TownHallLevel nextLevel = level.getNextLevel();
+        if(nextLevel == null) throw new IllegalStateException("Next town hall level doesn't exist.");
+        if(!inventory.consumeResources(nextLevel.getUpgradeCost()))
+            throw new IllegalStateException("Not enough resources to upgrade town hall.");
+        level = nextLevel;
+        HP = Math.min(HP + level.getUpgradeHealAmount() , maximumHP);
     }
 }
