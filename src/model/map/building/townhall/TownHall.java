@@ -3,6 +3,7 @@ package model.map.building.townhall;
 import java.util.HashMap;
 import config.Constants;
 import model.command.ProductionCommand;
+import model.command.UpgradeTownHallCommand;
 import model.map.building.Building;
 import model.map.hex.Hex;
 
@@ -85,12 +86,23 @@ public class TownHall extends Building {
         return false;
     }
 
-    public void upgrade(){
-        TownHallLevel nextLevel = level.getNextLevel();
-        if(nextLevel == null) throw new IllegalStateException("Next town hall level doesn't exist.");
-        if(!inventory.consumeResources(nextLevel.getUpgradeCost()))
+    public void startUpgrade(){
+        if(activeTask != null)
+            throw new IllegalStateException("There already is an active task.");
+        if(level.getNextLevel() == null) {
+            throw new IllegalStateException("Town hall level is at its max.");
+        }
+        if(!inventory.consumeResources(level.getNextLevel().getUpgradeCost()))
             throw new IllegalStateException("Not enough resources to upgrade town hall.");
+        activeTask = new UpgradeTownHallCommand(this, level.getNextLevel().getUpgradeTurnCost());
+    }
+
+    public void completeUpgrade(){
+        TownHallLevel nextLevel = level.getNextLevel();
+        if(nextLevel == null)
+            throw new IllegalStateException("Town hall level is at its max.");
         level = nextLevel;
         HP = Math.min(HP + level.getUpgradeHealAmount() , maximumHP);
+        inventory.setCapacity(level.getStorageCapacity());
     }
 }
