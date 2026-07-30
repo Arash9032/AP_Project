@@ -19,9 +19,12 @@ public class ProduceUnitCommand extends ProductionCommand{
 
     @Override
     public void execute() {
-        if(!isDone()) throw new IllegalStateException("ProduceUnitCommand is not done yet. executed too soon.");
-        Unit newUnit = unitType.createUnit(location);
-        // TODO:
-        getTownHall().setActiveTask(null);
+        decrementTurn();
+
+        if(isDone()) {
+            Unit newUnit = unitType.createUnit(location);
+            // TODO:
+            getTownHall().setActiveTask(null);
+        }
     }
 }
