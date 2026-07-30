@@ -5,7 +5,7 @@ import model.map.hex.Hex;
 import model.unit.Unit;
 import model.unit.UnitType;
 
-public class ProduceUnitCommand extends ProductionCommand{
+public class ProduceUnitCommand extends TurnBasedProductionCommand {
 
     private final UnitType unitType;
 

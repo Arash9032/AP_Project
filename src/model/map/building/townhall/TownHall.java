@@ -2,7 +2,7 @@ package model.map.building.townhall;
 
 import java.util.HashMap;
 import config.Constants;
-import model.command.ProductionCommand;
+import model.command.TurnBasedProductionCommand;
 import model.command.UpgradeTownHallCommand;
 import model.map.building.Building;
 import model.map.hex.Hex;
@@ -14,7 +14,7 @@ public class TownHall extends Building {
     private int unitCap;
     private int maximumHP;
 
-    private ProductionCommand activeTask;
+    private TurnBasedProductionCommand activeTask;
 
     public TownHall(Hex location) {
         super(location, 0, new HashMap<>(), new HashMap<>(), Constants.TOWN_HALL_INITIAL_HP);
@@ -37,11 +37,11 @@ public class TownHall extends Building {
         inventory.addResource(InventoryResource.FOOD, Constants.SAFEGUARD_CROPS_PRODUCTION);
     }
 
-    public ProductionCommand getActiveTask() {
+    public TurnBasedProductionCommand getActiveTask() {
         return activeTask;
     }
 
-    public void setActiveTask(ProductionCommand activeTask) {
+    public void setActiveTask(TurnBasedProductionCommand activeTask) {
         this.activeTask = activeTask;
     }
 

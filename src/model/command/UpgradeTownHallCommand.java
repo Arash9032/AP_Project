@@ -2,7 +2,7 @@ package model.command;
 
 import model.map.building.townhall.TownHall;
 
-public class UpgradeTownHallCommand extends ProductionCommand{
+public class UpgradeTownHallCommand extends TurnBasedProductionCommand {
 
     public UpgradeTownHallCommand(TownHall townHall, int turnCost) {
         super(townHall, turnCost);

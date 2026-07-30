@@ -2,13 +2,13 @@ package model.command;
 
 import model.map.building.townhall.TownHall;
 
-public abstract class ProductionCommand implements Command{
+public abstract class TurnBasedProductionCommand implements Command{
 
     private final TownHall townHall;
 
     private int remainingTurns;
 
-    public ProductionCommand(TownHall townHall , int turnCost){
+    public TurnBasedProductionCommand(TownHall townHall , int turnCost){
         this.townHall = townHall;
         this.remainingTurns = turnCost;
     }
