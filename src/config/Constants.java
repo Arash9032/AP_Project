@@ -10,6 +10,7 @@ public final class Constants {
     public static final int MEADOW_MOVEMENT_COST = 1;
     public static final int MOUNTAIN_RANGE_MOVEMENT_COST = 1000;
     public static final int SEA_MOVEMENT_COST = 2;
+    public static final int RIVER_CROSSING_PENALTY = 1;
 
     public static final int EXPLORER_MAX_AP = 6;
     public static final int EXPLORER_VISION_RADIUS = 3;

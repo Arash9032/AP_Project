@@ -102,7 +102,7 @@ public class TownHall extends Building {
         if(nextLevel == null)
             throw new IllegalStateException("Town hall level is at its max.");
         level = nextLevel;
-        HP = Math.min(HP + level.getUpgradeHealAmount() , maximumHP);
+        setHP(Math.min(getHP() + level.getUpgradeHealAmount() , maximumHP));
         inventory.setCapacity(level.getStorageCapacity());
     }
 }

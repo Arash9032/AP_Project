@@ -7,12 +7,12 @@ import model.map.hex.HexResource;
 import java.util.Map;
 
 public abstract class Building {
-    protected Hex location;
-    protected final int constructionAPCost;
-    protected final Map<InventoryResource, Integer> constructionCost;
-    protected final Map<InventoryResource, Integer> upkeepCost;
-    protected int consecutiveUnpaidUpkeep;
-    protected int HP;
+    private final Hex location;
+    private final int constructionAPCost;
+    private final Map<InventoryResource, Integer> constructionCost;
+    private final Map<InventoryResource, Integer> upkeepCost;
+    private int consecutiveUnpaidUpkeep;
+    private int HP;
 
     public Building(Hex location, int constructionAPCost, Map<InventoryResource, Integer> constructionCost, Map<InventoryResource, Integer> upkeepCost , int HP) {
         this.location = location;
