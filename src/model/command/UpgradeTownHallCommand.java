@@ -1,6 +1,5 @@
 package model.command;
 
-import config.Constants;
 import model.map.building.townhall.TownHall;
 
 public class UpgradeTownHallCommand extends ProductionCommand{
@@ -12,7 +11,7 @@ public class UpgradeTownHallCommand extends ProductionCommand{
     @Override
     public void execute() {
         if(!isDone()) throw new IllegalStateException("UpgradeTownHallCommand is not done yet. executed too soon.");
-        super.getTownHall().upgrade();
-        super.getTownHall().setActiveTask(null);
+        getTownHall().upgrade();
+        getTownHall().setActiveTask(null);
     }
 }
