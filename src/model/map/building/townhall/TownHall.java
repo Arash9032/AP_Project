@@ -73,6 +73,7 @@ public class TownHall extends Building {
         this.unitCap = unitCap;
     }
 
+    @Override
     public int getMaximumHP() {
         return maximumHP;
     }

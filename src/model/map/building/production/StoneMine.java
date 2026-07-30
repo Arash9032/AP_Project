@@ -32,11 +32,16 @@ public class StoneMine extends ProductionBuilding {
                 Constants.STONE_MINE_CAPACITY,
                 Constants.STONE_MINE_RATE,
                 InventoryResource.STONE,
-                Constants.STONE_MINE_HP
+                Constants.STONE_MINE_MAXIMUM_HP
         );
 
         if (location.getTerrain() != TerrainType.MOUNTAIN || location.getResource() != HexResource.STONE) {
             throw new IllegalArgumentException("Stone Mine can only be built on a MOUNTAIN hex with STONE resource.");
         }
+    }
+
+    @Override
+    public int getMaximumHP() {
+        return Constants.STONE_MINE_MAXIMUM_HP;
     }
 }

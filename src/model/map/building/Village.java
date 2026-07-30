@@ -6,7 +6,6 @@ import java.util.Map;
 import config.Constants;
 import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
-import model.map.hex.HexResource;
 
 public class Village extends Building {
 
@@ -32,7 +31,12 @@ public class Village extends Building {
                 Constants.VILLAGE_AP_COST,
                 createConstructionCost(),
                 createUpkeepCost(),
-                Constants.VILLAGE_HP
+                Constants.VILLAGE_MAXIMUM_HP
         );
+    }
+
+    @Override
+    public int getMaximumHP() {
+        return Constants.VILLAGE_MAXIMUM_HP;
     }
 }

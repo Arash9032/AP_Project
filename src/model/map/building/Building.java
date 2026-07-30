@@ -1,12 +1,12 @@
 package model.map.building;
 
+import model.map.Destructible;
 import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
-import model.map.hex.HexResource;
 
 import java.util.Map;
 
-public abstract class Building {
+public abstract class Building implements Destructible {
     private final Hex location;
     private final int constructionAPCost;
     private final Map<InventoryResource, Integer> constructionCost;
@@ -59,11 +59,18 @@ public abstract class Building {
         this.consecutiveUnpaidUpkeep = consecutiveUnpaidUpkeep;
     }
 
+    @Override
     public int getHP() {
         return HP;
     }
 
+    @Override
     public void setHP(int HP) {
         this.HP = HP;
+    }
+
+    @Override
+    public void damage(int amount) {
+        HP = Math.min(0 , HP - amount);
     }
 }

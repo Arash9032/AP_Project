@@ -3,7 +3,6 @@ package model.map.building.production;
 import java.util.HashMap;
 import java.util.Map;
 import config.Constants;
-import model.map.building.Building;
 import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
 import model.map.hex.HexResource;
@@ -32,11 +31,16 @@ public class Stable extends ProductionBuilding {
                 Constants.STABLE_CAPACITY,
                 Constants.STABLE_RATE,
                 InventoryResource.FOOD,
-                Constants.STABLE_HP
+                Constants.STABLE_MAXIMUM_HP
         );
 
         if (location.getTerrain() != TerrainType.PLAIN || location.getResource() != HexResource.LIVESTOCK) {
             throw new IllegalArgumentException("Stable requires a PLAIN hex containing LIVESTOCK.");
         }
+    }
+
+    @Override
+    public int getMaximumHP() {
+        return Constants.STABLE_MAXIMUM_HP;
     }
 }

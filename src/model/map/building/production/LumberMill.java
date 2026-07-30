@@ -6,7 +6,6 @@ import java.util.Map;
 import config.Constants;
 import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
-import model.map.hex.HexResource;
 import model.map.hex.TerrainType;
 
 public class LumberMill extends ProductionBuilding {
@@ -32,11 +31,16 @@ public class LumberMill extends ProductionBuilding {
                 Constants.LUMBER_MILL_CAPACITY,
                 Constants.LUMBER_MILL_RATE,
                 InventoryResource.WOOD,
-                Constants.LUMBER_MILL_HP
+                Constants.LUMBER_MILL_MAXIMUM_HP
         );
 
         if (location.getTerrain() != TerrainType.FOREST) {
             throw new IllegalArgumentException("Lumber Mill can only be built on a FOREST hex.");
         }
+    }
+
+    @Override
+    public int getMaximumHP() {
+        return Constants.LUMBER_MILL_MAXIMUM_HP;
     }
 }

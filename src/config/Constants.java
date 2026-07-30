@@ -56,13 +56,13 @@ public final class Constants {
     public static final int SAFEGUARD_CROPS_PRODUCTION = 1;
 
     public static final int TOWN_HALL_INITIAL_HP = 200;
-    public static final int LUMBER_MILL_HP = 80;
-    public static final int FARM_HP = 60;
-    public static final int STONE_MINE_HP = 100;
-    public static final int IRON_MINE_HP = 120;
-    public static final int STABLE_HP = 100;
-    public static final int VILLAGE_HP = 150;
-    public static final int TOWN_HP = 250;
+    public static final int LUMBER_MILL_MAXIMUM_HP = 80;
+    public static final int FARM_MAXIMUM_HP = 60;
+    public static final int STONE_MINE_MAXIMUM_HP = 100;
+    public static final int IRON_MINE_MAXIMUM_HP = 120;
+    public static final int STABLE_MAXIMUM_HP = 100;
+    public static final int VILLAGE_MAXIMUM_HP = 150;
+    public static final int TOWN_MAXIMUM_HP = 250;
 
     public static final int LUMBER_MILL_AP_COST = 1;
     public static final int LUMBER_MILL_WOOD_COST = 20;

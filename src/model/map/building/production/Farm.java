@@ -31,12 +31,17 @@ public class Farm extends ProductionBuilding {
                 Constants.FARM_CAPACITY,
                 Constants.FARM_RATE,
                 InventoryResource.FOOD,
-                Constants.FARM_HP
+                Constants.FARM_MAXIMUM_HP
 
         );
 
         if (location.getTerrain() != TerrainType.MEADOW || location.getResource() != HexResource.CROPS) {
             throw new IllegalArgumentException("Farm requires a MEADOW hex containing CROPS (Wheat/Rice).");
         }
+    }
+
+    @Override
+    public int getMaximumHP() {
+        return Constants.FARM_MAXIMUM_HP;
     }
 }
