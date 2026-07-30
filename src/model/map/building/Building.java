@@ -71,6 +71,6 @@ public abstract class Building implements Destructible {
 
     @Override
     public void damage(int amount) {
-        HP = Math.min(0 , HP - amount);
+        HP = Math.max(0 , HP - amount);
     }
 }
