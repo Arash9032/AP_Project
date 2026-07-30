@@ -1,12 +1,13 @@
 package model.map.building;
 
 import model.map.Destructible;
+import model.map.Maintainable;
 import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
 
 import java.util.Map;
 
-public abstract class Building implements Destructible {
+public abstract class Building implements Maintainable {
     private final Hex location;
     private final int constructionAPCost;
     private final Map<InventoryResource, Integer> constructionCost;
@@ -23,18 +24,6 @@ public abstract class Building implements Destructible {
         this.HP = HP;
     }
 
-    public void processUpkeep(boolean isPaid) {
-        if (isPaid) {
-            consecutiveUnpaidUpkeep = 0;
-        } else {
-            consecutiveUnpaidUpkeep++;
-        }
-    }
-
-    public boolean isDestroyed() {
-        return (consecutiveUnpaidUpkeep >= 3 || HP <= 0);
-    }
-
     public Hex getLocation() {
         return location;
     }
@@ -47,14 +36,17 @@ public abstract class Building implements Destructible {
         return constructionCost;
     }
 
+    @Override
     public Map<InventoryResource, Integer> getUpkeepCost() {
         return upkeepCost;
     }
 
+    @Override
     public int getConsecutiveUnpaidUpkeep() {
         return consecutiveUnpaidUpkeep;
     }
 
+    @Override
     public void setConsecutiveUnpaidUpkeep(int consecutiveUnpaidUpkeep) {
         this.consecutiveUnpaidUpkeep = consecutiveUnpaidUpkeep;
     }
