@@ -28,8 +28,24 @@ public final class Constants {
     public static final int BORDER_EXPANDER_VISION_RADIUS = 1;
     public static final int BORDER_EXPANDER_PRODUCTION_TURN_COST = 3;
 
-    public static final int INITIAL_STORAGE_CAPACITY = 500;
-    public static final int INITIAL_UNIT_CAP = 10;
+    public static final int LEVEL_1_TOWN_HALL_STORAGE_CAPACITY = 100;
+    public static final int LEVEL_1_TOWN_HALL_MILITARY_UNIT_CAPACITY = 5;
+
+    public static final int LEVEL_2_TOWN_HALL_STORAGE_CAPACITY = 200;
+    public static final int LEVEL_2_TOWN_HALL_MILITARY_UNIT_CAPACITY = 10;
+    public static final int LEVEL_2_TOWN_HALL_UPGRADE_TURN_COST = 3;
+    public static final int LEVEL_2_TOWN_HALL_UPGRADE_WOOD_COST = 50;
+    public static final int LEVEL_2_TOWN_HALL_UPGRADE_STONE_COST = 50;
+    public static final int LEVEL_2_TOWN_HALL_UPGRADE_HEAL_AMOUNT = 50;
+
+    public static final int LEVEL_3_TOWN_HALL_STORAGE_CAPACITY = 300;
+    public static final int LEVEL_3_TOWN_HALL_MILITARY_UNIT_CAPACITY = 15;
+    public static final int LEVEL_3_TOWN_HALL_UPGRADE_TURN_COST = 5;
+    public static final int LEVEL_3_TOWN_HALL_UPGRADE_STONE_COST = 100;
+    public static final int LEVEL_3_TOWN_HALL_UPGRADE_IRON_COST = 50;
+    public static final int LEVEL_3_TOWN_HALL_UPGRADE_HEAL_AMOUNT = 0;
+
+    public static final int INITIAL_UNIT_CAP = 5;
     public static final int INITIAL_CROPS = 100;
     public static final int INITIAL_WOOD = 100;
     public static final int INITIAL_STONE = 50;
