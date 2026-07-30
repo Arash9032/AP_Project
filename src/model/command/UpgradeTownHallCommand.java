@@ -10,8 +10,11 @@ public class UpgradeTownHallCommand extends ProductionCommand{
 
     @Override
     public void execute() {
-        if(!isDone()) throw new IllegalStateException("UpgradeTownHallCommand is not done yet. executed too soon.");
-        getTownHall().upgrade();
-        getTownHall().setActiveTask(null);
+        decrementTurn();
+
+        if(isDone()) {
+            getTownHall().completeUpgrade();
+            getTownHall().setActiveTask(null);
+        }
     }
 }
