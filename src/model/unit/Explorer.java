@@ -9,7 +9,7 @@ public class Explorer extends Unit {
     }
 
     @Override
-    public int getMaximumHP() {
+    public int getMaximumHp() {
         return Constants.EXPLORER_MAX_HP;
     }
 }

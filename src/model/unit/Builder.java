@@ -24,7 +24,7 @@ public class Builder extends Unit {
     }
 
     @Override
-    public int getMaximumHP() {
+    public int getMaximumHp() {
         return Constants.BUILDER_MAX_HP;
     }
 }

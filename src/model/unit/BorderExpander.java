@@ -20,7 +20,7 @@ public class BorderExpander extends Unit {
     }
 
     @Override
-    public int getMaximumHP() {
+    public int getMaximumHp() {
         return Constants.BORDER_EXPANDER_MAX_HP;
     }
 }

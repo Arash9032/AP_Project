@@ -71,12 +71,12 @@ public abstract class Unit implements Destructible {
     }
 
     @Override
-    public int getHP() {
+    public int getHp() {
         return HP;
     }
 
     @Override
-    public void setHP(int HP) {
-        this.HP = HP;
+    public void setHp(int hp) {
+        this.HP = hp;
     }
 }

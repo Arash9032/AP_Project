@@ -20,7 +20,7 @@ public class Worker extends Unit {
     }
 
     @Override
-    public int getMaximumHP() {
+    public int getMaximumHp() {
         return Constants.WORKER_MAX_HP;
     }
 }
