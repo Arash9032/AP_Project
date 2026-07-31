@@ -12,19 +12,23 @@ public final class Constants {
     public static final int SEA_MOVEMENT_COST = 2;
     public static final int RIVER_CROSSING_PENALTY = 1;
 
+    public static final int EXPLORER_MAX_HP = 30;
     public static final int EXPLORER_MAX_AP = 6;
     public static final int EXPLORER_VISION_RADIUS = 3;
     public static final int EXPLORER_PRODUCTION_TURN_COST = 2;
 
+    public static final int BUILDER_MAX_HP = 30;
     public static final int BUILDER_MAX_AP = 4;
     public static final int BUILDER_VISION_RADIUS = 2;
     public static final int BUILDER_INITIAL_CHARGES = 3;
     public static final int BUILDER_PRODUCTION_TURN_COST = 2;
 
+    public static final int WORKER_MAX_HP = 30;
     public static final int WORKER_MAX_AP = 4;
     public static final int WORKER_VISION_RADIUS = 1;
     public static final int WORKER_PRODUCTION_TURN_COST = 2;
 
+    public static final int BORDER_EXPANDER_MAX_HP = 30;
     public static final int BORDER_EXPANDER_MAX_AP = 4;
     public static final int BORDER_EXPANDER_VISION_RADIUS = 1;
     public static final int BORDER_EXPANDER_PRODUCTION_TURN_COST = 3;

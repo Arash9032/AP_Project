@@ -1,20 +1,23 @@
 package model.unit;
 
+import model.map.Destructible;
 import model.map.hex.Hex;
 
-public abstract class Unit {
+public abstract class Unit implements Destructible {
     private final UnitType unitType;
     private Hex currentHex;
     private final int maxAP;
     private int currentAP;
     private final int visionRadius;
+    private int HP;
 
-    public Unit(Hex startingHex, int maxAP, int visionRadius, UnitType unitType) {
+    public Unit(Hex startingHex, int maxAP, int visionRadius, UnitType unitType, int HP) {
         this.currentHex = startingHex;
         this.maxAP = maxAP;
         this.currentAP = maxAP;
         this.visionRadius = visionRadius;
         this.unitType = unitType;
+        this.HP = HP;
     }
 
     public boolean move(Hex destination) {
@@ -61,5 +64,19 @@ public abstract class Unit {
 
     public UnitType getUnitType() {
         return unitType;
+    }
+
+    public void setCurrentHex(Hex currentHex) {
+        this.currentHex = currentHex;
+    }
+
+    @Override
+    public int getHP() {
+        return HP;
+    }
+
+    @Override
+    public void setHP(int HP) {
+        this.HP = HP;
     }
 }

@@ -7,7 +7,7 @@ public class Builder extends Unit {
     private int charges;
 
     public Builder(Hex startingHex) {
-        super(startingHex, Constants.BUILDER_MAX_AP, Constants.BUILDER_VISION_RADIUS, UnitType.BUILDER);
+        super(startingHex, Constants.BUILDER_MAX_AP, Constants.BUILDER_VISION_RADIUS, UnitType.BUILDER, Constants.BUILDER_MAX_HP);
         this.charges = Constants.BUILDER_INITIAL_CHARGES;
     }
 
@@ -21,5 +21,10 @@ public class Builder extends Unit {
 
     public boolean isConsumed() {
         return charges <= 0;
+    }
+
+    @Override
+    public int getMaximumHP() {
+        return Constants.BUILDER_MAX_HP;
     }
 }

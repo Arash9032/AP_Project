@@ -7,7 +7,7 @@ public class BorderExpander extends Unit {
     private boolean isConsumed;
 
     public BorderExpander(Hex startingHex) {
-        super(startingHex, Constants.BORDER_EXPANDER_MAX_AP, Constants.BORDER_EXPANDER_VISION_RADIUS, UnitType.BORDER_EXPANDER);
+        super(startingHex, Constants.BORDER_EXPANDER_MAX_AP, Constants.BORDER_EXPANDER_VISION_RADIUS, UnitType.BORDER_EXPANDER, Constants.BORDER_EXPANDER_MAX_HP);
         this.isConsumed = false;
     }
 
@@ -17,5 +17,10 @@ public class BorderExpander extends Unit {
 
     public boolean isConsumed() {
         return isConsumed;
+    }
+
+    @Override
+    public int getMaximumHP() {
+        return Constants.BORDER_EXPANDER_MAX_HP;
     }
 }

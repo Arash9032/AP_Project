@@ -7,7 +7,7 @@ public class Worker extends Unit {
     private boolean isStationed;
 
     public Worker(Hex startingHex) {
-        super(startingHex, Constants.WORKER_MAX_AP, Constants.WORKER_VISION_RADIUS, UnitType.WORKER);
+        super(startingHex, Constants.WORKER_MAX_AP, Constants.WORKER_VISION_RADIUS, UnitType.WORKER, Constants.WORKER_MAX_HP);
         this.isStationed = false;
     }
 
@@ -17,5 +17,10 @@ public class Worker extends Unit {
 
     public boolean isStationed() {
         return isStationed;
+    }
+
+    @Override
+    public int getMaximumHP() {
+        return Constants.WORKER_MAX_HP;
     }
 }
