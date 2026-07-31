@@ -69,6 +69,12 @@ public final class Constants {
     public static final int TOWN_MAXIMUM_HP = 250;
     public static final int WALL_MAXIMUM_HP = 50;
 
+    public static final int WALL_CONSTRUCTION_AP_COST = 1;
+    public static final int WALL_WOOD_COST = 10;
+    public static final int WALL_WOOD_UPKEEP = 1;
+    public static final int WALL_STONE_COST = 10;
+    public static final int WALL_STONE_UPKEEP = 1;
+    
     public static final int LUMBER_MILL_CONSTRUCTION_AP_COST = 1;
     public static final int LUMBER_MILL_WOOD_COST = 20;
     public static final int LUMBER_MILL_WOOD_UPKEEP = 2;
