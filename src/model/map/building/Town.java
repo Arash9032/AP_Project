@@ -13,7 +13,7 @@ public class Town extends Building {
     }
 
     @Override
-    public int getMaximumHP() {
+    public int getMaximumHp() {
         return Constants.TOWN_MAXIMUM_HP;
     }
 }

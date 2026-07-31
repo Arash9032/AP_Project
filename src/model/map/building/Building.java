@@ -9,13 +9,13 @@ import java.util.Map;
 public abstract class Building implements Maintainable {
     private final Hex location;
     private int consecutiveUnpaidUpkeep;
-    private int HP;
+    private int hp;
     private final BuildingType type;
 
-    public Building(Hex location, int HP , BuildingType type) {
+    public Building(Hex location, int hp, BuildingType type) {
         this.location = location;
         this.consecutiveUnpaidUpkeep = 0;
-        this.HP = HP;
+        this.hp = hp;
         this.type = type;
     }
 
@@ -39,13 +39,13 @@ public abstract class Building implements Maintainable {
     }
 
     @Override
-    public int getHP() {
-        return HP;
+    public int getHp() {
+        return hp;
     }
 
     @Override
-    public void setHP(int HP) {
-        this.HP = HP;
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 
     public BuildingType getType() {

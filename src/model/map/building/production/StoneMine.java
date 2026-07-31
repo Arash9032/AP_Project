@@ -25,7 +25,7 @@ public class StoneMine extends ProductionBuilding {
     }
 
     @Override
-    public int getMaximumHP() {
+    public int getMaximumHp() {
         return Constants.STONE_MINE_MAXIMUM_HP;
     }
 }

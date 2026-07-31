@@ -25,7 +25,7 @@ public class Stable extends ProductionBuilding {
     }
 
     @Override
-    public int getMaximumHP() {
+    public int getMaximumHp() {
         return Constants.STABLE_MAXIMUM_HP;
     }
 }

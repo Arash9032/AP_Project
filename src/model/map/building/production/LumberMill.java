@@ -24,7 +24,7 @@ public class LumberMill extends ProductionBuilding {
     }
 
     @Override
-    public int getMaximumHP() {
+    public int getMaximumHp() {
         return Constants.LUMBER_MILL_MAXIMUM_HP;
     }
 }

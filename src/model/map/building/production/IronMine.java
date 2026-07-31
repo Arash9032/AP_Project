@@ -25,7 +25,7 @@ public class IronMine extends ProductionBuilding {
     }
 
     @Override
-    public int getMaximumHP() {
+    public int getMaximumHp() {
         return Constants.IRON_MINE_MAXIMUM_HP;
     }
 }

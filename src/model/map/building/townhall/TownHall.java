@@ -12,7 +12,7 @@ public class TownHall extends Building {
     private final TownHallInventory inventory;
     private TownHallLevel level;
     private int unitCap;
-    private int maximumHP;
+    private int maximumHp;
 
     private TurnBasedProductionCommand activeTask;
 
@@ -21,7 +21,7 @@ public class TownHall extends Building {
         this.level = TownHallLevel.LEVEL_1;
         this.unitCap = Constants.INITIAL_UNIT_CAP;
         this.inventory = new TownHallInventory(level.getStorageCapacity());
-        maximumHP = Constants.TOWN_HALL_INITIAL_HP;
+        maximumHp = Constants.TOWN_HALL_INITIAL_HP;
     }
 
     public void addResource(InventoryResource resource, int amount) {
@@ -74,12 +74,12 @@ public class TownHall extends Building {
     }
 
     @Override
-    public int getMaximumHP() {
-        return maximumHP;
+    public int getMaximumHp() {
+        return maximumHp;
     }
 
-    public void setMaximumHP(int maximumHP) {
-        this.maximumHP = maximumHP;
+    public void setMaximumHp(int maximumHp) {
+        this.maximumHp = maximumHp;
     }
 
     @Override
@@ -90,7 +90,7 @@ public class TownHall extends Building {
     @Override
     public void damage(int amount) {
         if(amount <= 0 ) return;
-        setHP(Math.max(1 , getHP() - amount));
+        setHp(Math.max(1 , getHp() - amount));
     }
 
     public void startUpgrade(){
@@ -109,7 +109,7 @@ public class TownHall extends Building {
         if(nextLevel == null)
             throw new IllegalStateException("Town hall level is at its max.");
         level = nextLevel;
-        setHP(Math.min(getHP() + level.getUpgradeHealAmount() , maximumHP));
+        setHp(Math.min(getHp() + level.getUpgradeHealAmount() , maximumHp));
         inventory.setCapacity(level.getStorageCapacity());
     }
 }

@@ -1,14 +1,14 @@
 package model.map;
 
 public interface Destructible {
-    int getMaximumHP();
-    int getHP();
-    void setHP(int HP);
+    int getMaximumHp();
+    int getHp();
+    void setHp(int hp);
     default void damage(int amount){
         if(amount <= 0 ) return;
-        setHP(Math.max(0 , getHP() - amount));
+        setHp(Math.max(0 , getHp() - amount));
     }
     default boolean isDestroyed(){
-        return getHP() <= 0;
+        return getHp() <= 0;
     }
 }

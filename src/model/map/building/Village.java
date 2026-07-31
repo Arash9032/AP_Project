@@ -14,7 +14,7 @@ public class Village extends Building {
     }
 
     @Override
-    public int getMaximumHP() {
+    public int getMaximumHp() {
         return Constants.VILLAGE_MAXIMUM_HP;
     }
 }

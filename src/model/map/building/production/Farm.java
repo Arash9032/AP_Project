@@ -25,7 +25,7 @@ public class Farm extends ProductionBuilding {
     }
 
     @Override
-    public int getMaximumHP() {
+    public int getMaximumHp() {
         return Constants.FARM_MAXIMUM_HP;
     }
 }
