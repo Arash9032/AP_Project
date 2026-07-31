@@ -48,11 +48,6 @@ public abstract class Building implements Maintainable {
         this.HP = HP;
     }
 
-    @Override
-    public void damage(int amount) {
-        HP = Math.max(0 , HP - amount);
-    }
-
     public BuildingType getType() {
         return type;
     }

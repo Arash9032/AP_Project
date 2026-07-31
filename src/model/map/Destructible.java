@@ -4,7 +4,10 @@ public interface Destructible {
     int getMaximumHP();
     int getHP();
     void setHP(int HP);
-    void damage(int amount);
+    default void damage(int amount){
+        if(amount <= 0 ) return;
+        setHP(Math.max(0 , getHP() - amount));
+    }
     default boolean isDestroyed(){
         return getHP() <= 0;
     }

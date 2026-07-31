@@ -87,6 +87,12 @@ public class TownHall extends Building {
         return false;
     }
 
+    @Override
+    public void damage(int amount) {
+        if(amount <= 0 ) return;
+        setHP(Math.max(1 , getHP() - amount));
+    }
+
     public void startUpgrade(){
         if(activeTask != null)
             throw new IllegalStateException("There already is an active task.");
