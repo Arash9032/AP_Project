@@ -1,9 +1,11 @@
 package model.map.building.townhall;
 
 import config.Constants;
+import model.map.CostBuilder;
 
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public enum TownHallLevel {
@@ -13,7 +15,8 @@ public enum TownHallLevel {
             Constants.LEVEL_1_TOWN_HALL_STORAGE_CAPACITY,
             Constants.LEVEL_1_TOWN_HALL_MILITARY_UNIT_CAPACITY,
             0,
-            0
+            0,
+            Collections.emptyMap()
     ),
     LEVEL_2(
             2,
@@ -22,8 +25,10 @@ public enum TownHallLevel {
             Constants.LEVEL_2_TOWN_HALL_MILITARY_UNIT_CAPACITY,
             Constants.LEVEL_2_TOWN_HALL_UPGRADE_TURN_COST,
             Constants.LEVEL_2_TOWN_HALL_UPGRADE_HEAL_AMOUNT,
-            new ResourceCost(InventoryResource.WOOD , Constants.LEVEL_2_TOWN_HALL_UPGRADE_WOOD_COST),
-            new ResourceCost(InventoryResource.STONE , Constants.LEVEL_2_TOWN_HALL_UPGRADE_STONE_COST)
+            new CostBuilder()
+                    .add(InventoryResource.WOOD , Constants.LEVEL_2_TOWN_HALL_UPGRADE_WOOD_COST)
+                    .add(InventoryResource.STONE , Constants.LEVEL_2_TOWN_HALL_UPGRADE_STONE_COST)
+                    .build()
     ),
     LEVEL_3(
             3,
@@ -32,8 +37,10 @@ public enum TownHallLevel {
             Constants.LEVEL_3_TOWN_HALL_MILITARY_UNIT_CAPACITY,
             Constants.LEVEL_3_TOWN_HALL_UPGRADE_TURN_COST,
             Constants.LEVEL_3_TOWN_HALL_UPGRADE_HEAL_AMOUNT,
-            new ResourceCost(InventoryResource.STONE , Constants.LEVEL_3_TOWN_HALL_UPGRADE_STONE_COST),
-            new ResourceCost(InventoryResource.IRON , Constants.LEVEL_3_TOWN_HALL_UPGRADE_IRON_COST)
+            new CostBuilder()
+                    .add(InventoryResource.STONE , Constants.LEVEL_3_TOWN_HALL_UPGRADE_STONE_COST)
+                    .add(InventoryResource.IRON , Constants.LEVEL_3_TOWN_HALL_UPGRADE_IRON_COST)
+                    .build()
     );
 
     private static final TownHallLevel[] levels = TownHallLevel.values();
@@ -59,7 +66,7 @@ public enum TownHallLevel {
             int militaryUnitCapacity,
             int upgradeTurnCost,
             int upgradeHealAmount,
-            ResourceCost... costs
+            Map<InventoryResource , Integer> upgradeCost
     ) {
         this.levelNumber = levelNumber;
         this.levelName = levelName;
@@ -67,7 +74,7 @@ public enum TownHallLevel {
         this.militaryUnitCapacity = militaryUnitCapacity;
         this.upgradeTurnCost = upgradeTurnCost;
         this.upgradeHealAmount = upgradeHealAmount;
-        this.upgradeCost = toMap(costs);
+        this.upgradeCost = upgradeCost;
     }
 
     public int getLevelNumber() {
@@ -96,31 +103,5 @@ public enum TownHallLevel {
 
     public int getUpgradeHealAmount() {
         return upgradeHealAmount;
-    }
-
-    private static class ResourceCost{
-        private final InventoryResource resource;
-        private final int amount;
-
-        public ResourceCost(InventoryResource resource, int amount) {
-            this.resource = resource;
-            this.amount = amount;
-        }
-
-        public InventoryResource getResource() {
-            return resource;
-        }
-
-        public int getAmount() {
-            return amount;
-        }
-    }
-
-    private static Map<InventoryResource , Integer> toMap(ResourceCost[] costs){
-        Map<InventoryResource , Integer> map = new EnumMap<>(InventoryResource.class);
-        for(ResourceCost cost : costs){
-            map.put(cost.getResource() , cost.getAmount());
-        }
-        return Collections.unmodifiableMap(map);
     }
 }
