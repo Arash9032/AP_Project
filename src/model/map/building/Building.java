@@ -1,6 +1,5 @@
 package model.map.building;
 
-import model.map.Destructible;
 import model.map.Maintainable;
 import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
@@ -9,36 +8,24 @@ import java.util.Map;
 
 public abstract class Building implements Maintainable {
     private final Hex location;
-    private final int constructionAPCost;
-    private final Map<InventoryResource, Integer> constructionCost;
-    private final Map<InventoryResource, Integer> upkeepCost;
     private int consecutiveUnpaidUpkeep;
     private int HP;
+    private final BuildingType type;
 
-    public Building(Hex location, int constructionAPCost, Map<InventoryResource, Integer> constructionCost, Map<InventoryResource, Integer> upkeepCost , int HP) {
+    public Building(Hex location, int HP , BuildingType type) {
         this.location = location;
-        this.constructionAPCost = constructionAPCost;
-        this.constructionCost = constructionCost;
-        this.upkeepCost = upkeepCost;
         this.consecutiveUnpaidUpkeep = 0;
         this.HP = HP;
+        this.type = type;
     }
 
     public Hex getLocation() {
         return location;
     }
 
-    public int getConstructionAPCost() {
-        return constructionAPCost;
-    }
-
-    public Map<InventoryResource, Integer> getConstructionCost() {
-        return constructionCost;
-    }
-
     @Override
     public Map<InventoryResource, Integer> getUpkeepCost() {
-        return upkeepCost;
+        return type.getUpkeepCost();
     }
 
     @Override
@@ -65,4 +52,9 @@ public abstract class Building implements Maintainable {
     public void damage(int amount) {
         HP = Math.max(0 , HP - amount);
     }
+
+    public BuildingType getType() {
+        return type;
+    }
+
 }

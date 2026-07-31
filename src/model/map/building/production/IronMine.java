@@ -1,9 +1,7 @@
 package model.map.building.production;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import config.Constants;
+import model.map.building.BuildingType;
 import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
 import model.map.hex.HexResource;
@@ -11,28 +9,14 @@ import model.map.hex.TerrainType;
 
 public class IronMine extends ProductionBuilding {
 
-    private static Map<InventoryResource, Integer> createConstructionCost() {
-        Map<InventoryResource, Integer> cost = new HashMap<>();
-        cost.put(InventoryResource.WOOD, Constants.IRON_MINE_WOOD_COST);
-        return cost;
-    }
-
-    private static Map<InventoryResource, Integer> createUpkeepCost() {
-        Map<InventoryResource, Integer> upkeep = new HashMap<>();
-        upkeep.put(InventoryResource.WOOD, Constants.IRON_MINE_WOOD_UPKEEP);
-        return upkeep;
-    }
-
     public IronMine(Hex location) {
         super(
                 location,
-                Constants.IRON_MINE_AP_COST,
-                createConstructionCost(),
-                createUpkeepCost(),
-                Constants.IRON_MINE_CAPACITY,
-                Constants.IRON_MINE_RATE,
+                Constants.IRON_MINE_WORKER_CAPACITY,
+                Constants.IRON_MINE_BASE_PRODUCTION_RATE,
                 InventoryResource.IRON,
-                Constants.IRON_MINE_MAXIMUM_HP
+                Constants.IRON_MINE_MAXIMUM_HP,
+                BuildingType.IRON_MINE
         );
 
         if (location.getTerrain() != TerrainType.MOUNTAIN || location.getResource() != HexResource.IRON) {

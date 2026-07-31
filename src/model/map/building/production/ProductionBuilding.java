@@ -1,32 +1,29 @@
 package model.map.building.production;
 
 import model.map.building.Building;
+import model.map.building.BuildingType;
 import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
-import model.map.hex.HexResource;
 import model.unit.Worker;
 
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ProductionBuilding extends Building {
-    protected final int workerCapacity;
-    protected List<Worker> stationedWorkers;
-    protected int baseProductionRate;
-    protected final InventoryResource producedResource;
+    private final int workerCapacity;
+    private final List<Worker> stationedWorkers;
+    private int baseProductionRate;
+    private final InventoryResource producedResource;
 
     public ProductionBuilding(
             Hex location,
-            int constructionAPCost,
-            Map<InventoryResource, Integer> constructionCost,
-            Map<InventoryResource, Integer> upkeepCost,
             int workerCapacity,
             int baseProductionRate,
             InventoryResource producedResource,
-            int HP
+            int HP,
+            BuildingType type
     ) {
-        super(location, constructionAPCost, constructionCost, upkeepCost , HP);
+        super(location, HP, type);
         this.workerCapacity = workerCapacity;
         this.baseProductionRate = baseProductionRate;
         this.producedResource = producedResource;
@@ -54,12 +51,8 @@ public abstract class ProductionBuilding extends Building {
         return stationedWorkers.size() * baseProductionRate;
     }
 
-    public void increaseProductionRate(int amount) {
-        this.baseProductionRate += amount;
-    }
-
-    public void setProductionRate(int newRate) {
-        this.baseProductionRate = newRate;
+    public void setBaseProductionRate(int baseProductionRate) {
+        this.baseProductionRate = baseProductionRate;
     }
 
     public int getBaseProductionRate() {

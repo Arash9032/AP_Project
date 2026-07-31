@@ -25,11 +25,11 @@ public class BuildBuildingCommand implements Command {
         if (builder.getCharges() <= 0) {
             throw new IllegalStateException("Builder has no remaining charges.");
         }
-        if (builder.getCurrentAP() < buildingType.getApCost()) {
+        if (builder.getCurrentAP() < buildingType.getConstructionApCost()) {
             throw new IllegalStateException("Not enough AP to build " + buildingType);
         }
 
-        builder.setCurrentAP(builder.getCurrentAP() - buildingType.getApCost());
+        builder.setCurrentAP(builder.getCurrentAP() - buildingType.getConstructionApCost());
         builder.consumeCharge();
 
         Building newBuilding = buildingType.createBuilding(targetHex);

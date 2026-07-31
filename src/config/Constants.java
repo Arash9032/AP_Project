@@ -68,32 +68,32 @@ public final class Constants {
     public static final int LUMBER_MILL_CONSTRUCTION_AP_COST = 1;
     public static final int LUMBER_MILL_WOOD_COST = 20;
     public static final int LUMBER_MILL_WOOD_UPKEEP = 2;
-    public static final int LUMBER_MILL_CAPACITY = 2;
-    public static final int LUMBER_MILL_RATE = 5;
+    public static final int LUMBER_MILL_WORKER_CAPACITY = 2;
+    public static final int LUMBER_MILL_BASE_PRODUCTION_RATE = 5;
 
     public static final int FARM_CONSTRUCTION_AP_COST = 1;
     public static final int FARM_WOOD_COST = 15;
     public static final int FARM_WOOD_UPKEEP = 2;
-    public static final int FARM_CAPACITY = 3;
-    public static final int FARM_RATE = 10;
+    public static final int FARM_WORKER_CAPACITY = 3;
+    public static final int FARM_BASE_PRODUCTION_RATE = 10;
 
     public static final int STONE_MINE_CONSTRUCTION_AP_COST = 2;
     public static final int STONE_MINE_WOOD_COST = 30;
     public static final int STONE_MINE_WOOD_UPKEEP = 3;
-    public static final int STONE_MINE_CAPACITY = 3;
-    public static final int STONE_MINE_RATE = 4;
+    public static final int STONE_MINE_WORKER_CAPACITY = 3;
+    public static final int STONE_MINE_BASE_PRODUCTION_RATE = 4;
 
     public static final int IRON_MINE_CONSTRUCTION_AP_COST = 2;
     public static final int IRON_MINE_WOOD_COST = 40;
     public static final int IRON_MINE_WOOD_UPKEEP = 4;
-    public static final int IRON_MINE_CAPACITY = 2;
-    public static final int IRON_MINE_RATE = 2;
+    public static final int IRON_MINE_WORKER_CAPACITY = 2;
+    public static final int IRON_MINE_BASE_PRODUCTION_RATE = 2;
 
     public static final int STABLE_CONSTRUCTION_AP_COST = 2;
     public static final int STABLE_WOOD_COST = 50;
     public static final int STABLE_WOOD_UPKEEP = 5;
-    public static final int STABLE_CAPACITY = 2;
-    public static final int STABLE_RATE = 8;
+    public static final int STABLE_WORKER_CAPACITY = 2;
+    public static final int STABLE_BASE_PRODUCTION_RATE = 8;
 
     public static final int VILLAGE_CONSTRUCTION_AP_COST = 2;
     public static final int VILLAGE_WOOD_COST = 50;

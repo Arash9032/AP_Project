@@ -1,10 +1,10 @@
 package model.map.building.townhall;
 
-import java.util.HashMap;
 import config.Constants;
 import model.command.TurnBasedProductionCommand;
 import model.command.UpgradeTownHallCommand;
 import model.map.building.Building;
+import model.map.building.BuildingType;
 import model.map.hex.Hex;
 
 public class TownHall extends Building {
@@ -17,7 +17,7 @@ public class TownHall extends Building {
     private TurnBasedProductionCommand activeTask;
 
     public TownHall(Hex location) {
-        super(location, 0, new HashMap<>(), new HashMap<>(), Constants.TOWN_HALL_INITIAL_HP);
+        super(location, Constants.TOWN_HALL_INITIAL_HP , BuildingType.TOWN_HALL);
         this.level = TownHallLevel.LEVEL_1;
         this.unitCap = Constants.INITIAL_UNIT_CAP;
         this.inventory = new TownHallInventory(level.getStorageCapacity());
