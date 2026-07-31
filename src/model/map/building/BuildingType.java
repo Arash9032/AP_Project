@@ -6,12 +6,13 @@ import model.map.building.production.*;
 import model.map.building.townhall.InventoryResource;
 import model.map.hex.Hex;
 
+import java.util.Collections;
 import java.util.Map;
 
 public enum BuildingType {
 
     LUMBER_MILL(
-            Constants.LUMBER_MILL_AP_COST,
+            Constants.LUMBER_MILL_CONSTRUCTION_AP_COST,
             new CostBuilder().add(InventoryResource.WOOD , Constants.LUMBER_MILL_WOOD_COST).build(),
             new CostBuilder().add(InventoryResource.WOOD , Constants.LUMBER_MILL_WOOD_UPKEEP).build()
             ) {
@@ -21,7 +22,7 @@ public enum BuildingType {
         }
     },
     FARM(
-            Constants.FARM_AP_COST,
+            Constants.FARM_CONSTRUCTION_AP_COST,
             new CostBuilder().add(InventoryResource.WOOD , Constants.FARM_WOOD_COST).build(),
             new CostBuilder().add(InventoryResource.WOOD , Constants.FARM_WOOD_UPKEEP).build()
     ) {
@@ -31,7 +32,7 @@ public enum BuildingType {
         }
     },
     STONE_MINE(
-            Constants.STONE_MINE_AP_COST,
+            Constants.STONE_MINE_CONSTRUCTION_AP_COST,
             new CostBuilder().add(InventoryResource.WOOD , Constants.STONE_MINE_WOOD_COST).build(),
             new CostBuilder().add(InventoryResource.WOOD , Constants.STONE_MINE_WOOD_UPKEEP).build()
     ) {
@@ -41,7 +42,7 @@ public enum BuildingType {
         }
     },
     IRON_MINE(
-            Constants.IRON_MINE_AP_COST,
+            Constants.IRON_MINE_CONSTRUCTION_AP_COST,
             new CostBuilder().add(InventoryResource.WOOD , Constants.IRON_MINE_WOOD_COST).build(),
             new CostBuilder().add(InventoryResource.WOOD , Constants.IRON_MINE_WOOD_UPKEEP).build()
     ) {
@@ -51,7 +52,7 @@ public enum BuildingType {
         }
     },
     STABLE(
-            Constants.STABLE_AP_COST,
+            Constants.STABLE_CONSTRUCTION_AP_COST,
             new CostBuilder().add(InventoryResource.WOOD , Constants.STABLE_WOOD_COST).build(),
             new CostBuilder().add(InventoryResource.WOOD , Constants.STABLE_WOOD_UPKEEP).build()
     ) {
@@ -61,7 +62,7 @@ public enum BuildingType {
         }
     },
     VILLAGE(
-            Constants.VILLAGE_AP_COST,
+            Constants.VILLAGE_CONSTRUCTION_AP_COST,
             new CostBuilder().add(InventoryResource.WOOD , Constants.VILLAGE_WOOD_COST)
                     .add(InventoryResource.STONE , Constants.VILLAGE_STONE_COST)
                     .add(InventoryResource.IRON , Constants.VILLAGE_IRON_COST)
@@ -77,7 +78,7 @@ public enum BuildingType {
         }
     },
     TOWN(
-            Constants.TOWN_AP_COST,
+            Constants.TOWN_CONSTRUCTION_AP_COST,
             new CostBuilder().add(InventoryResource.WOOD , Constants.TOWN_WOOD_COST)
                     .add(InventoryResource.STONE , Constants.TOWN_STONE_COST)
                     .add(InventoryResource.IRON , Constants.TOWN_IRON_COST)
@@ -91,19 +92,34 @@ public enum BuildingType {
         public Building createBuilding(Hex location) {
             return new Town(location);
         }
+    },
+    TOWN_HALL(
+            0,
+            Collections.emptyMap(),
+            Collections.emptyMap()
+
+    ) {
+        @Override
+        public Building createBuilding(Hex location) {
+            throw new UnsupportedOperationException("Town hall cannot be built.");
+        }
     };
 
-    private final int apCost;
+    private final int constructionApCost;
     private final Map<InventoryResource , Integer> constructionCost;
     private final Map<InventoryResource , Integer> upkeepCost;
-    BuildingType(int apCost, Map<InventoryResource, Integer> constructionCost, Map<InventoryResource, Integer> upkeepCost) {
-        this.apCost = apCost;
+    BuildingType(
+            int constructionApCost,
+            Map<InventoryResource, Integer> constructionCost,
+            Map<InventoryResource, Integer> upkeepCost
+    ) {
+        this.constructionApCost = constructionApCost;
         this.constructionCost = constructionCost;
         this.upkeepCost = upkeepCost;
     }
 
-    public int getApCost() {
-        return apCost;
+    public int getConstructionApCost() {
+        return constructionApCost;
     }
 
     public abstract Building createBuilding(Hex location);
