@@ -1,8 +1,7 @@
 package model.map.hex;
 
 public class Hex {
-    private final int q;
-    private final int r;
+    private final Point coordinate;
 
     private final TerrainType terrain;
     private final HexResource resource;
@@ -12,8 +11,7 @@ public class Hex {
     private boolean isWithinBorder;
 
     public Hex(int q, int r, TerrainType terrain, HexResource resource, int resourceCapacity) {
-        this.q = q;
-        this.r = r;
+        this.coordinate = new Point(q , r);
         this.terrain = terrain;
         this.resource = resource;
         this.resourceCapacity = resourceCapacity;
@@ -23,19 +21,21 @@ public class Hex {
     }
 
     public int distanceTo(Hex other) {
-        return (Math.abs(this.q - other.q) + Math.abs(this.q + this.r - other.q - other.r) + Math.abs(this.r - other.r)) / 2;
+        int q1 = this.coordinate.getQ();
+        int r1 = this.coordinate.getR();
+
+        int q2 = other.coordinate.getQ();
+        int r2 = other.coordinate.getR();
+
+        return (Math.abs(q1 - q2) + Math.abs(q1 + r1 - q2 - r2) + Math.abs(r1 - r2)) / 2;
     }
 
     public boolean isAdjacentTo(Hex other) {
         return distanceTo(other) == 1;
     }
 
-    public int getQ() {
-        return q;
-    }
-
-    public int getR() {
-        return r;
+    public Point getCoordinate() {
+        return coordinate;
     }
 
     public TerrainType getTerrain() {
@@ -48,6 +48,10 @@ public class Hex {
 
     public int getResourceCapacity() {
         return resourceCapacity;
+    }
+
+    public void setResourceCapacity(int resourceCapacity) {
+        this.resourceCapacity = resourceCapacity;
     }
 
     public int depleteResource(int amount) {
