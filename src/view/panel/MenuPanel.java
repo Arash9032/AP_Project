@@ -68,7 +68,7 @@ public class MenuPanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.gridy++;
         JButton startButton = createStyledButton("Start Game");
-        startButton.addActionListener(e -> mainContentPane.showPanel(PanelType.GAME));
+        startButton.addActionListener(e -> mainContentPane.startNewGame());
         add(startButton, gbc);
 
         gbc.gridy++;
@@ -78,7 +78,7 @@ public class MenuPanel extends JPanel {
 
         gbc.gridy++;
         JButton settingsButton = createStyledButton("Settings");
-        settingsButton.addActionListener(e -> mainContentPane.showPanel(PanelType.SETTINGS));
+        settingsButton.addActionListener(e -> mainContentPane.showStaticPanel(StaticPanelType.SETTINGS));
         add(settingsButton, gbc);
 
         gbc.gridy++;
