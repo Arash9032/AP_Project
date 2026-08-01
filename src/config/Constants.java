@@ -130,4 +130,31 @@ public final class Constants {
     public static final Color BUTTON_BACKGROUND_COLOR = new Color(112, 0, 112);
     public static final Color BUTTON_BORDER_COLOR = new Color(255, 0, 221);
     public static final Color BUTTON_TEXT_COLOR = new Color(255, 255, 255);
+
+    public static final int MAP_RADIUS = 10;
+
+    public static final int MOUNTAIN_RANGE_COUNT = 3;
+    public static final int MOUNTAIN_RANGE_LENGTH = 7;
+
+    public static final int REGION_SEED_COUNT = 4;
+    public static final int REGION_EXPANSION_ITERATIONS = 4;
+    public static final double REGION_EXPANSION_PROBABILITY = 0.75;
+
+    public static final int FOREST_RESOURCE_PROBABILITY = 1;
+    public static final int FOREST_RESOURCE_CAPACITY = 100;
+
+    public static final double MOUNTAIN_RESOURCE_PROBABILITY = 0.6;
+    public static final int MOUNTAIN_RESOURCE_CAPACITY = 80;
+
+    public static final double PLAIN_RESOURCE_PROBABILITY = 0.4;
+    public static final int PLAIN_RESOURCE_CAPACITY = 60;
+
+    public static final double MEADOW_RESOURCE_PROBABILITY = 0.4;
+    public static final int MEADOW_RESOURCE_CAPACITY = 60;
+
+    public static final double SEA_RESOURCE_PROBABILITY = 0.3;
+    public static final int SEA_RESOURCE_CAPACITY = 50;
+
+    public static final int TOWN_HALL_SAFE_RADIUS = 2;
+    public static final int EXPANSION_PATH_COUNT = 3;
 }
