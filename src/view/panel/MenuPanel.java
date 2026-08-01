@@ -1,6 +1,7 @@
 package view.panel;
 
 import config.Constants;
+import view.MainContentPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,10 @@ import java.awt.event.MouseEvent;
 
 public class MenuPanel extends JPanel {
 
-    public MenuPanel() {
+    private final MainContentPane mainContentPane;
+
+    public MenuPanel(MainContentPane mainContentPane) {
+        this.mainContentPane = mainContentPane;
         setLayout(new GridBagLayout());
         setBackground(Constants.GAME_BACKGROUND_COLOR);
 
@@ -64,14 +68,17 @@ public class MenuPanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.gridy++;
         JButton startButton = createStyledButton("Start Game");
+        startButton.addActionListener(e -> mainContentPane.showPanel(PanelType.GAME));
         add(startButton, gbc);
 
         gbc.gridy++;
         JButton loadButton = createStyledButton("Load Game");
+        // TODO:
         add(loadButton, gbc);
 
         gbc.gridy++;
         JButton settingsButton = createStyledButton("Settings");
+        settingsButton.addActionListener(e -> mainContentPane.showPanel(PanelType.SETTINGS));
         add(settingsButton, gbc);
 
         gbc.gridy++;

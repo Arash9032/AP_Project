@@ -1,26 +1,28 @@
 package view.panel;
 
+import view.MainContentPane;
+
 import javax.swing.*;
 
 public enum PanelType {
     MENU {
         @Override
-        public JPanel createPage() {
-            return new MenuPanel();
+        public JPanel createPage(MainContentPane mainContentPane) {
+            return new MenuPanel(mainContentPane);
         }
     },
     SETTINGS {
         @Override
-        public JPanel createPage() {
-            return new SettingsPanel();
+        public JPanel createPage(MainContentPane mainContentPane) {
+            return new SettingsPanel(mainContentPane);
         }
     },
     GAME {
         @Override
-        public JPanel createPage() {
-            return new GamePanel();
+        public JPanel createPage(MainContentPane mainContentPane) {
+            return new GamePanel(mainContentPane);
         }
     };
 
-    public abstract JPanel createPage();
+    public abstract JPanel createPage(MainContentPane mainContentPane);
 }

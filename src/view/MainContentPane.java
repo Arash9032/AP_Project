@@ -15,7 +15,7 @@ public class MainContentPane extends JPanel {
 
     private void addPanels(){
         for(PanelType panelType : PanelType.values()){
-            add(panelType.createPage() , panelType.name());
+            add(panelType.createPage(this) , panelType.name());
         }
     }
 
