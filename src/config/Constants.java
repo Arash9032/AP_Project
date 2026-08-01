@@ -1,5 +1,7 @@
 package config;
 
+import java.awt.*;
+
 public final class Constants {
 
     private Constants() {}
@@ -120,4 +122,12 @@ public final class Constants {
     public static final int TOWN_WOOD_UPKEEP = 10;
     public static final int TOWN_STONE_UPKEEP = 10;
     public static final int TOWN_IRON_UPKEEP = 2;
+
+    public static final int FRAME_WIDTH = 1400;
+    public static final int FRAME_HEIGHT = 800;
+
+    public static final Color GAME_BACKGROUND_COLOR = new Color(90, 0, 174);
+    public static final Color BUTTON_BACKGROUND_COLOR = new Color(112, 0, 112);
+    public static final Color BUTTON_BORDER_COLOR = new Color(255, 0, 221);
+    public static final Color BUTTON_TEXT_COLOR = new Color(255, 255, 255);
 }
