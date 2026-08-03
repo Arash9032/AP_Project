@@ -32,6 +32,7 @@ public class GamePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        if(gameState == null) return;
         Graphics2D g2 = (Graphics2D) g.create();
         //TODO:
     }

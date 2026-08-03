@@ -1,13 +1,13 @@
 package controller;
 
 import model.GameState;
+import model.map.MapGenerator;
 import view.MainFrame;
 
 public final class GameEngine {
     private GameState gameState;
     private MainFrame mainFrame;
     public GameEngine(){
-        gameState = new GameState();
         mainFrame = new MainFrame(this);
     }
 
@@ -28,6 +28,6 @@ public final class GameEngine {
     }
 
     public void startNewGame(){
-        gameState = new GameState();
+        gameState = new GameState(MapGenerator.generateMap());
     }
 }
