@@ -25,6 +25,8 @@ public class GamePanel extends JPanel {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+        repaint();
+        revalidate();
     }
 
     @Override

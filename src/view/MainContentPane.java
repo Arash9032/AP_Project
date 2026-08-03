@@ -1,10 +1,7 @@
 package view;
 
 import controller.GameEngine;
-import model.GameState;
 import view.panel.GamePanel;
-import view.panel.MenuPanel;
-import view.panel.SettingsPanel;
 import view.panel.StaticPanelType;
 
 import javax.swing.*;
@@ -15,7 +12,7 @@ public class MainContentPane extends JPanel {
 
     private final CardLayout layout;
     private final GameEngine engine;
-    private GamePanel gamePanel;
+    private final GamePanel gamePanel;
     public MainContentPane(GameEngine engine) {
         this.engine = engine;
         layout = new CardLayout();
@@ -37,7 +34,7 @@ public class MainContentPane extends JPanel {
 
     public void startNewGame(){
         engine.startNewGame();
-        setGamePanel(new GamePanel(this , engine.getGameState()));
+        gamePanel.setGameState(engine.getGameState());
         layout.show(this , GAME_PANEL_KEY);
     }
 
@@ -52,11 +49,5 @@ public class MainContentPane extends JPanel {
 
     public GamePanel getGamePanel() {
         return gamePanel;
-    }
-
-    public void setGamePanel(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
-        this.gamePanel.repaint();
-        this.gamePanel.revalidate();
     }
 }

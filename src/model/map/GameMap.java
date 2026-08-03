@@ -5,10 +5,7 @@ import model.map.edge.HexEdge;
 import model.map.hex.Hex;
 import model.map.hex.Point;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameMap {
     private final Map<Point, Hex> hexes;
@@ -83,10 +80,10 @@ public class GameMap {
     }
 
     public Map<Point, Hex> getHexes() {
-        return hexes;
+        return Collections.unmodifiableMap(hexes);
     }
 
     public Map<EdgeKey, HexEdge> getEdges() {
-        return edges;
+        return Collections.unmodifiableMap(edges);
     }
 }
