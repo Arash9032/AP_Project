@@ -131,10 +131,10 @@ public final class Constants {
     public static final Color BUTTON_BORDER_COLOR = new Color(255, 0, 221);
     public static final Color BUTTON_TEXT_COLOR = new Color(255, 255, 255);
 
-    public static final int MAP_RADIUS = 10;
+    public static final int MAP_RADIUS = 15;
 
-    public static final int MOUNTAIN_RANGE_COUNT = 3;
-    public static final int MOUNTAIN_RANGE_LENGTH = 7;
+    public static final int MOUNTAIN_RANGE_COUNT = 10;
+    public static final int MOUNTAIN_RANGE_LENGTH = 10;
 
     public static final int REGION_SEED_COUNT = 4;
     public static final int REGION_EXPANSION_ITERATIONS = 4;
@@ -157,4 +157,12 @@ public final class Constants {
 
     public static final int TOWN_HALL_SAFE_RADIUS = 2;
     public static final int EXPANSION_PATH_COUNT = 3;
+
+    public static final Color FOREST_HEX_COLOR = new Color(16, 124, 65);
+    public static final Color PLAIN_HEX_COLOR = new Color(225, 190, 120);
+    public static final Color MOUNTAIN_HEX_COLOR = new Color(160, 150, 180);
+    public static final Color MEADOW_HEX_COLOR = new Color(110, 220, 70);
+    public static final Color MOUNTAIN_RANGE_HEX_COLOR = new Color(55, 40, 75);
+    public static final Color SEA_HEX_COLOR = new Color(0, 180, 235);
+    public static final Color HEX_BORDER_COLORS = new Color(55, 0, 105);
 }
