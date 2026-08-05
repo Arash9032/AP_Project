@@ -46,10 +46,36 @@ public final class GameState {
     }
 
     public List<Destructible> getDestructibles() {
-        return destructibles;
+        return Collections.unmodifiableList(destructibles);
     }
 
     public List<Maintainable> getMaintainables() {
-        return maintainables;
+        return Collections.unmodifiableList(maintainables);
+    }
+
+    public void addUnit(Unit unit){
+        if(unit == null) return;
+        units.add(unit);
+        destructibles.add(unit);
+    }
+
+    public void addBuilding(Building building){
+        if(building == null) return;
+        buildings.add(building);
+        maintainables.add(building);
+        destructibles.add(building);
+    }
+
+    public void removeUnit(Unit unit){
+        if(unit == null) return;
+        units.remove(unit);
+        destructibles.remove(unit);
+    }
+
+    public void removeBuilding(Building building){
+        if(building == null) return;
+        buildings.remove(building);
+        maintainables.remove(building);
+        destructibles.remove(building);
     }
 }
