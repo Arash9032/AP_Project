@@ -4,6 +4,7 @@ import model.map.Destructible;
 import model.map.GameMap;
 import model.map.Maintainable;
 import model.map.building.Building;
+import model.map.hex.Point;
 import model.unit.Unit;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ public final class GameState {
     private final List<Building> buildings;
     private final List<Destructible> destructibles;
     private final List<Maintainable> maintainables;
+
+    private Point selectedHexPoint;
 
     public GameState() {
         units = new ArrayList<>();
@@ -77,5 +80,13 @@ public final class GameState {
         buildings.remove(building);
         maintainables.remove(building);
         destructibles.remove(building);
+    }
+
+    public Point getSelectedHexPoint() {
+        return selectedHexPoint;
+    }
+
+    public void setSelectedHexPoint(Point selectedHexPoint) {
+        this.selectedHexPoint = selectedHexPoint;
     }
 }
