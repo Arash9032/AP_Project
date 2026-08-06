@@ -128,4 +128,20 @@ public class GamePanel extends JPanel {
         if (hexSize > MAX_HEX_SIZE) hexSize = MAX_HEX_SIZE;
         else if (hexSize < MIN_HEX_SIZE) hexSize = MIN_HEX_SIZE;
     }
+
+    public double getCameraX() {
+        return cameraX;
+    }
+
+    public void setCameraX(double cameraX) {
+        this.cameraX = cameraX;
+    }
+
+    public double getCameraY() {
+        return cameraY;
+    }
+
+    public void setCameraY(double cameraY) {
+        this.cameraY = cameraY;
+    }
 }
