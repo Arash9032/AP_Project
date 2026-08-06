@@ -3,6 +3,7 @@ package view.render;
 import config.Constants;
 import model.GameState;
 import model.map.hex.Hex;
+import model.map.hex.Point;
 import model.map.hex.TerrainType;
 import util.HexMath;
 import view.camera.Camera;
@@ -55,11 +56,16 @@ public class MapRenderer {
         adjustBaseHex(hexSize);
 
         for (Hex hex : gameState.getGameMap().getHexes().values()) {
-            drawSingleHex(g2, hex, centerX, centerY, hexSize, gameState.getSelectedHexPoint() != null && hex.getCoordinate().equals(gameState.getSelectedHexPoint()));
+            drawHex(g2, hex, centerX, centerY, hexSize);
+        }
+
+        Point selectedPoint = gameState.getSelectedHexPoint();
+        if (selectedPoint != null) {
+            drawSelectionHighlight(g2, selectedPoint, centerX, centerY, hexSize);
         }
     }
 
-    private void drawSingleHex(Graphics2D g2, Hex hex, double centerX, double centerY, double hexSize, boolean isSelected) {
+    private void drawHex(Graphics2D g2, Hex hex, double centerX, double centerY, double hexSize) {
         int q = hex.getCoordinate().getQ();
         int r = hex.getCoordinate().getR();
 
@@ -71,16 +77,26 @@ public class MapRenderer {
         g2.setColor(terrainColors.getOrDefault(hex.getTerrain(), Color.WHITE));
         g2.fill(baseHex);
 
-        if (isSelected) {
-            g2.setColor(Color.YELLOW);
-            g2.setStroke(selectedHexStroke);
-
-        } else {
-            g2.setColor(Constants.HEX_BORDER_COLORS);
-            g2.setStroke(hexStroke);
-        }
-
+        g2.setColor(Constants.HEX_BORDER_COLORS);
+        g2.setStroke(hexStroke);
         g2.draw(baseHex);
+
+        g2.translate(-cx, -cy);
+    }
+
+    private void drawSelectionHighlight(Graphics2D g2, Point selectedPoint, double centerX, double centerY, double hexSize) {
+        int q = selectedPoint.getQ();
+        int r = selectedPoint.getR();
+
+        double cx = centerX + hexSize * HexMath.SQRT_3 * (q + r / 2.0);
+        double cy = centerY + hexSize * 3.0 / 2.0 * r;
+
+        g2.translate(cx, cy);
+
+        g2.setColor(Color.YELLOW);
+        g2.setStroke(selectedHexStroke);
+        g2.draw(baseHex);
+
         g2.translate(-cx, -cy);
     }
 
