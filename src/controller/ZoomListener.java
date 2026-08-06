@@ -14,6 +14,6 @@ public class ZoomListener extends MouseAdapter {
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        gamePanel.applyZoom(e.getPreciseWheelRotation(), e.getX(), e.getY());
+        gamePanel.getCamera().applyZoom(e.getPreciseWheelRotation(), e.getX(), e.getY(), gamePanel.getWidth(), gamePanel.getHeight());
     }
 }

@@ -6,6 +6,7 @@ import model.map.hex.Hex;
 import model.map.hex.Point;
 import model.map.hex.TerrainType;
 import view.MainContentPane;
+import view.camera.Camera;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +16,6 @@ import java.util.Map;
 
 public class GamePanel extends JPanel {
 
-    public static final double MAX_HEX_SIZE = 1.5 * Constants.FRAME_HEIGHT / Constants.MAP_RADIUS;
-    public static final double MIN_HEX_SIZE = MAX_HEX_SIZE / 5.0;
     private static final double SQRT_3 = Math.sqrt(3);
 
     private final Path2D.Double baseHex = new Path2D.Double();
@@ -26,10 +25,7 @@ public class GamePanel extends JPanel {
 
     private final MainContentPane mainContentPane;
     private GameState gameState;
-
-    private double hexSize = MIN_HEX_SIZE;
-    private double cameraX = 0;
-    private double cameraY = 0;
+    private final Camera camera;
 
     private final Map<TerrainType, Color> terrainColors;
 
@@ -37,6 +33,7 @@ public class GamePanel extends JPanel {
         setBackground(Constants.GAME_BACKGROUND_COLOR);
         this.mainContentPane = mainContentPane;
         this.gameState = gameState;
+        this.camera = new Camera(Camera.MIN_HEX_SIZE);
         this.terrainColors = new EnumMap<>(TerrainType.class);
         initializeColors();
         initializeSinCos();
@@ -74,13 +71,16 @@ public class GamePanel extends JPanel {
         revalidate();
     }
 
+    public Camera getCamera() {
+        return camera;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (gameState == null || gameState.getGameMap() == null) return;
 
         Graphics2D g2 = (Graphics2D) g.create();
-//        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 
         adjustBaseHex();
@@ -90,17 +90,20 @@ public class GamePanel extends JPanel {
     }
 
     private void drawHexes(Graphics2D g2) {
+        double hexSize = camera.getHexSize();
+        double centerX = camera.getCenterX(getWidth());
+        double centerY = camera.getCenterY(getHeight());
+
         for (Hex hex : gameState.getGameMap().getHexes().values()) {
             int q = hex.getCoordinate().getQ();
             int r = hex.getCoordinate().getR();
 
-            double cx = (getCenterX() + hexSize * SQRT_3 * (q + r / 2.0));
-            double cy = (getCenterY() + hexSize * 3.0 / 2.0 * r);
+            double cx = centerX + hexSize * SQRT_3 * (q + r / 2.0);
+            double cy = centerY + hexSize * 3.0 / 2.0 * r;
 
             g2.translate(cx, cy);
             g2.setColor(terrainColors.getOrDefault(hex.getTerrain(), Color.WHITE));
             g2.fill(baseHex);
-
 
             g2.setColor(Constants.HEX_BORDER_COLORS);
             g2.setStroke(hexStroke);
@@ -112,6 +115,7 @@ public class GamePanel extends JPanel {
 
     private void adjustBaseHex() {
         baseHex.reset();
+        double hexSize = camera.getHexSize();
         for (int i = 0; i < 6; i++) {
             double x = hexSize * cos[i];
             double y = hexSize * sin[i];
@@ -121,74 +125,33 @@ public class GamePanel extends JPanel {
         baseHex.closePath();
     }
 
-    public void applyZoom(double delta, double mousePositionX , double mousePositionY) {
-        double oldHexSize = hexSize;
-        hexSize += delta;
-        if (hexSize > MAX_HEX_SIZE) hexSize = MAX_HEX_SIZE;
-        else if (hexSize < MIN_HEX_SIZE) hexSize = MIN_HEX_SIZE;
-
-        if(hexSize == oldHexSize) return;
-        double scale = hexSize / oldHexSize;
-
-        double dx = mousePositionX - getCenterX();
-        double dy = mousePositionY - getCenterY();
-
-        cameraX -= dx * (1.0 - scale);
-        cameraY -= dy * (1.0 - scale);
-    }
-
-    public double getCameraX() {
-        return cameraX;
-    }
-
-    public void setCameraX(double cameraX) {
-        this.cameraX = cameraX;
-    }
-
-    public double getCameraY() {
-        return cameraY;
-    }
-
-    public void setCameraY(double cameraY) {
-        this.cameraY = cameraY;
-    }
-
-    public Point getSelectedHexPoint(double mouseX , double mouseY){
-        double dx = (mouseX - getCenterX()) / hexSize;
-        double dy = (mouseY - getCenterY()) / hexSize;
+    public Point getSelectedHexPoint(double mouseX, double mouseY) {
+        double dx = (mouseX - camera.getCenterX(getWidth())) / camera.getHexSize();
+        double dy = (mouseY - camera.getCenterY(getHeight())) / camera.getHexSize();
 
         double qFrac = SQRT_3 / 3.0 * dx - 1.0 / 3.0 * dy;
         double rFrac = 2.0 / 3.0 * dy;
 
-        return axialRound(qFrac , rFrac);
+        return axialRound(qFrac, rFrac);
     }
 
-    private Point axialRound(double qFrac , double rFrac){
+    private Point axialRound(double qFrac, double rFrac) {
         double sFrac = -qFrac - rFrac;
-        int q = (int)Math.round(qFrac);
-        int r = (int)Math.round(rFrac);
-        int s = (int)Math.round(sFrac);
+        int q = (int) Math.round(qFrac);
+        int r = (int) Math.round(rFrac);
+        int s = (int) Math.round(sFrac);
 
-        if(q + r + s == 0) return new Point(q , r);
+        if (q + r + s == 0) return new Point(q, r);
 
         double qDiff = Math.abs(qFrac - q);
         double rDiff = Math.abs(rFrac - r);
         double sDiff = Math.abs(sFrac - s);
 
-        if(qDiff >= rDiff){
-            if(qDiff >= sDiff) q = -r - s;
+        if (qDiff >= rDiff) {
+            if (qDiff >= sDiff) q = -r - s;
+        } else {
+            if (rDiff >= sDiff) r = -q - s;
         }
-        else{
-            if(rDiff >= sDiff) r = -q - s;
-        }
-        return new Point(q , r);
-    }
-
-    private double getCenterX(){
-        return getWidth() / 2.0 - cameraX;
-    }
-
-    private double getCenterY(){
-        return getHeight() / 2.0 - cameraY;
+        return new Point(q, r);
     }
 }
