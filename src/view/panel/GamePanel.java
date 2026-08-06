@@ -20,6 +20,8 @@ public class GamePanel extends JPanel {
 
     private final Path2D.Double baseHex = new Path2D.Double();
     private final BasicStroke hexStroke = new BasicStroke(1.5f);
+    private final BasicStroke selectedHexStroke = new BasicStroke(3.0f);
+
     private final double[] sin = new double[6];
     private final double[] cos = new double[6];
 
@@ -85,6 +87,7 @@ public class GamePanel extends JPanel {
 
         adjustBaseHex();
         drawHexes(g2);
+        drawSelectedHex(g2);
 
         g2.dispose();
     }
@@ -111,6 +114,24 @@ public class GamePanel extends JPanel {
 
             g2.translate(-cx, -cy);
         }
+    }
+
+    private void drawSelectedHex(Graphics2D g2) {
+        Point selectedPoint = gameState.getSelectedHexPoint();
+        if (selectedPoint == null) return;
+
+        Hex selectedHex = gameState.getGameMap().getHex(selectedPoint);
+        if (selectedHex == null) return;
+
+        double hexSize = camera.getHexSize();
+        double cx = camera.getCenterX(getWidth()) + hexSize * SQRT_3 * (selectedPoint.getQ() + selectedPoint.getR() / 2.0);
+        double cy = camera.getCenterY(getHeight()) + hexSize * 3.0 / 2.0 * selectedPoint.getR();
+
+        g2.translate(cx, cy);
+        g2.setColor(Color.YELLOW);
+        g2.setStroke(selectedHexStroke);
+        g2.draw(baseHex);
+        g2.translate(-cx, -cy);
     }
 
     private void adjustBaseHex() {
