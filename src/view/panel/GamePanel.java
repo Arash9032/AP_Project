@@ -3,6 +3,7 @@ package view.panel;
 import config.Constants;
 import model.GameState;
 import model.map.hex.Hex;
+import model.map.hex.Point;
 import model.map.hex.TerrainType;
 import view.MainContentPane;
 
@@ -156,5 +157,9 @@ public class GamePanel extends JPanel {
 
     public void setCameraY(double cameraY) {
         this.cameraY = cameraY;
+    }
+
+    public Point getSelectedHexPoint(double mouseX , double mouseY){
+        return null;
     }
 }
