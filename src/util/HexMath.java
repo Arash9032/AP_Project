@@ -31,10 +31,8 @@ public final class HexMath {
 
         if (qDiff >= rDiff) {
             if (qDiff >= sDiff) q = -r - s;
-            else s = -q - r;
         } else {
             if (rDiff >= sDiff) r = -q - s;
-            else s = -q - r;
         }
         return new Point(q, r);
     }
