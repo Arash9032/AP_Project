@@ -123,10 +123,23 @@ public class GamePanel extends JPanel {
         baseHex.closePath();
     }
 
-    public void applyZoom(double delta) {
+    public void applyZoom(double delta, double mousePositionX , double mousePositionY) {
+        double oldHexSize = hexSize;
         hexSize += delta;
         if (hexSize > MAX_HEX_SIZE) hexSize = MAX_HEX_SIZE;
         else if (hexSize < MIN_HEX_SIZE) hexSize = MIN_HEX_SIZE;
+
+        if(hexSize == oldHexSize) return;
+        double scale = hexSize / oldHexSize;
+
+        double centerX = getWidth() / 2.0 + cameraX;
+        double centerY = getHeight() / 2.0 + cameraY;
+
+        double dx = mousePositionX - centerX;
+        double dy = mousePositionY - centerY;
+
+        cameraX += dx * (1.0 - scale);
+        cameraY += dy * (1.0 - scale);
     }
 
     public double getCameraX() {
