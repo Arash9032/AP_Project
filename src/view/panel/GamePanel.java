@@ -8,6 +8,7 @@ import view.MainContentPane;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Path2D;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -15,9 +16,9 @@ public class GamePanel extends JPanel {
     private final MainContentPane mainContentPane;
     private GameState gameState;
 
-    private int hexSize = 16;
-    private int cameraX = 0;
-    private int cameraY = 0;
+    private double hexSize = 16;
+    private double cameraX = 0;
+    private double cameraY = 0;
 
     private final Map<TerrainType, Color> terrainColors;
 
@@ -59,18 +60,19 @@ public class GamePanel extends JPanel {
 
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL , RenderingHints.VALUE_STROKE_PURE);
 
-        int centerX = getWidth() / 2 + cameraX;
-        int centerY = getHeight() / 2 + cameraY;
+        double centerX = getWidth() / 2.0 + cameraX;
+        double centerY = getHeight() / 2.0 + cameraY;
 
         for (Hex hex : gameState.getGameMap().getHexes().values()) {
             int q = hex.getCoordinate().getQ();
             int r = hex.getCoordinate().getR();
 
-            int cx = (int) (centerX + hexSize * Math.sqrt(3) * (q + r / 2.0));
-            int cy = (int) (centerY + hexSize * 3.0 / 2.0 * r);
+            double cx = (centerX + hexSize * Math.sqrt(3) * (q + r / 2.0));
+            double cy = (centerY + hexSize * 3.0 / 2.0 * r);
 
-            Polygon hexPolygon = createHexagon(cx, cy, hexSize);
+            Path2D.Double hexPolygon = createHexagon(cx, cy, hexSize);
 
             g2.setColor(terrainColors.getOrDefault(hex.getTerrain(), Color.WHITE));
             g2.fill(hexPolygon);
@@ -83,15 +85,17 @@ public class GamePanel extends JPanel {
         g2.dispose();
     }
 
-    private Polygon createHexagon(int cx, int cy, int size) {
-        Polygon polygon = new Polygon();
+    private Path2D.Double createHexagon(double cx, double cy, double size) {
+        Path2D.Double polygon = new Path2D.Double();
         for (int i = 0; i < 6; i++) {
             double angleDeg = 60 * i - 30;
-            double angleRad = Math.PI / 180 * angleDeg;
-            int x = (int) (cx + size * Math.cos(angleRad));
-            int y = (int) (cy + size * Math.sin(angleRad));
-            polygon.addPoint(x, y);
+            double angleRad = Math.toRadians(angleDeg);
+            double x = (cx + size * Math.cos(angleRad));
+            double y = (cy + size * Math.sin(angleRad));
+            if (i==0) polygon.moveTo(x , y);
+            else polygon.lineTo(x , y);
         }
+        polygon.closePath();
         return polygon;
     }
 }
