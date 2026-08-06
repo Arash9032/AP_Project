@@ -47,10 +47,12 @@ public class GamePanel extends JPanel {
     }
 
     public Point getSelectedHexPoint(double mouseX, double mouseY) {
-        return HexMath.pixelToHex(mouseX, mouseY,
+        Point selectedPoint = HexMath.pixelToHex(mouseX, mouseY,
                 camera.getCenterX(getWidth()),
                 camera.getCenterY(getHeight()),
                 camera.getHexSize());
+        if (gameState.getGameMap().getHex(selectedPoint) == null) return null;
+        return selectedPoint;
     }
 
     @Override
