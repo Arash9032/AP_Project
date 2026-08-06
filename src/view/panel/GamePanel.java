@@ -13,6 +13,9 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class GamePanel extends JPanel {
+    private static final double MAX_HEX_SIZE = 64;
+    private static final double MIN_HEX_SIZE = 16;
+
     private final MainContentPane mainContentPane;
     private GameState gameState;
 
@@ -97,5 +100,11 @@ public class GamePanel extends JPanel {
         }
         polygon.closePath();
         return polygon;
+    }
+
+    public void applyZoom(double delta){
+        hexSize += delta;
+        if (hexSize > MAX_HEX_SIZE) hexSize = MAX_HEX_SIZE;
+        else if (hexSize < MIN_HEX_SIZE) hexSize = MIN_HEX_SIZE;
     }
 }
