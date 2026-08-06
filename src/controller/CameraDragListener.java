@@ -25,8 +25,8 @@ public class CameraDragListener extends MouseAdapter {
         double dx = e.getX() - lastMousePosition.x;
         double dy = e.getY() - lastMousePosition.y;
 
-        gamePanel.setCameraX(gamePanel.getCameraX() + dx);
-        gamePanel.setCameraY(gamePanel.getCameraY() + dy);
+        gamePanel.setCameraX(gamePanel.getCameraX() - dx);
+        gamePanel.setCameraY(gamePanel.getCameraY() - dy);
         lastMousePosition = e.getPoint();
     }
 }

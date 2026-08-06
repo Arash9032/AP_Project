@@ -82,8 +82,8 @@ public class GamePanel extends JPanel {
 //        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 
-        double centerX = getWidth() / 2.0 + cameraX;
-        double centerY = getHeight() / 2.0 + cameraY;
+        double centerX = getWidth() / 2.0 - cameraX;
+        double centerY = getHeight() / 2.0 - cameraY;
 
         adjustBaseHex();
         drawHexes(g2, centerX, centerY);
@@ -132,14 +132,14 @@ public class GamePanel extends JPanel {
         if(hexSize == oldHexSize) return;
         double scale = hexSize / oldHexSize;
 
-        double centerX = getWidth() / 2.0 + cameraX;
-        double centerY = getHeight() / 2.0 + cameraY;
+        double centerX = getWidth() / 2.0 - cameraX;
+        double centerY = getHeight() / 2.0 - cameraY;
 
         double dx = mousePositionX - centerX;
         double dy = mousePositionY - centerY;
 
-        cameraX += dx * (1.0 - scale);
-        cameraY += dy * (1.0 - scale);
+        cameraX -= dx * (1.0 - scale);
+        cameraY -= dy * (1.0 - scale);
     }
 
     public double getCameraX() {
