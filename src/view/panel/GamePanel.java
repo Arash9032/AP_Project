@@ -14,8 +14,8 @@ import java.util.Map;
 
 public class GamePanel extends JPanel {
 
-    public static final double MAX_HEX_SIZE = 150;
-    public static final double MIN_HEX_SIZE = 16;
+    public static final double MAX_HEX_SIZE = 1.5 * Constants.FRAME_HEIGHT / Constants.MAP_RADIUS;
+    public static final double MIN_HEX_SIZE = MAX_HEX_SIZE / 5.0;
     private static final double SQRT_3 = Math.sqrt(3);
 
     private final Path2D.Double baseHex = new Path2D.Double();
@@ -26,7 +26,7 @@ public class GamePanel extends JPanel {
     private final MainContentPane mainContentPane;
     private GameState gameState;
 
-    private double hexSize = 16;
+    private double hexSize = MIN_HEX_SIZE;
     private double cameraX = 0;
     private double cameraY = 0;
 
