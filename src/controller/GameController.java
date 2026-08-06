@@ -10,7 +10,7 @@ public final class GameController {
     public GameController(GameState gameState, GamePanel gamePanel) {
         this.gameState = gameState;
         this.gamePanel = gamePanel;
-//        registerListeners();
+        registerListeners();
     }
 
     public GameState getGameState() {
@@ -29,9 +29,9 @@ public final class GameController {
         this.gamePanel = gamePanel;
     }
 
-//    private void registerListeners(){
-//        ZoomListener zoomListener = new ZoomListener(gamePanel);
-//        gamePanel.addMouseWheelListener(zoomListener);
-//    }
+    private void registerListeners(){
+        ZoomListener zoomListener = new ZoomListener(gamePanel);
+        gamePanel.addMouseWheelListener(zoomListener);
+    }
 
 }
