@@ -13,8 +13,15 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class GamePanel extends JPanel {
-    private static final double MAX_HEX_SIZE = 64;
-    private static final double MIN_HEX_SIZE = 16;
+
+    public static final double MAX_HEX_SIZE = 150;
+    public static final double MIN_HEX_SIZE = 16;
+    private static final double SQRT_3 = Math.sqrt(3);
+
+    private final Path2D.Double baseHex = new Path2D.Double();
+    private final BasicStroke hexStroke = new BasicStroke(1.5f);
+    private final double[] sin = new double[6];
+    private final double[] cos = new double[6];
 
     private final MainContentPane mainContentPane;
     private GameState gameState;
@@ -31,6 +38,7 @@ public class GamePanel extends JPanel {
         this.gameState = gameState;
         this.terrainColors = new EnumMap<>(TerrainType.class);
         initializeColors();
+        initializeSinCos();
     }
 
     private void initializeColors() {
@@ -40,6 +48,15 @@ public class GamePanel extends JPanel {
         terrainColors.put(TerrainType.MEADOW, Constants.MEADOW_HEX_COLOR);
         terrainColors.put(TerrainType.MOUNTAIN_RANGE, Constants.MOUNTAIN_RANGE_HEX_COLOR);
         terrainColors.put(TerrainType.SEA, Constants.SEA_HEX_COLOR);
+    }
+
+    private void initializeSinCos() {
+        for (int i = 0; i < 6; i++) {
+            double angleDeg = 60 * i - 30;
+            double angleRad = Math.toRadians(angleDeg);
+            sin[i] = Math.sin(angleRad);
+            cos[i] = Math.cos(angleRad);
+        }
     }
 
     public MainContentPane getMainContentPane() {
@@ -62,47 +79,51 @@ public class GamePanel extends JPanel {
         if (gameState == null || gameState.getGameMap() == null) return;
 
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL , RenderingHints.VALUE_STROKE_PURE);
+//        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 
         double centerX = getWidth() / 2.0 + cameraX;
         double centerY = getHeight() / 2.0 + cameraY;
 
-        for (Hex hex : gameState.getGameMap().getHexes().values()) {
-            int q = hex.getCoordinate().getQ();
-            int r = hex.getCoordinate().getR();
-
-            double cx = (centerX + hexSize * Math.sqrt(3) * (q + r / 2.0));
-            double cy = (centerY + hexSize * 3.0 / 2.0 * r);
-
-            Path2D.Double hexPolygon = createHexagon(cx, cy, hexSize);
-
-            g2.setColor(terrainColors.getOrDefault(hex.getTerrain(), Color.WHITE));
-            g2.fill(hexPolygon);
-
-            g2.setColor(Constants.HEX_BORDER_COLORS);
-            g2.setStroke(new BasicStroke(1.5f));
-            g2.draw(hexPolygon);
-        }
+        adjustBaseHex();
+        drawHexes(g2, centerX, centerY);
 
         g2.dispose();
     }
 
-    private Path2D.Double createHexagon(double cx, double cy, double size) {
-        Path2D.Double polygon = new Path2D.Double();
-        for (int i = 0; i < 6; i++) {
-            double angleDeg = 60 * i - 30;
-            double angleRad = Math.toRadians(angleDeg);
-            double x = (cx + size * Math.cos(angleRad));
-            double y = (cy + size * Math.sin(angleRad));
-            if (i==0) polygon.moveTo(x , y);
-            else polygon.lineTo(x , y);
+    private void drawHexes(Graphics2D g2, double centerX, double centerY) {
+        for (Hex hex : gameState.getGameMap().getHexes().values()) {
+            int q = hex.getCoordinate().getQ();
+            int r = hex.getCoordinate().getR();
+
+            double cx = (centerX + hexSize * SQRT_3 * (q + r / 2.0));
+            double cy = (centerY + hexSize * 3.0 / 2.0 * r);
+
+            g2.translate(cx, cy);
+            g2.setColor(terrainColors.getOrDefault(hex.getTerrain(), Color.WHITE));
+            g2.fill(baseHex);
+
+
+            g2.setColor(Constants.HEX_BORDER_COLORS);
+            g2.setStroke(hexStroke);
+            g2.draw(baseHex);
+
+            g2.translate(-cx, -cy);
         }
-        polygon.closePath();
-        return polygon;
     }
 
-    public void applyZoom(double delta){
+    private void adjustBaseHex() {
+        baseHex.reset();
+        for (int i = 0; i < 6; i++) {
+            double x = hexSize * cos[i];
+            double y = hexSize * sin[i];
+            if (i == 0) baseHex.moveTo(x, y);
+            else baseHex.lineTo(x, y);
+        }
+        baseHex.closePath();
+    }
+
+    public void applyZoom(double delta) {
         hexSize += delta;
         if (hexSize > MAX_HEX_SIZE) hexSize = MAX_HEX_SIZE;
         else if (hexSize < MIN_HEX_SIZE) hexSize = MIN_HEX_SIZE;
