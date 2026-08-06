@@ -36,6 +36,9 @@ public final class GameController {
         CameraDragListener dragListener = new CameraDragListener(gamePanel);
         gamePanel.addMouseListener(dragListener);
         gamePanel.addMouseMotionListener(dragListener);
+
+        SelectHexListener selectHexListener = new SelectHexListener(gameState , gamePanel);
+        gamePanel.addMouseListener(selectHexListener);
     }
 
 }
