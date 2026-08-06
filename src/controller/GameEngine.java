@@ -15,7 +15,6 @@ public final class GameEngine {
 
     public GameEngine(){
         mainFrame = new MainFrame(this);
-        controller = new GameController(gameState , mainFrame.getMainContentPane().getGamePanel());
         timer = new Timer(1000/ Constants.FRAME_RATE, e -> mainFrame.getMainContentPane().getGamePanel().repaint());
         if(mainFrame.getMainContentPane().getGamePanel() != null) timer.start();
     }
@@ -38,6 +37,6 @@ public final class GameEngine {
 
     public void startNewGame(){
         gameState = new GameState(MapGenerator.generateMap());
-        controller.setGameState(gameState);
+        controller = new GameController(gameState , mainFrame.getMainContentPane().getGamePanel());
     }
 }
