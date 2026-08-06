@@ -32,6 +32,10 @@ public final class GameController {
     private void registerListeners(){
         ZoomListener zoomListener = new ZoomListener(gamePanel);
         gamePanel.addMouseWheelListener(zoomListener);
+
+        CameraDragListener dragListener = new CameraDragListener(gamePanel);
+        gamePanel.addMouseListener(dragListener);
+        gamePanel.addMouseMotionListener(dragListener);
     }
 
 }
