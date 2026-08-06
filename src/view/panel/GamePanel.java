@@ -83,22 +83,19 @@ public class GamePanel extends JPanel {
 //        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 
-        double centerX = getWidth() / 2.0 - cameraX;
-        double centerY = getHeight() / 2.0 - cameraY;
-
         adjustBaseHex();
-        drawHexes(g2, centerX, centerY);
+        drawHexes(g2);
 
         g2.dispose();
     }
 
-    private void drawHexes(Graphics2D g2, double centerX, double centerY) {
+    private void drawHexes(Graphics2D g2) {
         for (Hex hex : gameState.getGameMap().getHexes().values()) {
             int q = hex.getCoordinate().getQ();
             int r = hex.getCoordinate().getR();
 
-            double cx = (centerX + hexSize * SQRT_3 * (q + r / 2.0));
-            double cy = (centerY + hexSize * 3.0 / 2.0 * r);
+            double cx = (getCenterX() + hexSize * SQRT_3 * (q + r / 2.0));
+            double cy = (getCenterY() + hexSize * 3.0 / 2.0 * r);
 
             g2.translate(cx, cy);
             g2.setColor(terrainColors.getOrDefault(hex.getTerrain(), Color.WHITE));
@@ -133,11 +130,8 @@ public class GamePanel extends JPanel {
         if(hexSize == oldHexSize) return;
         double scale = hexSize / oldHexSize;
 
-        double centerX = getWidth() / 2.0 - cameraX;
-        double centerY = getHeight() / 2.0 - cameraY;
-
-        double dx = mousePositionX - centerX;
-        double dy = mousePositionY - centerY;
+        double dx = mousePositionX - getCenterX();
+        double dy = mousePositionY - getCenterY();
 
         cameraX -= dx * (1.0 - scale);
         cameraY -= dy * (1.0 - scale);
@@ -160,6 +154,41 @@ public class GamePanel extends JPanel {
     }
 
     public Point getSelectedHexPoint(double mouseX , double mouseY){
-        return null;
+        double dx = (mouseX - getCenterX()) / hexSize;
+        double dy = (mouseY - getCenterY()) / hexSize;
+
+        double qFrac = SQRT_3 / 3.0 * dx - 1.0 / 3.0 * dy;
+        double rFrac = 2.0 / 3.0 * dy;
+
+        return axialRound(qFrac , rFrac);
+    }
+
+    private Point axialRound(double qFrac , double rFrac){
+        double sFrac = -qFrac - rFrac;
+        int q = (int)Math.round(qFrac);
+        int r = (int)Math.round(rFrac);
+        int s = (int)Math.round(sFrac);
+
+        if(q + r + s == 0) return new Point(q , r);
+
+        double qDiff = Math.abs(qFrac - q);
+        double rDiff = Math.abs(rFrac - r);
+        double sDiff = Math.abs(sFrac - s);
+
+        if(qDiff >= rDiff){
+            if(qDiff >= sDiff) q = -r - s;
+        }
+        else{
+            if(rDiff >= sDiff) r = -q - s;
+        }
+        return new Point(q , r);
+    }
+
+    private double getCenterX(){
+        return getWidth() / 2.0 - cameraX;
+    }
+
+    private double getCenterY(){
+        return getHeight() / 2.0 - cameraY;
     }
 }
