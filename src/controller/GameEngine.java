@@ -1,14 +1,23 @@
 package controller;
 
+import config.Constants;
 import model.GameState;
 import model.map.MapGenerator;
 import view.MainFrame;
 
+import javax.swing.*;
+
 public final class GameEngine {
     private GameState gameState;
     private MainFrame mainFrame;
+//    private GameController controller;
+    private Timer timer;
+
     public GameEngine(){
         mainFrame = new MainFrame(this);
+//        controller = new GameController(gameState , mainFrame.getMainContentPane().getGamePanel());
+        timer = new Timer(1000/ Constants.FRAME_RATE, e -> mainFrame.getMainContentPane().getGamePanel().repaint());
+        if(mainFrame.getMainContentPane().getGamePanel() != null) timer.start();
     }
 
     public GameState getGameState() {
@@ -29,5 +38,6 @@ public final class GameEngine {
 
     public void startNewGame(){
         gameState = new GameState(MapGenerator.generateMap());
+//        controller.setGameState(gameState);
     }
 }

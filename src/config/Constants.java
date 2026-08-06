@@ -165,4 +165,6 @@ public final class Constants {
     public static final Color MOUNTAIN_RANGE_HEX_COLOR = new Color(55, 40, 75);
     public static final Color SEA_HEX_COLOR = new Color(0, 180, 235);
     public static final Color HEX_BORDER_COLORS = new Color(55, 0, 105);
+
+    public static final int FRAME_RATE = 60;
 }
