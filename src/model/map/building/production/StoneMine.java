@@ -12,8 +12,8 @@ public class StoneMine extends ProductionBuilding {
     public StoneMine(Hex location) {
         super(
                 location,
-                Constants.STABLE_WORKER_CAPACITY,
-                Constants.STABLE_BASE_PRODUCTION_RATE,
+                Constants.STONE_MINE_WORKER_CAPACITY,
+                Constants.STONE_MINE_BASE_PRODUCTION_RATE,
                 InventoryResource.STONE,
                 Constants.STONE_MINE_MAXIMUM_HP,
                 BuildingType.STONE_MINE
