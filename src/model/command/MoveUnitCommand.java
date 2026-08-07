@@ -3,11 +3,10 @@ package model.command;
 import model.map.hex.Hex;
 import model.unit.Unit;
 
-public class MoveUnitCommand implements UndoableCommand {
+public class MoveUnitCommand implements Command {
 
     private final Unit unit;
     private final Hex destinationHex;
-    private Hex previousHex;
 
     public MoveUnitCommand(Unit unit, Hex destinationHex) {
         if (unit == null || destinationHex == null) {
@@ -19,15 +18,9 @@ public class MoveUnitCommand implements UndoableCommand {
 
     @Override
     public void execute() {
-        previousHex = unit.getCurrentHex();
-        if(!unit.move(destinationHex))
+        if (!unit.move(destinationHex)) {
             throw new IllegalStateException("Cannot execute move command.");
-    }
-
-    @Override
-    public void undo() {
-        if(previousHex == null || !unit.undoMove(previousHex))
-            throw new IllegalStateException("Cannot undo move command.");
+        }
     }
 
     public Unit getUnit() {
