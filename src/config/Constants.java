@@ -18,22 +18,28 @@ public final class Constants {
     public static final int EXPLORER_MAX_AP = 6;
     public static final int EXPLORER_VISION_RADIUS = 3;
     public static final int EXPLORER_PRODUCTION_TURN_COST = 2;
+    public static final int EXPLORER_FOOD_COST = 25;
 
     public static final int BUILDER_MAX_HP = 30;
     public static final int BUILDER_MAX_AP = 4;
     public static final int BUILDER_VISION_RADIUS = 2;
     public static final int BUILDER_INITIAL_CHARGES = 3;
     public static final int BUILDER_PRODUCTION_TURN_COST = 2;
+    public static final int BUILDER_FOOD_COST = 30;
 
     public static final int WORKER_MAX_HP = 30;
     public static final int WORKER_MAX_AP = 4;
     public static final int WORKER_VISION_RADIUS = 1;
     public static final int WORKER_PRODUCTION_TURN_COST = 2;
+    public static final int WORKER_FOOD_COST = 20;
+
 
     public static final int BORDER_EXPANDER_MAX_HP = 30;
     public static final int BORDER_EXPANDER_MAX_AP = 4;
     public static final int BORDER_EXPANDER_VISION_RADIUS = 1;
     public static final int BORDER_EXPANDER_PRODUCTION_TURN_COST = 3;
+    public static final int BORDER_EXPANDER_FOOD_COST = 40;
+    public static final int BORDER_EXPANDER_WOOD_COST = 20;
 
     public static final int LEVEL_1_TOWN_HALL_STORAGE_CAPACITY = 100;
     public static final int LEVEL_1_TOWN_HALL_MILITARY_UNIT_CAPACITY = 5;

@@ -12,7 +12,7 @@ public class ProduceUnitCommand extends TurnBasedProductionCommand {
     private final Hex location;
 
     public ProduceUnitCommand(TownHall townHall, UnitType unitType, Hex location) {
-        super(townHall, unitType.getTurnCost());
+        super(townHall, unitType.getProductionTurnCost());
         this.unitType = unitType;
         this.location = location;
     }
