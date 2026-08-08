@@ -1,13 +1,13 @@
 package controller.eventbus;
 
 public class TurnEndedEvent implements GameEvent {
-    private final int currentTurn;
+    private final int newTurn;
 
-    public TurnEndedEvent(int currentTurn) {
-        this.currentTurn = currentTurn;
+    public TurnEndedEvent(int newTurn) {
+        this.newTurn = newTurn;
     }
 
-    public int getCurrentTurn() {
-        return currentTurn;
+    public int getNewTurn() {
+        return newTurn;
     }
 }
