@@ -1,4 +1,4 @@
-package controller;
+package controller.logic;
 
 import controller.eventbus.EventBus;
 import controller.eventbus.TurnEndedEvent;
