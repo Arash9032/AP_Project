@@ -4,6 +4,7 @@ import model.map.Destructible;
 import model.map.GameMap;
 import model.map.Maintainable;
 import model.map.building.Building;
+import model.map.edge.Wall;
 import model.map.hex.Point;
 import model.unit.Unit;
 
@@ -69,6 +70,12 @@ public final class GameState {
         destructibles.add(building);
     }
 
+    public void addWall(Wall wall) {
+        if(wall == null) return;
+        maintainables.add(wall);
+        destructibles.add(wall);
+    }
+
     public void removeUnit(Unit unit){
         if(unit == null) return;
         units.remove(unit);
@@ -80,6 +87,19 @@ public final class GameState {
         buildings.remove(building);
         maintainables.remove(building);
         destructibles.remove(building);
+    }
+
+    public void removeWall(Wall wall) {
+        if(wall == null) return;
+        maintainables.remove(wall);
+        destructibles.remove(wall);
+    }
+
+    public void cleanupDestroyedEntities() {
+        units.removeIf(Destructible::isDestroyed);
+        buildings.removeIf(Destructible::isDestroyed);
+        maintainables.removeIf(Destructible::isDestroyed);
+        destructibles.removeIf(Destructible::isDestroyed);
     }
 
     public Point getSelectedHexPoint() {
