@@ -1,4 +1,4 @@
-package controller;
+package controller.ux;
 
 import view.panel.GamePanel;
 

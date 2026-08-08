@@ -1,5 +1,8 @@
 package controller;
 
+import controller.ux.CameraDragListener;
+import controller.ux.SelectHexListener;
+import controller.ux.ZoomListener;
 import model.GameState;
 import view.panel.GamePanel;
 
