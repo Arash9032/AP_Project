@@ -173,4 +173,6 @@ public final class Constants {
     public static final Color HEX_BORDER_COLORS = new Color(55, 0, 105);
 
     public static final int FRAME_RATE = 60;
+
+    public static final int SEASON_DURATION_IN_TURN = 10;
 }
