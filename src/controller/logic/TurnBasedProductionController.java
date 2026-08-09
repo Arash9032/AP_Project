@@ -7,14 +7,12 @@ import model.map.building.townhall.TownHall;
 
 public class TurnBasedProductionController {
     private GameState gameState;
-
     public TurnBasedProductionController(GameState gameState) {
         this.gameState = gameState;
         EventBus.getInstance().subscribe(TurnEndedEvent.class , event -> advanceProductions());
     }
     private void advanceProductions(){
         TownHall townHall = gameState.getTownHall();
-        if(townHall == null) throw new IllegalStateException("Town hall doesn't exist.");
         if(townHall.getActiveTask() != null) townHall.getActiveTask().execute();
     }
 

@@ -114,6 +114,7 @@ public final class GameState {
     }
 
     public TownHall getTownHall() {
+        if(townHall == null) throw new IllegalStateException("TownHall doesn't exist.");
         return townHall;
     }
 }

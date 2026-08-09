@@ -24,14 +24,6 @@ public class TownHall extends Building {
         maximumHp = Constants.TOWN_HALL_INITIAL_HP;
     }
 
-    public void addResource(InventoryResource resource, int amount) {
-        inventory.addResource(resource, amount);
-    }
-
-    public boolean consumeResource(InventoryResource resource, int amount) {
-        return inventory.consumeResource(resource, amount);
-    }
-
     public void applySafeguardProduction() {
         inventory.addResource(InventoryResource.WOOD, Constants.SAFEGUARD_WOOD_PRODUCTION);
         inventory.addResource(InventoryResource.FOOD, Constants.SAFEGUARD_CROPS_PRODUCTION);
