@@ -3,7 +3,6 @@ package controller.logic;
 import controller.eventbus.EventBus;
 import controller.eventbus.TurnEndedEvent;
 import model.GameState;
-import model.map.building.Building;
 import model.map.building.townhall.TownHall;
 
 public class TurnBasedProductionController {

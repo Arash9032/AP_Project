@@ -3,7 +3,6 @@ package controller.logic;
 import controller.eventbus.EventBus;
 import controller.eventbus.TurnEndedEvent;
 import model.GameState;
-import model.unit.Unit;
 
 public class TurnManager {
     private GameState gameState;
@@ -16,14 +15,7 @@ public class TurnManager {
 
     public void endTurn() {
         currentTurn++;
-        resetUnitsAP();
         EventBus.getInstance().publish(new TurnEndedEvent(currentTurn));
-    }
-
-    private void resetUnitsAP() {
-        for (Unit unit : gameState.getUnits()) {
-            unit.resetAP();
-        }
     }
 
     public int getCurrentTurn() {
