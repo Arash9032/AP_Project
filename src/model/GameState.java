@@ -3,6 +3,7 @@ package model;
 import model.map.Destructible;
 import model.map.GameMap;
 import model.map.Maintainable;
+import model.map.Season;
 import model.map.building.Building;
 import model.map.building.production.ProductionBuilding;
 import model.map.building.townhall.TownHall;
@@ -22,6 +23,7 @@ public final class GameState {
     private final List<Destructible> destructibles;
     private final List<Maintainable> maintainables;
     private TownHall townHall;
+    private Season season;
 
     private Point selectedHexPoint;
 
@@ -31,6 +33,7 @@ public final class GameState {
         productionBuildings = new ArrayList<>();
         destructibles = new ArrayList<>();
         maintainables = new ArrayList<>();
+        season = Season.SPRING;
     }
 
     public GameState(GameMap gameMap){
@@ -131,5 +134,17 @@ public final class GameState {
     public TownHall getTownHall() {
         if(townHall == null) throw new IllegalStateException("TownHall doesn't exist.");
         return townHall;
+    }
+
+    public Season getSeason() {
+        return season;
+    }
+
+    public void setSeason(Season season) {
+        this.season = season;
+    }
+
+    public void changeSeason(){
+        season = season.getNextSeason();
     }
 }
