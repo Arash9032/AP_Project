@@ -1,7 +1,7 @@
 package model.map.building.townhall;
 
 import config.Constants;
-import model.command.TurnBasedProductionCommand;
+import model.command.TownHallTurnBasedCommand;
 import model.command.UpgradeTownHallCommand;
 import model.map.building.Building;
 import model.map.building.BuildingType;
@@ -14,7 +14,7 @@ public class TownHall extends Building {
     private int unitCap;
     private int maximumHp;
 
-    private TurnBasedProductionCommand activeTask;
+    private TownHallTurnBasedCommand activeTask;
 
     public TownHall(Hex location) {
         super(location, Constants.TOWN_HALL_INITIAL_HP , BuildingType.TOWN_HALL);
@@ -29,11 +29,11 @@ public class TownHall extends Building {
         inventory.addResource(InventoryResource.FOOD, Constants.SAFEGUARD_CROPS_PRODUCTION);
     }
 
-    public TurnBasedProductionCommand getActiveTask() {
+    public TownHallTurnBasedCommand getActiveTask() {
         return activeTask;
     }
 
-    public void setActiveTask(TurnBasedProductionCommand activeTask) {
+    public void setActiveTask(TownHallTurnBasedCommand activeTask) {
         this.activeTask = activeTask;
     }
 
