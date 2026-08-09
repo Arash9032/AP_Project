@@ -48,15 +48,14 @@ public class TownHallInventory {
     }
 
     public boolean consumeResources(Map<InventoryResource, Integer> costs) {
-        if (!hasEnoughResources(costs)) {
-            return false;
-        }
-        if (costs != null) {
+        if(costs == null || costs.isEmpty()) return true;
+        if (hasEnoughResources(costs)) {
             for (Map.Entry<InventoryResource, Integer> entry : costs.entrySet()) {
                 consumeResource(entry.getKey(), entry.getValue());
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
     public int getResourceAmount(InventoryResource resource) {
