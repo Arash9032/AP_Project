@@ -48,7 +48,10 @@ public class MapRenderer {
 
     public void render(Graphics2D g2, GameState gameState, Camera camera, int screenWidth, int screenHeight) {
         if (gameState == null || gameState.getGameMap() == null) return;
+        renderHexes(g2, gameState, camera, screenWidth, screenHeight);
+    }
 
+    private void renderHexes(Graphics2D g2, GameState gameState, Camera camera, int screenWidth, int screenHeight){
         double hexSize = camera.getHexSize();
         double centerX = camera.getCenterX(screenWidth);
         double centerY = camera.getCenterY(screenHeight);
