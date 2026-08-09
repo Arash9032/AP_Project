@@ -29,4 +29,16 @@ public class TurnManager {
     public int getCurrentTurn() {
         return currentTurn;
     }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public void setCurrentTurn(int currentTurn) {
+        this.currentTurn = currentTurn;
+    }
 }
