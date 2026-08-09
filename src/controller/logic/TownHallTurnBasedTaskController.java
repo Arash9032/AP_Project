@@ -5,13 +5,13 @@ import controller.eventbus.TurnEndedEvent;
 import model.GameState;
 import model.map.building.townhall.TownHall;
 
-public class TurnBasedProductionController {
+public class TownHallTurnBasedTaskController {
     private GameState gameState;
-    public TurnBasedProductionController(GameState gameState) {
+    public TownHallTurnBasedTaskController(GameState gameState) {
         this.gameState = gameState;
-        EventBus.getInstance().subscribe(TurnEndedEvent.class , event -> advanceProductions());
+        EventBus.getInstance().subscribe(TurnEndedEvent.class , event -> advanceTask());
     }
-    private void advanceProductions(){
+    private void advanceTask(){
         TownHall townHall = gameState.getTownHall();
         if(townHall.getActiveTask() != null) townHall.getActiveTask().execute();
     }
