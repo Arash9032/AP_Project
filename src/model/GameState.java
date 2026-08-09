@@ -4,6 +4,7 @@ import model.map.Destructible;
 import model.map.GameMap;
 import model.map.Maintainable;
 import model.map.building.Building;
+import model.map.building.townhall.TownHall;
 import model.map.edge.Wall;
 import model.map.hex.Point;
 import model.unit.Unit;
@@ -18,6 +19,7 @@ public final class GameState {
     private final List<Building> buildings;
     private final List<Destructible> destructibles;
     private final List<Maintainable> maintainables;
+    private TownHall townHall;
 
     private Point selectedHexPoint;
 
@@ -68,6 +70,7 @@ public final class GameState {
         buildings.add(building);
         maintainables.add(building);
         destructibles.add(building);
+        if(building instanceof TownHall) townHall = (TownHall) building;
     }
 
     public void addWall(Wall wall) {
@@ -108,5 +111,9 @@ public final class GameState {
 
     public void setSelectedHexPoint(Point selectedHexPoint) {
         this.selectedHexPoint = selectedHexPoint;
+    }
+
+    public TownHall getTownHall() {
+        return townHall;
     }
 }
