@@ -4,6 +4,7 @@ import model.map.Destructible;
 import model.map.GameMap;
 import model.map.Maintainable;
 import model.map.building.Building;
+import model.map.building.production.ProductionBuilding;
 import model.map.building.townhall.TownHall;
 import model.map.edge.Wall;
 import model.map.hex.Point;
@@ -17,6 +18,7 @@ public final class GameState {
     private GameMap gameMap;
     private final List<Unit> units;
     private final List<Building> buildings;
+    private final List<ProductionBuilding> productionBuildings;
     private final List<Destructible> destructibles;
     private final List<Maintainable> maintainables;
     private TownHall townHall;
@@ -26,6 +28,7 @@ public final class GameState {
     public GameState() {
         units = new ArrayList<>();
         buildings = new ArrayList<>();
+        productionBuildings = new ArrayList<>();
         destructibles = new ArrayList<>();
         maintainables = new ArrayList<>();
     }
@@ -59,6 +62,10 @@ public final class GameState {
         return Collections.unmodifiableList(maintainables);
     }
 
+    public List<ProductionBuilding> getProductionBuildings() {
+        return Collections.unmodifiableList(productionBuildings);
+    }
+
     public void addUnit(Unit unit){
         if(unit == null) return;
         units.add(unit);
@@ -71,6 +78,7 @@ public final class GameState {
         maintainables.add(building);
         destructibles.add(building);
         if(building instanceof TownHall) townHall = (TownHall) building;
+        if(building instanceof ProductionBuilding) productionBuildings.add((ProductionBuilding) building);
     }
 
     public void addWall(Wall wall) {
@@ -90,6 +98,8 @@ public final class GameState {
         buildings.remove(building);
         maintainables.remove(building);
         destructibles.remove(building);
+        if(building instanceof TownHall) townHall = null;
+        if(building instanceof ProductionBuilding) productionBuildings.remove((ProductionBuilding) building);
     }
 
     public void removeWall(Wall wall) {
@@ -103,6 +113,11 @@ public final class GameState {
         buildings.removeIf(Destructible::isDestroyed);
         maintainables.removeIf(Destructible::isDestroyed);
         destructibles.removeIf(Destructible::isDestroyed);
+        productionBuildings.removeIf(Destructible::isDestroyed);
+
+        if (townHall != null && townHall.isDestroyed()) {
+            townHall = null;
+        }
     }
 
     public Point getSelectedHexPoint() {
