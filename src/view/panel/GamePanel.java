@@ -6,7 +6,7 @@ import model.map.hex.Point;
 import util.HexMath;
 import view.MainContentPane;
 import view.camera.Camera;
-import view.render.MapRenderer;
+import view.render.HexRenderer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ public class GamePanel extends JPanel {
     private GameState gameState;
 
     private final Camera camera;
-    private final MapRenderer mapRenderer;
+    private final HexRenderer hexRenderer;
 
     public GamePanel(MainContentPane mainContentPane, GameState gameState) {
         setBackground(Constants.GAME_BACKGROUND_COLOR);
@@ -25,7 +25,7 @@ public class GamePanel extends JPanel {
         this.gameState = gameState;
 
         this.camera = new Camera(Camera.MIN_HEX_SIZE);
-        this.mapRenderer = new MapRenderer();
+        this.hexRenderer = new HexRenderer();
     }
 
     public MainContentPane getMainContentPane() {
@@ -62,7 +62,7 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 
-        mapRenderer.render(g2, gameState, camera, getWidth(), getHeight());
+        hexRenderer.render(g2, gameState, camera, getWidth(), getHeight());
 
         g2.dispose();
     }

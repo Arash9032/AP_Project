@@ -13,7 +13,7 @@ import java.awt.geom.Path2D;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class MapRenderer {
+public class HexRenderer {
     private final Path2D.Double baseHex = new Path2D.Double();
     private final BasicStroke hexStroke = new BasicStroke(1.5f);
     private final BasicStroke selectedHexStroke = new BasicStroke(3.0f);
@@ -22,7 +22,7 @@ public class MapRenderer {
     private final double[] cos = new double[6];
     private final Map<TerrainType, Color> terrainColors;
 
-    public MapRenderer() {
+    public HexRenderer() {
         this.terrainColors = new EnumMap<>(TerrainType.class);
         initializeColors();
         initializeSinCos();
