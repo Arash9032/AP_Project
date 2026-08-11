@@ -39,7 +39,7 @@ public class BuildingRenderer {
 
             g2.translate(cx, cy);
 
-            BuildingTypeRenderer.getFromType(building.getType()).drawBuilding(g2 , bSize);
+            BuildingTypeRenderer.getFromType(building.getType()).drawBuilding(g2 , bSize, building.getHp());
 
             g2.translate(-cx, -cy);
         }

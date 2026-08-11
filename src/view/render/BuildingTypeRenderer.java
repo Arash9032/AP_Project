@@ -10,49 +10,49 @@ public enum BuildingTypeRenderer {
 
     LUMBER_MILL(BuildingType.LUMBER_MILL) {
         @Override
-        public void drawBuilding(Graphics2D g2, double size) {
+        public void drawShape(Graphics2D g2, double size) {
 
         }
     },
     FARM(BuildingType.FARM) {
         @Override
-        public void drawBuilding(Graphics2D g2, double size) {
+        public void drawShape(Graphics2D g2, double size) {
 
         }
     },
     STONE_MINE(BuildingType.STONE_MINE) {
         @Override
-        public void drawBuilding(Graphics2D g2, double size) {
+        public void drawShape(Graphics2D g2, double size) {
 
         }
     },
     IRON_MINE(BuildingType.IRON_MINE) {
         @Override
-        public void drawBuilding(Graphics2D g2, double size) {
+        public void drawShape(Graphics2D g2, double size) {
 
         }
     },
     STABLE(BuildingType.STABLE) {
         @Override
-        public void drawBuilding(Graphics2D g2, double size) {
+        public void drawShape(Graphics2D g2, double size) {
 
         }
     },
     VILLAGE(BuildingType.VILLAGE) {
         @Override
-        public void drawBuilding(Graphics2D g2, double size) {
+        public void drawShape(Graphics2D g2, double size) {
 
         }
     },
     TOWN(BuildingType.TOWN) {
         @Override
-        public void drawBuilding(Graphics2D g2, double size) {
+        public void drawShape(Graphics2D g2, double size) {
 
         }
     },
     TOWN_HALL(BuildingType.TOWN_HALL) {
         @Override
-        public void drawBuilding(Graphics2D g2, double size) {
+        public void drawShape(Graphics2D g2, double size) {
 
         }
     };
@@ -82,5 +82,14 @@ public enum BuildingTypeRenderer {
         throw new IllegalStateException("BuildingType " + type.name() + " doesn't have a BuildingTypeRenderer.");
     }
 
-    public abstract void drawBuilding(Graphics2D g2, double size);
+    protected abstract void drawShape(Graphics2D g2, double size);
+
+    private void drawHealthBar(Graphics2D g2, double size, int hp){
+
+    }
+
+    public void drawBuilding(Graphics2D g2, double size, int hp){
+        drawShape(g2, size);
+        drawHealthBar(g2, size, hp);
+    }
 }
