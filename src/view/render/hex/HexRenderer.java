@@ -1,4 +1,4 @@
-package view.render;
+package view.render.hex;
 
 import config.Constants;
 import model.GameState;

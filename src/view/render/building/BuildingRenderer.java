@@ -1,4 +1,4 @@
-package view.render;
+package view.render.building;
 
 import model.GameState;
 import model.map.building.Building;

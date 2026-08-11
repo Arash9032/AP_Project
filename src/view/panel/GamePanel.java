@@ -6,7 +6,6 @@ import model.map.hex.Point;
 import util.HexMath;
 import view.MainContentPane;
 import view.camera.Camera;
-import view.render.HexRenderer;
 import view.render.WorldRenderer;
 
 import javax.swing.*;

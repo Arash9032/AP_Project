@@ -1,4 +1,4 @@
-package view.render;
+package view.render.building;
 
 import model.map.building.BuildingType;
 

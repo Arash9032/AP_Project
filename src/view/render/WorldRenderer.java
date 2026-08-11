@@ -2,6 +2,8 @@ package view.render;
 
 import model.GameState;
 import view.camera.Camera;
+import view.render.building.BuildingRenderer;
+import view.render.hex.HexRenderer;
 
 import java.awt.*;
 
