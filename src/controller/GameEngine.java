@@ -39,7 +39,7 @@ public final class GameEngine {
     }
 
     public void startNewGame(){
-        gameState = new GameState(MapGenerator.generateMap());
+        gameState = GameState.generateNewGameState();
         controller = new GameController(gameState , mainFrame.getMainContentPane().getGamePanel());
         timer.start();
     }

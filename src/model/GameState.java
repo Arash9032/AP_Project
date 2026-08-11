@@ -1,15 +1,14 @@
 package model;
 
-import model.map.Destructible;
-import model.map.GameMap;
-import model.map.Maintainable;
-import model.map.Season;
+import model.map.*;
 import model.map.building.Building;
+import model.map.building.BuildingType;
 import model.map.building.production.ProductionBuilding;
 import model.map.building.townhall.TownHall;
 import model.map.edge.Wall;
 import model.map.hex.Point;
 import model.unit.Unit;
+import model.unit.UnitType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +38,12 @@ public final class GameState {
     public GameState(GameMap gameMap){
         this();
         this.gameMap = gameMap;
+    }
+
+    public static GameState generateNewGameState(){
+        GameState newGameState = new GameState(MapGenerator.generateMap());
+        newGameState.initGameState();
+        return newGameState;
     }
 
     public GameMap getGameMap() {
@@ -146,5 +151,14 @@ public final class GameState {
 
     public void changeSeason(){
         season = season.getNextSeason();
+    }
+
+    private void initGameState(){
+        addUnit(UnitType.BUILDER.createUnit(gameMap.getHex(0 , 0)));
+        addUnit(UnitType.BUILDER.createUnit(gameMap.getHex(0 , 0)));
+        addUnit(UnitType.WORKER.createUnit(gameMap.getHex(0 , 0)));
+        addUnit(UnitType.WORKER.createUnit(gameMap.getHex(0 , 0)));
+        addUnit(UnitType.EXPLORER.createUnit(gameMap.getHex(0 , 0)));
+        addBuilding(BuildingType.TOWN_HALL.createBuilding(gameMap.getHex(0 , 0)));
     }
 }

@@ -4,7 +4,9 @@ import config.Constants;
 import model.map.CostBuilder;
 import model.map.building.production.*;
 import model.map.building.townhall.InventoryResource;
+import model.map.building.townhall.TownHall;
 import model.map.hex.Hex;
+import model.map.hex.Point;
 
 import java.util.Collections;
 import java.util.Map;
@@ -101,7 +103,8 @@ public enum BuildingType {
     ) {
         @Override
         public Building createBuilding(Hex location) {
-            throw new UnsupportedOperationException("Town hall cannot be built.");
+            if(!location.getCoordinate().equals(new Point(0,0))) throw new UnsupportedOperationException("Town hall cannot be built on any hex other than (0,0)");
+            return new TownHall(location);
         }
     };
 
