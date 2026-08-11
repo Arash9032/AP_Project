@@ -4,7 +4,7 @@ import config.Constants;
 
 public class Camera {
     public static final double MAX_HEX_SIZE = 1.5 * Constants.FRAME_HEIGHT / Constants.MAP_RADIUS;
-    public static final double MIN_HEX_SIZE = MAX_HEX_SIZE / 5.0;
+    public static final double MIN_HEX_SIZE = MAX_HEX_SIZE / 3.0;
 
     private double x;
     private double y;
