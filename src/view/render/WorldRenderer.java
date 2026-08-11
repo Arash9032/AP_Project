@@ -6,23 +6,28 @@ import view.render.building.BuildingRenderer;
 import view.render.hex.HexRenderer;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorldRenderer {
     private GameState gameState;
     private Camera camera;
-    private HexRenderer hexRenderer;
-    private BuildingRenderer buildingRenderer;
+    private final List<AbstractRenderer> layers;
 
-    public WorldRenderer(GameState gameState, Camera camera){
+    public WorldRenderer(GameState gameState, Camera camera) {
         this.gameState = gameState;
         this.camera = camera;
-        hexRenderer = new HexRenderer(gameState, camera);
-        buildingRenderer = new BuildingRenderer(gameState , camera);
+        this.layers = new ArrayList<>();
+
+        layers.add(new HexRenderer(gameState, camera));
+        layers.add(new BuildingRenderer(gameState, camera));
+
     }
 
-    public void renderWorld(Graphics2D g2, int screenWidth, int screenHeight){
-        hexRenderer.render(g2, screenWidth, screenHeight);
-        buildingRenderer.render(g2 , screenWidth , screenHeight);
+    public void renderWorld(Graphics2D g2, int screenWidth, int screenHeight) {
+        for (AbstractRenderer layer : layers) {
+            layer.render(g2, screenWidth, screenHeight);
+        }
     }
 
     public GameState getGameState() {
@@ -31,8 +36,9 @@ public class WorldRenderer {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
-        hexRenderer.setGameState(gameState);
-        buildingRenderer.setGameState(gameState);
+        for (AbstractRenderer layer : layers) {
+            layer.setGameState(gameState);
+        }
     }
 
     public Camera getCamera() {
@@ -41,21 +47,8 @@ public class WorldRenderer {
 
     public void setCamera(Camera camera) {
         this.camera = camera;
-    }
-
-    public HexRenderer getHexRenderer() {
-        return hexRenderer;
-    }
-
-    public void setHexRenderer(HexRenderer hexRenderer) {
-        this.hexRenderer = hexRenderer;
-    }
-
-    public BuildingRenderer getBuildingRenderer() {
-        return buildingRenderer;
-    }
-
-    public void setBuildingRenderer(BuildingRenderer buildingRenderer) {
-        this.buildingRenderer = buildingRenderer;
+        for (AbstractRenderer layer : layers) {
+            layer.setCamera(camera);
+        }
     }
 }

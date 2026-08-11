@@ -7,15 +7,14 @@ import model.map.hex.Point;
 import model.map.hex.TerrainType;
 import util.HexMath;
 import view.camera.Camera;
+import view.render.AbstractRenderer;
 
 import java.awt.*;
 import java.awt.geom.Path2D;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class HexRenderer {
-    private GameState gameState;
-    private Camera camera;
+public class HexRenderer extends AbstractRenderer {
 
     private final Path2D.Double baseHex = new Path2D.Double();
     private final BasicStroke hexStroke = new BasicStroke(1.5f);
@@ -26,8 +25,7 @@ public class HexRenderer {
     private final Map<TerrainType, Color> terrainColors;
 
     public HexRenderer(GameState gameState, Camera camera) {
-        this.gameState = gameState;
-        this.camera = camera;
+        super(gameState , camera);
         this.terrainColors = new EnumMap<>(TerrainType.class);
         initializeColors();
         initializeSinCos();
@@ -51,23 +49,24 @@ public class HexRenderer {
         }
     }
 
+    @Override
     public void render(Graphics2D g2, int screenWidth, int screenHeight) {
-        if (gameState == null || gameState.getGameMap() == null) return;
+        if (getGameState() == null || getGameState().getGameMap() == null) return;
         renderHexes(g2, screenWidth, screenHeight);
     }
 
     private void renderHexes(Graphics2D g2, int screenWidth, int screenHeight){
-        double hexSize = camera.getHexSize();
-        double centerX = camera.getCenterX(screenWidth);
-        double centerY = camera.getCenterY(screenHeight);
+        double hexSize = getCamera().getHexSize();
+        double centerX = getCamera().getCenterX(screenWidth);
+        double centerY = getCamera().getCenterY(screenHeight);
 
         adjustBaseHex(hexSize);
 
-        for (Hex hex : gameState.getGameMap().getHexes().values()) {
+        for (Hex hex : getGameState().getGameMap().getHexes().values()) {
             drawHex(g2, hex, centerX, centerY, hexSize);
         }
 
-        Point selectedPoint = gameState.getSelectedHexPoint();
+        Point selectedPoint = getGameState().getSelectedHexPoint();
         if (selectedPoint != null) {
             drawSelectionHighlight(g2, selectedPoint, centerX, centerY, hexSize);
         }
@@ -117,21 +116,5 @@ public class HexRenderer {
             else baseHex.lineTo(x, y);
         }
         baseHex.closePath();
-    }
-
-    public GameState getGameState() {
-        return gameState;
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
-
-    public Camera getCamera() {
-        return camera;
-    }
-
-    public void setCamera(Camera camera) {
-        this.camera = camera;
     }
 }

@@ -5,29 +5,27 @@ import model.map.building.Building;
 import model.map.hex.Hex;
 import util.HexMath;
 import view.camera.Camera;
+import view.render.AbstractRenderer;
 
 import java.awt.*;
 
-public class BuildingRenderer {
-
-    private GameState gameState;
-    private Camera camera;
+public class BuildingRenderer extends AbstractRenderer {
 
     public BuildingRenderer(GameState gameState, Camera camera) {
-        this.gameState = gameState;
-        this.camera = camera;
+        super(gameState , camera);
     }
 
+    @Override
     public void render(Graphics2D g2, int screenWidth, int screenHeight) {
-        if (gameState == null || camera == null) return;
+        if (getGameState() == null || getCamera() == null) return;
 
-        double hexSize = camera.getHexSize();
-        double centerX = camera.getCenterX(screenWidth);
-        double centerY = camera.getCenterY(screenHeight);
+        double hexSize = getCamera().getHexSize();
+        double centerX = getCamera().getCenterX(screenWidth);
+        double centerY = getCamera().getCenterY(screenHeight);
 
         double bSize = hexSize * 0.5;
 
-        for (Building building : gameState.getBuildings()) {
+        for (Building building : getGameState().getBuildings()) {
             Hex hex = building.getLocation();
             if (hex == null) continue;
 
@@ -45,21 +43,5 @@ public class BuildingRenderer {
 
             g2.translate(-cx, -cy);
         }
-    }
-
-    public GameState getGameState() {
-        return gameState;
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
-
-    public Camera getCamera() {
-        return camera;
-    }
-
-    public void setCamera(Camera camera) {
-        this.camera = camera;
     }
 }
