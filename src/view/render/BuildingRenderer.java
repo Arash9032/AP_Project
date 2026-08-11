@@ -39,7 +39,9 @@ public class BuildingRenderer {
 
             g2.translate(cx, cy);
 
-            BuildingTypeRenderer.getFromType(building.getType()).drawBuilding(g2 , bSize, building.getHp());
+            Graphics2D g2d = (Graphics2D) g2.create();
+            BuildingTypeRenderer.getFromType(building.getType()).drawBuilding(g2 , bSize, building.getHp(), building.getMaximumHp());
+            g2d.dispose();
 
             g2.translate(-cx, -cy);
         }
