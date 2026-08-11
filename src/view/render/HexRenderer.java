@@ -14,6 +14,9 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class HexRenderer {
+    private GameState gameState;
+    private Camera camera;
+
     private final Path2D.Double baseHex = new Path2D.Double();
     private final BasicStroke hexStroke = new BasicStroke(1.5f);
     private final BasicStroke selectedHexStroke = new BasicStroke(3.0f);
@@ -22,7 +25,9 @@ public class HexRenderer {
     private final double[] cos = new double[6];
     private final Map<TerrainType, Color> terrainColors;
 
-    public HexRenderer() {
+    public HexRenderer(GameState gameState, Camera camera) {
+        this.gameState = gameState;
+        this.camera = camera;
         this.terrainColors = new EnumMap<>(TerrainType.class);
         initializeColors();
         initializeSinCos();
@@ -46,12 +51,12 @@ public class HexRenderer {
         }
     }
 
-    public void render(Graphics2D g2, GameState gameState, Camera camera, int screenWidth, int screenHeight) {
+    public void render(Graphics2D g2, int screenWidth, int screenHeight) {
         if (gameState == null || gameState.getGameMap() == null) return;
-        renderHexes(g2, gameState, camera, screenWidth, screenHeight);
+        renderHexes(g2, screenWidth, screenHeight);
     }
 
-    private void renderHexes(Graphics2D g2, GameState gameState, Camera camera, int screenWidth, int screenHeight){
+    private void renderHexes(Graphics2D g2, int screenWidth, int screenHeight){
         double hexSize = camera.getHexSize();
         double centerX = camera.getCenterX(screenWidth);
         double centerY = camera.getCenterY(screenHeight);
@@ -112,5 +117,21 @@ public class HexRenderer {
             else baseHex.lineTo(x, y);
         }
         baseHex.closePath();
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
     }
 }

@@ -7,6 +7,7 @@ import util.HexMath;
 import view.MainContentPane;
 import view.camera.Camera;
 import view.render.HexRenderer;
+import view.render.WorldRenderer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class GamePanel extends JPanel {
     private GameState gameState;
 
     private final Camera camera;
-    private final HexRenderer hexRenderer;
+    private final WorldRenderer worldRenderer;
 
     public GamePanel(MainContentPane mainContentPane, GameState gameState) {
         setBackground(Constants.GAME_BACKGROUND_COLOR);
@@ -25,7 +26,7 @@ public class GamePanel extends JPanel {
         this.gameState = gameState;
 
         this.camera = new Camera(Camera.MIN_HEX_SIZE);
-        this.hexRenderer = new HexRenderer();
+        worldRenderer = new WorldRenderer(gameState, camera);
     }
 
     public MainContentPane getMainContentPane() {
@@ -38,6 +39,7 @@ public class GamePanel extends JPanel {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+        worldRenderer.setGameState(gameState);
         repaint();
         revalidate();
     }
@@ -62,8 +64,12 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 
-        hexRenderer.render(g2, gameState, camera, getWidth(), getHeight());
+        worldRenderer.renderWorld(g2, getWidth(), getHeight());
 
         g2.dispose();
+    }
+
+    public WorldRenderer getWorldRenderer() {
+        return worldRenderer;
     }
 }
