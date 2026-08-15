@@ -25,6 +25,7 @@ public final class GameState {
     private Season season;
 
     private Point selectedHexPoint;
+    private Unit selectedUnit;
 
     public GameState() {
         units = new ArrayList<>();
@@ -160,5 +161,13 @@ public final class GameState {
         addUnit(UnitType.WORKER.createUnit(gameMap.getHex(0 , 0)));
         addUnit(UnitType.EXPLORER.createUnit(gameMap.getHex(0 , 0)));
         addBuilding(BuildingType.TOWN_HALL.createBuilding(gameMap.getHex(0 , 0)));
+    }
+
+    public Unit getSelectedUnit() {
+        return selectedUnit;
+    }
+
+    public void setSelectedUnit(Unit selectedUnit) {
+        this.selectedUnit = selectedUnit;
     }
 }
