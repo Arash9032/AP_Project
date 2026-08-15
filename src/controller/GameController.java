@@ -40,7 +40,7 @@ public final class GameController {
         gameContainer.getGamePanel().addMouseListener(dragListener);
         gameContainer.getGamePanel().addMouseMotionListener(dragListener);
 
-        SelectHexListener selectHexListener = new SelectHexListener(gameState , gameContainer.getGamePanel());
+        SelectHexListener selectHexListener = new SelectHexListener(gameState , gameContainer.getGamePanel(), gameContainer.getSideMenuPanel());
         gameContainer.getGamePanel().addMouseListener(selectHexListener);
     }
 
