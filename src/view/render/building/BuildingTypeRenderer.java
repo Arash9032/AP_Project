@@ -200,7 +200,7 @@ public enum BuildingTypeRenderer {
 
     public void drawBuilding(Graphics2D g2, double size, int hp, int maxHp, boolean detailed) {
         drawShape(g2, size);
-        if(detailed) drawHealthBar(g2, size, hp, maxHp);
+        if(detailed) drawHealthBar(g2, size / 1.5, hp, maxHp);
     }
 
     protected abstract void drawShape(Graphics2D g2, double size);
