@@ -2,6 +2,7 @@ package controller;
 
 import controller.uiux.CameraDragListener;
 import controller.uiux.SelectHexListener;
+import controller.uiux.SelectUnitListener;
 import controller.uiux.ZoomListener;
 import model.GameState;
 import view.GameContainer;
@@ -42,6 +43,9 @@ public final class GameController {
 
         SelectHexListener selectHexListener = new SelectHexListener(gameState , gameContainer.getGamePanel(), gameContainer.getSideMenuPanel());
         gameContainer.getGamePanel().addMouseListener(selectHexListener);
+
+        SelectUnitListener selectUnitListener = new SelectUnitListener(gameState);
+        gameContainer.getSideMenuPanel().getUnitList().addListSelectionListener(selectUnitListener);
     }
 
 }

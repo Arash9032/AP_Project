@@ -208,4 +208,8 @@ public class SideMenuPanel extends JPanel {
     public JButton getMoveButton() {
         return moveButton;
     }
+
+    public JList<Unit> getUnitList() {
+        return unitList;
+    }
 }
