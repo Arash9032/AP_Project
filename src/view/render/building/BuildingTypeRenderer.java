@@ -198,9 +198,9 @@ public enum BuildingTypeRenderer {
         throw new IllegalStateException("BuildingType " + type.name() + " doesn't have a BuildingTypeRenderer.");
     }
 
-    public void drawBuilding(Graphics2D g2, double size, int hp, int maxHp) {
+    public void drawBuilding(Graphics2D g2, double size, int hp, int maxHp, boolean detailed) {
         drawShape(g2, size);
-        drawHealthBar(g2, size, hp, maxHp);
+        if(detailed) drawHealthBar(g2, size, hp, maxHp);
     }
 
     protected abstract void drawShape(Graphics2D g2, double size);
@@ -210,7 +210,7 @@ public enum BuildingTypeRenderer {
 
         double hpPercentage = Math.max(0, (double) hp / maxHp);
         double barWidth = size * 1.2;
-        double barHeight = 4.0;
+        double barHeight = size / 8.0;
         double barX = -barWidth / 2;
         double barY = size / 2 + 4;
 

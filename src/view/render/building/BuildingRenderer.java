@@ -1,5 +1,6 @@
 package view.render.building;
 
+import config.Constants;
 import model.GameState;
 import model.map.building.Building;
 import model.map.hex.Hex;
@@ -38,7 +39,7 @@ public class BuildingRenderer extends AbstractRenderer {
             g2.translate(cx, cy);
 
             Graphics2D g2d = (Graphics2D) g2.create();
-            BuildingTypeRenderer.getFromType(building.getType()).drawBuilding(g2 , bSize, building.getHp(), building.getMaximumHp());
+            BuildingTypeRenderer.getFromType(building.getType()).drawBuilding(g2 , bSize, building.getHp(), building.getMaximumHp(), hexSize >= Constants.MINIMUM_DETAILED_SIZE);
             g2d.dispose();
 
             g2.translate(-cx, -cy);
