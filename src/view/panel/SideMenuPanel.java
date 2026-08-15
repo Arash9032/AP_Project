@@ -19,7 +19,6 @@ public class SideMenuPanel extends JPanel {
     private static final Font BODY_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 15);
     private static final Font BUTTON_FONT = new Font(Font.SANS_SERIF, Font.BOLD, 16);
 
-
     private static final Color PANEL_BG_COLOR = new Color(90, 0, 174);
     private static final Color LIST_BG_COLOR = new Color(55, 0, 105);
     private static final Color BUTTON_BG_COLOR = new Color(112, 0, 112);
@@ -30,9 +29,8 @@ public class SideMenuPanel extends JPanel {
     private final JLabel terrainLabel;
     private final JLabel isWithinBorder;
 
-    private final DefaultListModel<String> unitListModel;
-    private final JList<String> unitList;
-    private List<Unit> currentUnits;
+    private final DefaultListModel<Unit> unitListModel;
+    private final JList<Unit> unitList;
 
     private final JPanel actionPanel;
     private final JLabel selectedUnitLabel;
@@ -78,18 +76,17 @@ public class SideMenuPanel extends JPanel {
         return panel;
     }
 
-    private JList<String> createUnitList() {
-        JList<String> list = new JList<>(unitListModel);
+    private JList<Unit> createUnitList() {
+        JList<Unit> list = new JList<>(unitListModel);
         list.setFont(BODY_FONT);
         list.setBackground(LIST_BG_COLOR);
         list.setForeground(TEXT_COLOR);
-        list.setSelectionBackground(BUTTON_BG_COLOR);
-        list.setSelectionForeground(TEXT_COLOR);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setCellRenderer(new UnitListCellRenderer(LIST_BG_COLOR, BUTTON_BG_COLOR, TEXT_COLOR));
 
         list.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                handleUnitSelection(list.getSelectedIndex());
+                handleUnitSelection(list.getSelectedValue());
             }
         });
         return list;
@@ -122,14 +119,14 @@ public class SideMenuPanel extends JPanel {
             public void mouseEntered(MouseEvent e) {
                 if(button.isEnabled()){
                     button.setBackground(ACCENT_BORDER_COLOR);
-                    button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                    button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 }
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 button.setBackground(BUTTON_BG_COLOR);
-                button.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                button.setCursor(Cursor.getDefaultCursor());
             }
         });
         return button;
@@ -176,23 +173,20 @@ public class SideMenuPanel extends JPanel {
         terrainLabel.setText("Terrain: " + hex.getTerrain().name());
         isWithinBorder.setText("Is Within Border: " + (hex.isWithinBorder() ? "YES" : "NO"));
 
-        this.currentUnits = units;
         unitListModel.clear();
-
         for (Unit unit : units) {
-            unitListModel.addElement(unit.getUnitType().name() + " [HP: " + unit.getHp() + "/" + unit.getMaximumHp() + "]");
+            unitListModel.addElement(unit);
         }
 
         resetUnitSelection();
     }
 
-    private void handleUnitSelection(int index) {
-        if (index < 0 || currentUnits == null || index >= currentUnits.size()) {
+    private void handleUnitSelection(Unit selectedUnit) {
+        if (selectedUnit == null) {
             resetUnitSelection();
             return;
         }
 
-        Unit selectedUnit = currentUnits.get(index);
         selectedUnitLabel.setText(selectedUnit.getUnitType().name() + " Selected");
         moveButton.setEnabled(true);
     }
@@ -208,7 +202,6 @@ public class SideMenuPanel extends JPanel {
         terrainLabel.setText("Terrain: -");
         isWithinBorder.setText("Is Within Border: -");
         unitListModel.clear();
-        currentUnits = null;
         resetUnitSelection();
     }
 
