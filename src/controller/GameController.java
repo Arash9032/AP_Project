@@ -1,8 +1,8 @@
 package controller;
 
-import controller.ux.CameraDragListener;
-import controller.ux.SelectHexListener;
-import controller.ux.ZoomListener;
+import controller.uiux.CameraDragListener;
+import controller.uiux.SelectHexListener;
+import controller.uiux.ZoomListener;
 import model.GameState;
 import view.GameContainer;
 

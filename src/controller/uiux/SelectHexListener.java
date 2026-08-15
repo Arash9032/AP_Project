@@ -1,4 +1,4 @@
-package controller.ux;
+package controller.uiux;
 
 import model.GameState;
 import view.panel.GamePanel;
