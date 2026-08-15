@@ -18,7 +18,7 @@ public class MainContentPane extends JPanel {
         layout = new CardLayout();
         setLayout(layout);
         addStaticPanels();
-        gamePanel = new GamePanel(this , engine.getGameState());
+        gamePanel = new GamePanel(engine.getGameState());
         add(gamePanel , GAME_PANEL_KEY);
     }
 

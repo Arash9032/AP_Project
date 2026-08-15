@@ -4,7 +4,6 @@ import config.Constants;
 import model.GameState;
 import model.map.hex.Point;
 import util.HexMath;
-import view.MainContentPane;
 import view.camera.Camera;
 import view.render.WorldRenderer;
 
@@ -13,23 +12,17 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    private final MainContentPane mainContentPane;
     private GameState gameState;
 
     private final Camera camera;
     private final WorldRenderer worldRenderer;
 
-    public GamePanel(MainContentPane mainContentPane, GameState gameState) {
+    public GamePanel(GameState gameState) {
         setBackground(Constants.GAME_BACKGROUND_COLOR);
-        this.mainContentPane = mainContentPane;
         this.gameState = gameState;
 
         this.camera = new Camera(Camera.MIN_HEX_SIZE);
         worldRenderer = new WorldRenderer(gameState, camera);
-    }
-
-    public MainContentPane getMainContentPane() {
-        return mainContentPane;
     }
 
     public GameState getGameState() {
