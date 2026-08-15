@@ -183,4 +183,8 @@ public enum UnitTypeRenderer {
         g2.setStroke(THIN_STROKE);
         g2.draw(hpBgRect);
     }
+
+    public BufferedImage getIcon() {
+        return icon;
+    }
 }
