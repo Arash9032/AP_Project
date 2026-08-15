@@ -71,7 +71,8 @@ public class UnitRenderer extends AbstractRenderer {
                         uSize,
                         unit.getHp(),
                         unit.getMaximumHp(),
-                        hexSize >= Constants.MINIMUM_DETAILED_SIZE
+                        hexSize >= Constants.MINIMUM_DETAILED_SIZE,
+                        unit == getGameState().getSelectedUnit()
                 );
 
                 g2.translate(-ux, -uy);

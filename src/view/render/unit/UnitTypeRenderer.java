@@ -116,6 +116,11 @@ public enum UnitTypeRenderer {
 
     private static final Map<UnitType, UnitTypeRenderer> MAP = new EnumMap<>(UnitType.class);
     private static final BasicStroke THIN_STROKE = new BasicStroke(1.0f);
+    private static final Color GLOW_CENTER_COLOR = new Color(255, 255, 0, 255);
+    private static final Color GLOW_MIDDLE_COLOR = new Color(255, 255, 0, 150);
+    private static final Color GLOW_EDGE_COLOR = new Color(255, 255, 0, 0);
+    private static final float[] GLOW_FRACTIONS = {0.0f, 0.5f, 1.0f};
+    private static final Color[] GLOW_COLORS = {GLOW_CENTER_COLOR, GLOW_MIDDLE_COLOR, GLOW_EDGE_COLOR};
 
     static {
         for (UnitTypeRenderer e : UnitTypeRenderer.values()) {
@@ -148,7 +153,15 @@ public enum UnitTypeRenderer {
         throw new IllegalStateException("UnitType " + type.name() + " doesn't have a UnitTypeRenderer.");
     }
 
-    public void drawUnit(Graphics2D g2, double size, int hp, int maxHp, boolean detailed) {
+    public void drawUnit(Graphics2D g2, double size, int hp, int maxHp, boolean detailed, boolean isSelected) {
+        if (isSelected && detailed) {
+            int haloSize = (int) (size * 1.4);
+            int haloOffset = -haloSize / 2;
+            float radius = haloSize / 2f;
+            RadialGradientPaint gradient = new RadialGradientPaint(0f , 0f , radius, GLOW_FRACTIONS, GLOW_COLORS);
+            g2.setPaint(gradient);
+            g2.fillOval(haloOffset, haloOffset, haloSize, haloSize);
+        }
         if (icon != null) {
             int iconSize = (int) size;
             int centerOffset = -iconSize / 2;
