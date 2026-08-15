@@ -2,24 +2,26 @@ package view;
 
 import controller.GameEngine;
 import view.panel.GamePanel;
+import view.panel.SideMenuPanel;
 import view.panel.StaticPanelType;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainContentPane extends JPanel {
-    private static final String GAME_PANEL_KEY = "ACTIVE_GAME";
+    private static final String GAME_CONTAINER_KEY = "ACTIVE_GAME";
 
     private final CardLayout layout;
     private final GameEngine engine;
-    private final GamePanel gamePanel;
+    private final GameContainer gameContainer;
+
     public MainContentPane(GameEngine engine) {
         this.engine = engine;
         layout = new CardLayout();
         setLayout(layout);
         addStaticPanels();
-        gamePanel = new GamePanel(engine.getGameState());
-        add(gamePanel , GAME_PANEL_KEY);
+        gameContainer = new GameContainer(new GamePanel(engine.getGameState()) , new SideMenuPanel());
+        add(gameContainer , GAME_CONTAINER_KEY);
     }
 
     private void addStaticPanels(){
@@ -34,8 +36,8 @@ public class MainContentPane extends JPanel {
 
     public void startNewGame(){
         engine.startNewGame();
-        gamePanel.setGameState(engine.getGameState());
-        layout.show(this , GAME_PANEL_KEY);
+        gameContainer.getGamePanel().setGameState(engine.getGameState());
+        layout.show(this , GAME_CONTAINER_KEY);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class MainContentPane extends JPanel {
         return engine;
     }
 
-    public GamePanel getGamePanel() {
-        return gamePanel;
+    public GameContainer getGameContainer() {
+        return gameContainer;
     }
 }

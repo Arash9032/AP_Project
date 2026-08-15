@@ -4,15 +4,15 @@ import controller.ux.CameraDragListener;
 import controller.ux.SelectHexListener;
 import controller.ux.ZoomListener;
 import model.GameState;
-import view.panel.GamePanel;
+import view.GameContainer;
 
 public final class GameController {
     private GameState gameState;
-    private GamePanel gamePanel;
+    private GameContainer gameContainer;
 
-    public GameController(GameState gameState, GamePanel gamePanel) {
+    public GameController(GameState gameState, GameContainer gameContainer) {
         this.gameState = gameState;
-        this.gamePanel = gamePanel;
+        this.gameContainer = gameContainer;
         registerListeners();
     }
 
@@ -24,24 +24,24 @@ public final class GameController {
         this.gameState = gameState;
     }
 
-    public GamePanel getGamePanel() {
-        return gamePanel;
+    public GameContainer getGameContainer() {
+        return gameContainer;
     }
 
-    public void setGamePanel(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    public void setGameContainer(GameContainer gameContainer) {
+        this.gameContainer = gameContainer;
     }
 
     private void registerListeners(){
-        ZoomListener zoomListener = new ZoomListener(gamePanel);
-        gamePanel.addMouseWheelListener(zoomListener);
+        ZoomListener zoomListener = new ZoomListener(gameContainer.getGamePanel());
+        gameContainer.getGamePanel().addMouseWheelListener(zoomListener);
 
-        CameraDragListener dragListener = new CameraDragListener(gamePanel);
-        gamePanel.addMouseListener(dragListener);
-        gamePanel.addMouseMotionListener(dragListener);
+        CameraDragListener dragListener = new CameraDragListener(gameContainer.getGamePanel());
+        gameContainer.getGamePanel().addMouseListener(dragListener);
+        gameContainer.getGamePanel().addMouseMotionListener(dragListener);
 
-        SelectHexListener selectHexListener = new SelectHexListener(gameState , gamePanel);
-        gamePanel.addMouseListener(selectHexListener);
+        SelectHexListener selectHexListener = new SelectHexListener(gameState , gameContainer.getGamePanel());
+        gameContainer.getGamePanel().addMouseListener(selectHexListener);
     }
 
 }

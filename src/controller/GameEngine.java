@@ -2,7 +2,6 @@ package controller;
 
 import config.Constants;
 import model.GameState;
-import model.map.MapGenerator;
 import view.MainFrame;
 
 import javax.swing.*;
@@ -17,8 +16,8 @@ public final class GameEngine {
         mainFrame = new MainFrame(this);
         timer = new Timer(1000/ Constants.FRAME_RATE, e ->
         {
-            if(mainFrame != null && mainFrame.getMainContentPane() != null && mainFrame.getMainContentPane().getGamePanel() != null)
-                mainFrame.getMainContentPane().getGamePanel().repaint();
+            if(mainFrame != null && mainFrame.getMainContentPane() != null && mainFrame.getMainContentPane().getGameContainer() != null && mainFrame.getMainContentPane().getGameContainer().getGamePanel() != null)
+                mainFrame.getMainContentPane().getGameContainer().getGamePanel().repaint();
         });
     }
 
@@ -40,7 +39,7 @@ public final class GameEngine {
 
     public void startNewGame(){
         gameState = GameState.generateNewGameState();
-        controller = new GameController(gameState , mainFrame.getMainContentPane().getGamePanel());
+        controller = new GameController(gameState , mainFrame.getMainContentPane().getGameContainer());
         timer.start();
     }
 }
