@@ -175,4 +175,6 @@ public final class Constants {
     public static final int FRAME_RATE = 60;
 
     public static final int SEASON_DURATION_IN_TURN = 10;
+
+    public static final int MINIMUM_DETAILED_SIZE = 50;
 }
