@@ -4,6 +4,7 @@ import model.GameState;
 import view.camera.Camera;
 import view.render.building.BuildingRenderer;
 import view.render.hex.HexRenderer;
+import view.render.unit.UnitRenderer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,10 +19,13 @@ public class WorldRenderer {
         this.gameState = gameState;
         this.camera = camera;
         this.layers = new ArrayList<>();
+        initLayers();
+    }
 
+    private void initLayers(){
         layers.add(new HexRenderer(gameState, camera));
         layers.add(new BuildingRenderer(gameState, camera));
-
+        layers.add(new UnitRenderer(gameState , camera));
     }
 
     public void renderWorld(Graphics2D g2, int screenWidth, int screenHeight) {
