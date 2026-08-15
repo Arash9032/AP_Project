@@ -1,17 +1,20 @@
 package view.panel;
 
-
 import model.map.hex.Hex;
 import model.unit.Unit;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.List;
 
 public class SideMenuPanel extends JPanel {
 
     private static final int PANEL_WIDTH = 260;
+    private static final Font TITLE_FONT = new Font(Font.SANS_SERIF, Font.BOLD, 17);
+    private static final Font BODY_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 15);
+    private static final Font BUTTON_FONT = new Font(Font.SANS_SERIF, Font.BOLD, 16);
 
     private final JLabel coordinateLabel;
     private final JLabel terrainLabel;
@@ -26,57 +29,91 @@ public class SideMenuPanel extends JPanel {
     private final JButton moveButton;
 
     public SideMenuPanel() {
-        setPreferredSize(new Dimension(PANEL_WIDTH, 0));
-        setLayout(new BorderLayout(0, 10));
-        setBorder(new EmptyBorder(10, 10, 10, 10));
+        setupPanelLayout();
 
-        JPanel hexInfoPanel = createHexInfoPanel();
-        add(hexInfoPanel, BorderLayout.NORTH);
-
-        coordinateLabel = new JLabel("Coordinates: -");
-        terrainLabel = new JLabel("Terrain: -");
-        isWithinBorder = new JLabel("Is Within Border: -");
-
-        hexInfoPanel.add(coordinateLabel);
-        hexInfoPanel.add(terrainLabel);
-        hexInfoPanel.add(isWithinBorder);
+        coordinateLabel = createLabel("Coordinates: -", BODY_FONT);
+        terrainLabel = createLabel("Terrain: -", BODY_FONT);
+        isWithinBorder = createLabel("Is Within Border: -", BODY_FONT);
+        add(createHexInfoSection(), BorderLayout.NORTH);
 
         unitListModel = new DefaultListModel<>();
-        unitList = new JList<>(unitListModel);
-        unitList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        unitList.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                handleUnitSelection(unitList.getSelectedIndex());
-            }
-        });
+        unitList = createUnitList();
+        add(createUnitListSection(), BorderLayout.CENTER);
 
-        JScrollPane unitScrollPane = new JScrollPane(unitList);
-        unitScrollPane.setBorder(BorderFactory.createTitledBorder("Units in Hex"));
-        add(unitScrollPane, BorderLayout.CENTER);
-
-        actionPanel = new JPanel();
-        actionPanel.setLayout(new BoxLayout(actionPanel, BoxLayout.Y_AXIS));
-        actionPanel.setBorder(BorderFactory.createTitledBorder("Unit Actions"));
-
-        selectedUnitLabel = new JLabel("No unit selected");
-        selectedUnitLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        moveButton = new JButton("Move Unit");
-        moveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        moveButton.setEnabled(false);
-
-        actionPanel.add(selectedUnitLabel);
-        actionPanel.add(Box.createVerticalStrut(10));
-        actionPanel.add(moveButton);
-
+        selectedUnitLabel = createLabel("No unit selected", TITLE_FONT);
+        moveButton = createMoveButton();
+        actionPanel = createActionSection();
         add(actionPanel, BorderLayout.SOUTH);
     }
 
-    private JPanel createHexInfoPanel() {
+    private void setupPanelLayout() {
+        setPreferredSize(new Dimension(PANEL_WIDTH, 0));
+        setLayout(new BorderLayout(0, 10));
+        setBorder(new EmptyBorder(10, 10, 10, 10));
+    }
+
+    private JPanel createHexInfoSection() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createTitledBorder("Hex Info"));
+        panel.setBorder(createTitledBorder("Hex Info"));
+
+        panel.add(coordinateLabel);
+        panel.add(terrainLabel);
+        panel.add(isWithinBorder);
+
         return panel;
+    }
+
+    private JList<String> createUnitList() {
+        JList<String> list = new JList<>(unitListModel);
+        list.setFont(BODY_FONT);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                handleUnitSelection(list.getSelectedIndex());
+            }
+        });
+        return list;
+    }
+
+    private JScrollPane createUnitListSection() {
+        JScrollPane scrollPane = new JScrollPane(unitList);
+        scrollPane.setBorder(createTitledBorder("Units in Hex"));
+        return scrollPane;
+    }
+
+    private JButton createMoveButton() {
+        JButton button = new JButton("Move Unit");
+        button.setFont(BUTTON_FONT);
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setEnabled(false);
+        return button;
+    }
+
+    private JPanel createActionSection() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(createTitledBorder("Unit Actions"));
+
+        selectedUnitLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        panel.add(selectedUnitLabel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(moveButton);
+
+        return panel;
+    }
+
+    private JLabel createLabel(String text, Font font) {
+        JLabel label = new JLabel(text);
+        label.setFont(font);
+        return label;
+    }
+
+    private TitledBorder createTitledBorder(String title) {
+        TitledBorder border = BorderFactory.createTitledBorder(title);
+        border.setTitleFont(TITLE_FONT);
+        return border;
     }
 
     public void updateSelectedHex(Hex hex, List<Unit> units) {
