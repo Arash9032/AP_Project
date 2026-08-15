@@ -6,6 +6,7 @@ import model.map.building.BuildingType;
 import model.map.building.production.ProductionBuilding;
 import model.map.building.townhall.TownHall;
 import model.map.edge.Wall;
+import model.map.hex.Hex;
 import model.map.hex.Point;
 import model.unit.Unit;
 import model.unit.UnitType;
@@ -13,6 +14,7 @@ import model.unit.UnitType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class GameState {
     private GameMap gameMap;
@@ -169,5 +171,11 @@ public final class GameState {
 
     public void setSelectedUnit(Unit selectedUnit) {
         this.selectedUnit = selectedUnit;
+    }
+
+    public List<Unit> getUnitsInHex(Hex targetHex){
+        return Collections.unmodifiableList(units.stream()
+                .filter(unit -> targetHex.getCoordinate().equals(unit.getCurrentHex().getCoordinate()))
+                .collect(Collectors.toList()));
     }
 }
