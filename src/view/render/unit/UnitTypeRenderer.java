@@ -13,7 +13,7 @@ import java.util.Map;
 
 public enum UnitTypeRenderer {
 
-    WORKER(UnitType.WORKER, "/resources/icon/unit/worker.png") {
+    WORKER(UnitType.WORKER, "/resources/icons/unit/worker.png") {
         private final Ellipse2D.Double workerShape = new Ellipse2D.Double();
 
         @Override
@@ -27,7 +27,7 @@ public enum UnitTypeRenderer {
             g2.draw(workerShape);
         }
     },
-    BUILDER(UnitType.BUILDER, "/resources/icon/unit/builder.png") {
+    BUILDER(UnitType.BUILDER, "/resources/icons/unit/builder.png") {
         private final Path2D.Double builderShape = new Path2D.Double();
 
         @Override
@@ -56,7 +56,7 @@ public enum UnitTypeRenderer {
             g2.draw(builderShape);
         }
     },
-    EXPLORER(UnitType.EXPLORER, "/resources/icon/unit/explorer.png") {
+    EXPLORER(UnitType.EXPLORER, "/resources/icons/unit/explorer.png") {
         private final Path2D.Double explorerTopShape = new Path2D.Double();
         private final Path2D.Double explorerBottomShape = new Path2D.Double();
 
@@ -87,7 +87,7 @@ public enum UnitTypeRenderer {
             g2.draw(explorerBottomShape);
         }
     },
-    BORDER_EXPANDER(UnitType.BORDER_EXPANDER, "/resources/icon/unit/border_expander.png") {
+    BORDER_EXPANDER(UnitType.BORDER_EXPANDER, "/resources/icons/unit/border_expander.png") {
         private final Rectangle2D.Double flagPoleShape = new Rectangle2D.Double();
         private final Path2D.Double flagClothShape = new Path2D.Double();
 
