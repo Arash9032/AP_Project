@@ -19,7 +19,7 @@ public enum BuildingType {
             new CostBuilder().add(InventoryResource.WOOD , Constants.LUMBER_MILL_WOOD_UPKEEP).build()
             ) {
         @Override
-        public Building createBuilding(Hex location) {
+        public Building createInstance(Hex location) {
             return new LumberMill(location);
         }
     },
@@ -29,7 +29,7 @@ public enum BuildingType {
             new CostBuilder().add(InventoryResource.WOOD , Constants.FARM_WOOD_UPKEEP).build()
     ) {
         @Override
-        public Building createBuilding(Hex location) {
+        public Building createInstance(Hex location) {
             return new Farm(location);
         }
     },
@@ -39,7 +39,7 @@ public enum BuildingType {
             new CostBuilder().add(InventoryResource.WOOD , Constants.STONE_MINE_WOOD_UPKEEP).build()
     ) {
         @Override
-        public Building createBuilding(Hex location) {
+        public Building createInstance(Hex location) {
             return new StoneMine(location);
         }
     },
@@ -49,7 +49,7 @@ public enum BuildingType {
             new CostBuilder().add(InventoryResource.WOOD , Constants.IRON_MINE_WOOD_UPKEEP).build()
     ) {
         @Override
-        public Building createBuilding(Hex location) {
+        public Building createInstance(Hex location) {
             return new IronMine(location);
         }
     },
@@ -59,7 +59,7 @@ public enum BuildingType {
             new CostBuilder().add(InventoryResource.WOOD , Constants.STABLE_WOOD_UPKEEP).build()
     ) {
         @Override
-        public Building createBuilding(Hex location) {
+        public Building createInstance(Hex location) {
             return new Stable(location);
         }
     },
@@ -75,7 +75,7 @@ public enum BuildingType {
                     .build()
     ) {
         @Override
-        public Building createBuilding(Hex location) {
+        public Building createInstance(Hex location) {
             return new Village(location);
         }
     },
@@ -91,7 +91,7 @@ public enum BuildingType {
                     .build()
     ) {
         @Override
-        public Building createBuilding(Hex location) {
+        public Building createInstance(Hex location) {
             return new Town(location);
         }
     },
@@ -102,7 +102,7 @@ public enum BuildingType {
 
     ) {
         @Override
-        public Building createBuilding(Hex location) {
+        public Building createInstance(Hex location) {
             if(!location.getCoordinate().equals(new Point(0,0))) throw new UnsupportedOperationException("Town hall cannot be built on any hex other than (0,0)");
             return new TownHall(location);
         }
@@ -125,7 +125,13 @@ public enum BuildingType {
         return constructionApCost;
     }
 
-    public abstract Building createBuilding(Hex location);
+    protected abstract Building createInstance(Hex location);
+
+    public Building createBuilding(Hex location){
+        Building building = createInstance(location);
+        location.setBuilding(building);
+        return building;
+    }
 
     public Map<InventoryResource, Integer> getConstructionCost() {
         return constructionCost;

@@ -1,5 +1,7 @@
 package model.map.hex;
 
+import model.map.building.Building;
+
 public class Hex {
     private final Point coordinate;
 
@@ -9,6 +11,8 @@ public class Hex {
 
     private boolean isExplored;
     private boolean isWithinBorder;
+
+    private Building building;
 
     public Hex(int q, int r, TerrainType terrain, HexResource resource, int resourceCapacity) {
         this.coordinate = new Point(q , r);
@@ -83,5 +87,13 @@ public class Hex {
 
     public void setWithinBorder(boolean withinBorder) {
         isWithinBorder = withinBorder;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 }
