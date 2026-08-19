@@ -29,6 +29,7 @@ public final class MapGenerator {
         assignResources(map);
         ensureTownHallConstraints(map);
         generateEdges(map);
+        generateRivers(map);
         return map;
     }
 
@@ -225,6 +226,35 @@ public final class MapGenerator {
                 if(map.getEdge(edgeKey) == null){
                     map.addEdge(edgeKey, new HexEdge(false));
                 }
+            }
+        }
+    }
+
+    private static void generateRivers(GameMap map) {
+        List<EdgeKey> allEdges = new ArrayList<>(map.getEdges().keySet());
+
+        for (int i = 0; i < Constants.RIVER_COUNT; i++) {
+            EdgeKey currentEdgeKey = getRandomElement(allEdges);
+            int riverLength = RANDOM.nextInt(Constants.MINIMUM_RIVER_LENGTH , Constants.MAXIMUM_RIVER_LENGTH + 1);
+
+            for (int step = 0; step < riverLength; step++) {
+                HexEdge edge = map.getEdge(currentEdgeKey);
+                if (edge != null) {
+                    edge.setHasRiver(true);
+                }
+
+                List<EdgeKey> adjacentEdges = map.getAdjacentEdges(currentEdgeKey);
+
+                adjacentEdges.removeIf(key -> {
+                    HexEdge e = map.getEdge(key);
+                    return e == null || e.hasRiver();
+                });
+
+                if (adjacentEdges.isEmpty()) {
+                    break;
+                }
+
+                currentEdgeKey = getRandomElement(adjacentEdges);
             }
         }
     }
