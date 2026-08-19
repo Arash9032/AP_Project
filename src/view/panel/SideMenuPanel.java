@@ -1,7 +1,9 @@
 package view.panel;
 
+import model.map.building.Building;
 import model.map.hex.Hex;
 import model.unit.Unit;
+import view.render.building.BuildingTypeRenderer;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,6 +12,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class SideMenuPanel extends JPanel {
@@ -29,6 +32,10 @@ public class SideMenuPanel extends JPanel {
     private final JLabel terrainLabel;
     private final JLabel isWithinBorder;
 
+    private final JLabel buildingNameLabel;
+    private final JLabel buildingStatusLabel;
+    private final JButton buildingActionButton;
+
     private final DefaultListModel<Unit> unitListModel;
     private final JList<Unit> unitList;
 
@@ -44,12 +51,22 @@ public class SideMenuPanel extends JPanel {
         isWithinBorder = createLabel("Is Within Border: -", BODY_FONT);
         add(createHexInfoSection(), BorderLayout.NORTH);
 
+        JPanel centerWrapper = new JPanel(new BorderLayout(0, 10));
+        centerWrapper.setBackground(PANEL_BG_COLOR);
+
+        buildingNameLabel = createLabel("No Building", TITLE_FONT);
+        buildingStatusLabel = createLabel("HP: -", BODY_FONT);
+        buildingActionButton = createStyledButton("Interact");
+        centerWrapper.add(createBuildingInfoSection(), BorderLayout.NORTH);
+
         unitListModel = new DefaultListModel<>();
         unitList = createUnitList();
-        add(createUnitListSection(), BorderLayout.CENTER);
+        centerWrapper.add(createUnitListSection(), BorderLayout.CENTER);
+
+        add(centerWrapper, BorderLayout.CENTER);
 
         selectedUnitLabel = createLabel("No unit selected", TITLE_FONT);
-        moveButton = createMoveButton();
+        moveButton = createStyledButton("Move Unit");
         actionPanel = createActionSection();
         add(actionPanel, BorderLayout.SOUTH);
     }
@@ -72,6 +89,30 @@ public class SideMenuPanel extends JPanel {
         panel.add(terrainLabel);
         panel.add(Box.createVerticalStrut(5));
         panel.add(isWithinBorder);
+
+        return panel;
+    }
+
+    private JPanel createBuildingInfoSection() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(createTitledBorder("Building in Hex"));
+        panel.setBackground(PANEL_BG_COLOR);
+
+        buildingNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buildingNameLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
+
+        buildingStatusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buildingActionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buildingActionButton.setEnabled(false);
+
+        panel.add(Box.createVerticalStrut(5));
+        panel.add(buildingNameLabel);
+        panel.add(Box.createVerticalStrut(5));
+        panel.add(buildingStatusLabel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(buildingActionButton);
+        panel.add(Box.createVerticalStrut(5));
 
         return panel;
     }
@@ -100,10 +141,9 @@ public class SideMenuPanel extends JPanel {
         return scrollPane;
     }
 
-    private JButton createMoveButton() {
-        JButton button = new JButton("Move Unit");
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
         button.setFont(BUTTON_FONT);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setEnabled(false);
 
         button.setBackground(BUTTON_BG_COLOR);
@@ -117,7 +157,7 @@ public class SideMenuPanel extends JPanel {
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                if(button.isEnabled()){
+                if (button.isEnabled()) {
                     button.setBackground(ACCENT_BORDER_COLOR);
                     button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 }
@@ -139,6 +179,7 @@ public class SideMenuPanel extends JPanel {
         panel.setBackground(PANEL_BG_COLOR);
 
         selectedUnitLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        moveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         panel.add(selectedUnitLabel);
         panel.add(Box.createVerticalStrut(15));
@@ -173,6 +214,19 @@ public class SideMenuPanel extends JPanel {
         terrainLabel.setText("Terrain: " + hex.getTerrain().name());
         isWithinBorder.setText("Is Within Border: " + (hex.isWithinBorder() ? "YES" : "NO"));
 
+        Building building = hex.getBuilding();
+        if (building != null) {
+            buildingNameLabel.setText(building.getClass().getSimpleName());
+            buildingNameLabel.setIcon(getScaledBuildingIcon(building));
+            buildingStatusLabel.setText("HP: " + building.getHp());
+            buildingActionButton.setEnabled(true);
+        } else {
+            buildingNameLabel.setText("No Building");
+            buildingNameLabel.setIcon(null);
+            buildingStatusLabel.setText("HP: -");
+            buildingActionButton.setEnabled(false);
+        }
+
         unitListModel.clear();
         for (Unit unit : units) {
             unitListModel.addElement(unit);
@@ -201,6 +255,12 @@ public class SideMenuPanel extends JPanel {
         coordinateLabel.setText("Coordinates: -");
         terrainLabel.setText("Terrain: -");
         isWithinBorder.setText("Is Within Border: -");
+
+        buildingNameLabel.setText("No Building");
+        buildingNameLabel.setIcon(null);
+        buildingStatusLabel.setText("HP: -");
+        buildingActionButton.setEnabled(false);
+
         unitListModel.clear();
         resetUnitSelection();
     }
@@ -211,5 +271,20 @@ public class SideMenuPanel extends JPanel {
 
     public JList<Unit> getUnitList() {
         return unitList;
+    }
+
+    public JButton getBuildingActionButton() {
+        return buildingActionButton;
+    }
+
+    private ImageIcon getScaledBuildingIcon(Building building) {
+        BufferedImage originalImage = BuildingTypeRenderer.getFromType(building.getType()).getBuildingIcon();
+
+        if (originalImage != null) {
+            Image scaledImage = originalImage.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            return new ImageIcon(scaledImage);
+        }
+
+        return null;
     }
 }
