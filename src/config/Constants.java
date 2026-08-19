@@ -177,4 +177,8 @@ public final class Constants {
     public static final int SEASON_DURATION_IN_TURN = 10;
 
     public static final int MINIMUM_DETAILED_SIZE = 50;
+
+    public static final int RIVER_COUNT = Math.max(1 , MAP_RADIUS / 3);
+    public static final int MINIMUM_RIVER_LENGTH = RIVER_COUNT;
+    public static final int MAXIMUM_RIVER_LENGTH = MAP_RADIUS;
 }
