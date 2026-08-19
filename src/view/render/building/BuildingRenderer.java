@@ -12,8 +12,10 @@ import java.awt.*;
 
 public class BuildingRenderer extends AbstractRenderer {
 
+    private static final double BASE_HEX_SIZE = 100.0;
+
     public BuildingRenderer(GameState gameState, Camera camera) {
-        super(gameState , camera);
+        super(gameState, camera);
     }
 
     @Override
@@ -21,10 +23,13 @@ public class BuildingRenderer extends AbstractRenderer {
         if (getGameState() == null || getCamera() == null) return;
 
         double hexSize = getCamera().getHexSize();
+        boolean isDetailed = hexSize >= Constants.MINIMUM_DETAILED_SIZE;
+
+        double zoom = hexSize / BASE_HEX_SIZE;
         double centerX = getCamera().getCenterX(screenWidth);
         double centerY = getCamera().getCenterY(screenHeight);
 
-        double bSize = hexSize * 0.5;
+        double bSize = BASE_HEX_SIZE * 0.5;
 
         for (Building building : getGameState().getBuildings()) {
             Hex hex = building.getLocation();
@@ -33,16 +38,28 @@ public class BuildingRenderer extends AbstractRenderer {
             int q = hex.getCoordinate().getQ();
             int r = hex.getCoordinate().getR();
 
-            double cx = centerX + hexSize * HexMath.SQRT_3 * (q + r / 2.0);
-            double cy = centerY + hexSize * 3.0 / 2.0 * r;
+            double worldX = BASE_HEX_SIZE * HexMath.SQRT_3 * (q + r / 2.0);
+            double worldY = BASE_HEX_SIZE * 3.0 / 2.0 * r;
 
-            g2.translate(cx, cy);
+            double screenX = centerX + worldX * zoom;
+            double screenY = centerY + worldY * zoom;
 
-            Graphics2D g2d = (Graphics2D) g2.create();
-            BuildingTypeRenderer.getFromType(building.getType()).drawBuilding(g2 , bSize, building.getHp(), building.getMaximumHp(), hexSize >= Constants.MINIMUM_DETAILED_SIZE);
-            g2d.dispose();
+            if (!isHexInSight(screenX, screenY, hexSize, screenWidth, screenHeight)) {
+                continue;
+            }
 
-            g2.translate(-cx, -cy);
+            g2.translate(worldX, worldY);
+
+            BuildingTypeRenderer.getFromType(building.getType()).drawBuilding(
+                    g2, bSize, building.getHp(), building.getMaximumHp(), isDetailed
+            );
+
+            g2.translate(-worldX, -worldY);
         }
+    }
+
+    private boolean isHexInSight(double cx, double cy, double hexSize, int screenWidth, int screenHeight) {
+        return !(cx + hexSize < 0 || cx - hexSize > screenWidth ||
+                cy + hexSize < 0 || cy - hexSize > screenHeight);
     }
 }

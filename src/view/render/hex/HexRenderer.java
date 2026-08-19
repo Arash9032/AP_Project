@@ -2,6 +2,8 @@ package view.render.hex;
 
 import config.Constants;
 import model.GameState;
+import model.map.edge.EdgeKey;
+import model.map.edge.HexEdge;
 import model.map.hex.Hex;
 import model.map.hex.Point;
 import model.map.hex.TerrainType;
@@ -10,25 +12,33 @@ import view.camera.Camera;
 import view.render.AbstractRenderer;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.util.EnumMap;
 import java.util.Map;
 
 public class HexRenderer extends AbstractRenderer {
 
+    private static final double BASE_HEX_SIZE = 100.0;
+    private static final double HEX_DRAW_RATIO = 0.92;
+
     private final Path2D.Double baseHex = new Path2D.Double();
+    private final Line2D.Double edgeLine = new Line2D.Double();
+
     private final BasicStroke hexStroke = new BasicStroke(1.5f);
-    private final BasicStroke selectedHexStroke = new BasicStroke(3.0f);
+    private final BasicStroke selectedHexStroke = new BasicStroke(4.0f);
+    private final BasicStroke riverStroke = new BasicStroke(8.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
     private final double[] sin = new double[6];
     private final double[] cos = new double[6];
     private final Map<TerrainType, Color> terrainColors;
 
     public HexRenderer(GameState gameState, Camera camera) {
-        super(gameState , camera);
+        super(gameState, camera);
         this.terrainColors = new EnumMap<>(TerrainType.class);
         initializeColors();
         initializeSinCos();
+        adjustBaseHex(BASE_HEX_SIZE * HEX_DRAW_RATIO);
     }
 
     private void initializeColors() {
@@ -52,52 +62,116 @@ public class HexRenderer extends AbstractRenderer {
     @Override
     public void render(Graphics2D g2, int screenWidth, int screenHeight) {
         if (getGameState() == null || getGameState().getGameMap() == null) return;
-        renderHexes(g2, screenWidth, screenHeight);
-    }
 
-    private void renderHexes(Graphics2D g2, int screenWidth, int screenHeight){
         double hexSize = getCamera().getHexSize();
+        double zoom = hexSize / BASE_HEX_SIZE;
         double centerX = getCamera().getCenterX(screenWidth);
         double centerY = getCamera().getCenterY(screenHeight);
 
-        adjustBaseHex(hexSize);
+        renderHexes(g2, screenWidth, screenHeight, centerX, centerY, zoom, hexSize);
+        renderEdges(g2, screenWidth, screenHeight, centerX, centerY, zoom, hexSize);
+        renderHighlights(g2, screenWidth, screenHeight, centerX, centerY, zoom, hexSize);
+    }
 
+    private void renderHexes(Graphics2D g2, int screenWidth, int screenHeight, double centerX, double centerY, double zoom, double hexSize) {
         for (Hex hex : getGameState().getGameMap().getHexes().values()) {
-            double cx = getCX(centerX, hexSize, hex.getCoordinate().getQ(), hex.getCoordinate().getR());
-            double cy = getCY(centerY, hexSize, hex.getCoordinate().getR());
+            double worldX = getWorldX(hex.getCoordinate().getQ(), hex.getCoordinate().getR());
+            double worldY = getWorldY(hex.getCoordinate().getR());
 
-            if(!isHexInSight(cx, cy, hexSize, screenWidth, screenHeight))
+            if (!isHexInSight(centerX + worldX * zoom, centerY + worldY * zoom, hexSize, screenWidth, screenHeight)) {
                 continue;
+            }
 
-            drawHex(g2, hex, cx, cy);
+            drawHex(g2, hex, worldX, worldY);
         }
+    }
 
+    private void renderEdges(Graphics2D g2, int screenWidth, int screenHeight, double centerX, double centerY, double zoom, double hexSize) {
+        for (Map.Entry<EdgeKey, HexEdge> entry : getGameState().getGameMap().getEdges().entrySet()) {
+            HexEdge edge = entry.getValue();
+
+            if (!edge.hasRiver()) {
+                continue;
+            }
+
+            EdgeKey key = entry.getKey();
+
+            double worldX1 = getWorldX(key.getP1().getQ(), key.getP1().getR());
+            double worldY1 = getWorldY(key.getP1().getR());
+
+            double worldX2 = getWorldX(key.getP2().getQ(), key.getP2().getR());
+            double worldY2 = getWorldY(key.getP2().getR());
+
+            double screenX1 = centerX + worldX1 * zoom;
+            double screenY1 = centerY + worldY1 * zoom;
+            double screenX2 = centerX + worldX2 * zoom;
+            double screenY2 = centerY + worldY2 * zoom;
+
+            if (!isHexInSight(screenX1, screenY1, hexSize, screenWidth, screenHeight) &&
+                    !isHexInSight(screenX2, screenY2, hexSize, screenWidth, screenHeight)) {
+                continue;
+            }
+
+            drawEdge(g2, edge, worldX1, worldY1, worldX2, worldY2);
+        }
+    }
+
+    private void renderHighlights(Graphics2D g2, int screenWidth, int screenHeight, double centerX, double centerY, double zoom, double hexSize) {
         Point selectedPoint = getGameState().getSelectedHexPoint();
         if (selectedPoint != null) {
-            double cx = getCX(centerX, hexSize, selectedPoint.getQ(), selectedPoint.getR());
-            double cy = getCY(centerY, hexSize, selectedPoint.getR());
+            double worldX = getWorldX(selectedPoint.getQ(), selectedPoint.getR());
+            double worldY = getWorldY(selectedPoint.getR());
 
-            if (isHexInSight(cx, cy, hexSize, screenWidth, screenHeight)) {
-                drawSelectionHighlight(g2, cx, cy);
+            if (isHexInSight(centerX + worldX * zoom, centerY + worldY * zoom, hexSize, screenWidth, screenHeight)) {
+                drawSelectionHighlight(g2, worldX, worldY);
             }
         }
     }
 
-    private void drawHex(Graphics2D g2, Hex hex, double cx, double cy) {
-        g2.translate(cx, cy);
+    private void drawHex(Graphics2D g2, Hex hex, double worldX, double worldY) {
+        g2.translate(worldX, worldY);
 
         g2.setColor(terrainColors.getOrDefault(hex.getTerrain(), Color.WHITE));
         g2.fill(baseHex);
 
-        g2.setColor(Constants.HEX_BORDER_COLORS);
-        g2.setStroke(hexStroke);
-        g2.draw(baseHex);
-
-        g2.translate(-cx, -cy);
+        g2.translate(-worldX, -worldY);
     }
 
-    private void drawSelectionHighlight(Graphics2D g2, double cx, double cy) {
-        g2.translate(cx, cy);
+    private void drawEdge(Graphics2D g2, HexEdge edge, double worldX1, double worldY1, double worldX2, double worldY2) {
+        double mx = (worldX1 + worldX2) / 2.0;
+        double my = (worldY1 + worldY2) / 2.0;
+
+        double dx = worldX2 - worldX1;
+        double dy = worldY2 - worldY1;
+
+        double length = Math.sqrt(dx * dx + dy * dy);
+        if (length == 0) return;
+
+        double ux = -dy / length;
+        double uy = dx / length;
+
+        double halfEdgeLength = BASE_HEX_SIZE / 2.0;
+
+        double x1 = mx + ux * halfEdgeLength;
+        double y1 = my + uy * halfEdgeLength;
+        double x2 = mx - ux * halfEdgeLength;
+        double y2 = my - uy * halfEdgeLength;
+
+        edgeLine.setLine(x1, y1, x2, y2);
+
+        Stroke originalStroke = g2.getStroke();
+
+        if (edge.hasRiver()) {
+            g2.setColor(Constants.RIVER_COLOR);
+            g2.setStroke(riverStroke);
+            g2.draw(edgeLine);
+        }
+
+        g2.setStroke(originalStroke);
+    }
+
+    private void drawSelectionHighlight(Graphics2D g2, double worldX, double worldY) {
+        g2.translate(worldX, worldY);
         Stroke originalStroke = g2.getStroke();
 
         g2.setColor(Color.YELLOW);
@@ -105,30 +179,30 @@ public class HexRenderer extends AbstractRenderer {
         g2.draw(baseHex);
 
         g2.setStroke(originalStroke);
-        g2.translate(-cx, -cy);
+        g2.translate(-worldX, -worldY);
     }
 
-    private void adjustBaseHex(double hexSize) {
+    private void adjustBaseHex(double drawSize) {
         baseHex.reset();
         for (int i = 0; i < 6; i++) {
-            double x = hexSize * cos[i];
-            double y = hexSize * sin[i];
+            double x = drawSize * cos[i];
+            double y = drawSize * sin[i];
             if (i == 0) baseHex.moveTo(x, y);
             else baseHex.lineTo(x, y);
         }
         baseHex.closePath();
     }
 
-    private boolean isHexInSight(double cx, double cy, double hexSize, int screenWidth, int screenHeight){
+    private boolean isHexInSight(double cx, double cy, double hexSize, int screenWidth, int screenHeight) {
         return !(cx + hexSize < 0 || cx - hexSize > screenWidth ||
                 cy + hexSize < 0 || cy - hexSize > screenHeight);
     }
 
-    private double getCX(double centerX, double hexSize, int q , int r){
-        return centerX + hexSize * HexMath.SQRT_3 * (q + r / 2.0);
+    private double getWorldX(int q, int r) {
+        return BASE_HEX_SIZE * HexMath.SQRT_3 * (q + r / 2.0);
     }
 
-    private double getCY(double centerY, double hexSize, int r){
-        return centerY + hexSize * 3.0 / 2.0 * r;
+    private double getWorldY(int r) {
+        return BASE_HEX_SIZE * 3.0 / 2.0 * r;
     }
 }

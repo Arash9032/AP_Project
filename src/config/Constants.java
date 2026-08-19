@@ -169,8 +169,8 @@ public final class Constants {
     public static final Color MOUNTAIN_HEX_COLOR = new Color(160, 150, 180);
     public static final Color MEADOW_HEX_COLOR = new Color(110, 220, 70);
     public static final Color MOUNTAIN_RANGE_HEX_COLOR = new Color(55, 40, 75);
-    public static final Color SEA_HEX_COLOR = new Color(0, 180, 235);
-    public static final Color HEX_BORDER_COLORS = new Color(55, 0, 105);
+    public static final Color SEA_HEX_COLOR = new Color(0, 110, 235);
+    public static final Color RIVER_COLOR = new Color(0,180,235);
 
     public static final int FRAME_RATE = 60;
 
@@ -178,7 +178,7 @@ public final class Constants {
 
     public static final int MINIMUM_DETAILED_SIZE = 50;
 
-    public static final int RIVER_COUNT = Math.max(1 , MAP_RADIUS / 3);
+    public static final int RIVER_COUNT = Math.max(1 , MAP_RADIUS / 2);
     public static final int MINIMUM_RIVER_LENGTH = RIVER_COUNT;
-    public static final int MAXIMUM_RIVER_LENGTH = MAP_RADIUS;
+    public static final int MAXIMUM_RIVER_LENGTH = MAP_RADIUS * 2;
 }
