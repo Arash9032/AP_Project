@@ -86,4 +86,24 @@ public class GameMap {
     public Map<EdgeKey, HexEdge> getEdges() {
         return Collections.unmodifiableMap(edges);
     }
+
+    public List<EdgeKey> getAdjacentEdges(EdgeKey key){
+        List<EdgeKey> adjacentEdges = new ArrayList<>();
+        Point p1 = key.getP1();
+        Point p2 = key.getP2();
+
+        List<Hex> neighborsOfP1 = getNeighbors(p1);
+        List<Hex> neighborsOfP2 = getNeighbors(p2);
+
+        for (Hex n1 : neighborsOfP1) {
+            for (Hex n2 : neighborsOfP2) {
+                if (n1.getCoordinate().equals(n2.getCoordinate())) {
+                    Point common = n1.getCoordinate();
+                    adjacentEdges.add(new EdgeKey(p1, common));
+                    adjacentEdges.add(new EdgeKey(p2, common));
+                }
+            }
+        }
+        return adjacentEdges;
+    }
 }
