@@ -1,6 +1,8 @@
 package model.map;
 
 import config.Constants;
+import model.map.edge.EdgeKey;
+import model.map.edge.HexEdge;
 import model.map.hex.Hex;
 import model.map.hex.HexResource;
 import model.map.hex.Point;
@@ -26,6 +28,7 @@ public final class MapGenerator {
         expandRegions(map);
         assignResources(map);
         ensureTownHallConstraints(map);
+        generateEdges(map);
         return map;
     }
 
@@ -212,5 +215,17 @@ public final class MapGenerator {
 
     private static <T> T getRandomElement(List<T> list) {
         return list.get(RANDOM.nextInt(list.size()));
+    }
+
+    private static void generateEdges(GameMap map){
+        for(Point p1 : map.getHexes().keySet()){
+            for(Hex neighbor : map.getNeighbors(p1)){
+                Point p2 = neighbor.getCoordinate();
+                EdgeKey edgeKey = new EdgeKey(p1 , p2);
+                if(map.getEdge(edgeKey) == null){
+                    map.addEdge(edgeKey, new HexEdge(false));
+                }
+            }
+        }
     }
 }
