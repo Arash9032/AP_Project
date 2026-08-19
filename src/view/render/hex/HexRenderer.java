@@ -63,22 +63,27 @@ public class HexRenderer extends AbstractRenderer {
         adjustBaseHex(hexSize);
 
         for (Hex hex : getGameState().getGameMap().getHexes().values()) {
-            drawHex(g2, hex, centerX, centerY, hexSize);
+            double cx = getCX(centerX, hexSize, hex.getCoordinate().getQ(), hex.getCoordinate().getR());
+            double cy = getCY(centerY, hexSize, hex.getCoordinate().getR());
+
+            if(!isHexInSight(cx, cy, hexSize, screenWidth, screenHeight))
+                continue;
+
+            drawHex(g2, hex, cx, cy);
         }
 
         Point selectedPoint = getGameState().getSelectedHexPoint();
         if (selectedPoint != null) {
-            drawSelectionHighlight(g2, selectedPoint, centerX, centerY, hexSize);
+            double cx = getCX(centerX, hexSize, selectedPoint.getQ(), selectedPoint.getR());
+            double cy = getCY(centerY, hexSize, selectedPoint.getR());
+
+            if (isHexInSight(cx, cy, hexSize, screenWidth, screenHeight)) {
+                drawSelectionHighlight(g2, cx, cy);
+            }
         }
     }
 
-    private void drawHex(Graphics2D g2, Hex hex, double centerX, double centerY, double hexSize) {
-        int q = hex.getCoordinate().getQ();
-        int r = hex.getCoordinate().getR();
-
-        double cx = centerX + hexSize * HexMath.SQRT_3 * (q + r / 2.0);
-        double cy = centerY + hexSize * 3.0 / 2.0 * r;
-
+    private void drawHex(Graphics2D g2, Hex hex, double cx, double cy) {
         g2.translate(cx, cy);
 
         g2.setColor(terrainColors.getOrDefault(hex.getTerrain(), Color.WHITE));
@@ -91,19 +96,15 @@ public class HexRenderer extends AbstractRenderer {
         g2.translate(-cx, -cy);
     }
 
-    private void drawSelectionHighlight(Graphics2D g2, Point selectedPoint, double centerX, double centerY, double hexSize) {
-        int q = selectedPoint.getQ();
-        int r = selectedPoint.getR();
-
-        double cx = centerX + hexSize * HexMath.SQRT_3 * (q + r / 2.0);
-        double cy = centerY + hexSize * 3.0 / 2.0 * r;
-
+    private void drawSelectionHighlight(Graphics2D g2, double cx, double cy) {
         g2.translate(cx, cy);
+        Stroke originalStroke = g2.getStroke();
 
         g2.setColor(Color.YELLOW);
         g2.setStroke(selectedHexStroke);
         g2.draw(baseHex);
 
+        g2.setStroke(originalStroke);
         g2.translate(-cx, -cy);
     }
 
@@ -116,5 +117,18 @@ public class HexRenderer extends AbstractRenderer {
             else baseHex.lineTo(x, y);
         }
         baseHex.closePath();
+    }
+
+    private boolean isHexInSight(double cx, double cy, double hexSize, int screenWidth, int screenHeight){
+        return !(cx + hexSize < 0 || cx - hexSize > screenWidth ||
+                cy + hexSize < 0 || cy - hexSize > screenHeight);
+    }
+
+    private double getCX(double centerX, double hexSize, int q , int r){
+        return centerX + hexSize * HexMath.SQRT_3 * (q + r / 2.0);
+    }
+
+    private double getCY(double centerY, double hexSize, int r){
+        return centerY + hexSize * 3.0 / 2.0 * r;
     }
 }
