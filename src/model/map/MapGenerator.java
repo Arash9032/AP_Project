@@ -112,22 +112,29 @@ public final class MapGenerator {
         Point center = new Point(0, 0);
         updateHexTerrain(map, center, TerrainType.PLAIN);
 
-        boolean hasForest = false;
-        List<Hex> withinRadiusTwo = getHexesWithinRadius(map, center, 1, Constants.TOWN_HALL_SAFE_RADIUS);
+        int forestCount = 0;
+        List<Hex> safeZoneHexes = getHexesWithinRadius(map, center, 1, Constants.TOWN_HALL_SAFE_RADIUS);
+        List<Point> forestCandidates = new ArrayList<>();
 
-        for (Hex hex : withinRadiusTwo) {
+        for (Hex hex : safeZoneHexes) {
+            Point p = hex.getCoordinate();
             TerrainType currentTerrain = hex.getTerrain();
 
             if (currentTerrain == TerrainType.MOUNTAIN_RANGE || currentTerrain == TerrainType.SEA) {
-                updateHexTerrain(map, hex.getCoordinate(), TerrainType.MEADOW);
+                updateHexTerrain(map, p, TerrainType.MEADOW);
+                forestCandidates.add(p);
             } else if (currentTerrain == TerrainType.FOREST) {
-                hasForest = true;
+                forestCount++;
+            } else {
+                forestCandidates.add(p);
             }
         }
 
-        if (!hasForest && !withinRadiusTwo.isEmpty()) {
-            Hex targetHex = getRandomElement(withinRadiusTwo);
-            updateHexTerrain(map, targetHex.getCoordinate(), TerrainType.FOREST, HexResource.WOOD, Constants.FOREST_RESOURCE_CAPACITY);
+        while (forestCount < 3 && !forestCandidates.isEmpty()) {
+            Point targetPoint = getRandomElement(forestCandidates);
+            forestCandidates.remove(targetPoint);
+            updateHexTerrain(map, targetPoint, TerrainType.FOREST, HexResource.WOOD, Constants.FOREST_RESOURCE_CAPACITY);
+            forestCount++;
         }
 
         ensureExpansionPaths(map);
