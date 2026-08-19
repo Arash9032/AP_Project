@@ -7,6 +7,7 @@ import model.map.hex.Hex;
 import util.HexMath;
 import view.camera.Camera;
 import view.render.AbstractRenderer;
+import view.render.RenderContext;
 
 import java.awt.*;
 
@@ -14,8 +15,8 @@ public class BuildingRenderer extends AbstractRenderer {
 
     private static final double BASE_HEX_SIZE = 100.0;
 
-    public BuildingRenderer(GameState gameState, Camera camera) {
-        super(gameState, camera);
+    public BuildingRenderer(GameState gameState, Camera camera, RenderContext renderContext) {
+        super(gameState, camera, renderContext);
     }
 
     @Override
@@ -23,8 +24,6 @@ public class BuildingRenderer extends AbstractRenderer {
         if (getGameState() == null || getCamera() == null) return;
 
         double hexSize = getCamera().getHexSize();
-        boolean isDetailed = hexSize >= Constants.MINIMUM_DETAILED_SIZE;
-
         double zoom = hexSize / BASE_HEX_SIZE;
         double centerX = getCamera().getCenterX(screenWidth);
         double centerY = getCamera().getCenterY(screenHeight);
@@ -51,7 +50,7 @@ public class BuildingRenderer extends AbstractRenderer {
             g2.translate(worldX, worldY);
 
             BuildingTypeRenderer.getFromType(building.getType()).drawBuilding(
-                    g2, bSize, building.getHp(), building.getMaximumHp(), isDetailed
+                    g2, bSize, building.getHp(), building.getMaximumHp(), getRenderContext().isDetailed(getCamera())
             );
 
             g2.translate(-worldX, -worldY);

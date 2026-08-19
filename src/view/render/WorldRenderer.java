@@ -18,18 +18,20 @@ public class WorldRenderer {
     private GameState gameState;
     private Camera camera;
     private final List<AbstractRenderer> layers;
+    private RenderContext renderContext;
 
     public WorldRenderer(GameState gameState, Camera camera) {
         this.gameState = gameState;
         this.camera = camera;
         this.layers = new ArrayList<>();
+        this.renderContext = new RenderContext();
         initLayers();
     }
 
     private void initLayers(){
-        layers.add(new HexRenderer(gameState, camera));
-        layers.add(new BuildingRenderer(gameState, camera));
-        layers.add(new UnitRenderer(gameState, camera));
+        layers.add(new HexRenderer(gameState, camera, renderContext));
+        layers.add(new BuildingRenderer(gameState, camera, renderContext));
+        layers.add(new UnitRenderer(gameState, camera, renderContext));
     }
 
     public void renderWorld(Graphics2D g2, int screenWidth, int screenHeight) {
@@ -70,5 +72,13 @@ public class WorldRenderer {
         for (AbstractRenderer layer : layers) {
             layer.setCamera(camera);
         }
+    }
+
+    public RenderContext getRenderContext() {
+        return renderContext;
+    }
+
+    public void setRenderContext(RenderContext renderContext) {
+        this.renderContext = renderContext;
     }
 }

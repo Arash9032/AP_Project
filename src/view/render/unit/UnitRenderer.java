@@ -7,6 +7,7 @@ import model.unit.Unit;
 import util.HexMath;
 import view.camera.Camera;
 import view.render.AbstractRenderer;
+import view.render.RenderContext;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,16 +20,14 @@ public class UnitRenderer extends AbstractRenderer {
     private static final double BASE_HEX_SIZE = 100.0;
     private final Map<Hex, List<Unit>> unitsByHex = new HashMap<>();
 
-    public UnitRenderer(GameState gameState, Camera camera) {
-        super(gameState, camera);
+    public UnitRenderer(GameState gameState, Camera camera, RenderContext renderContext) {
+        super(gameState, camera, renderContext);
     }
 
     public void render(Graphics2D g2, int screenWidth, int screenHeight) {
         if (getGameState() == null || getCamera() == null) return;
 
         double hexSize = getCamera().getHexSize();
-        boolean isDetailed = hexSize >= Constants.MINIMUM_DETAILED_SIZE;
-
         double zoom = hexSize / BASE_HEX_SIZE;
         double centerX = getCamera().getCenterX(screenWidth);
         double centerY = getCamera().getCenterY(screenHeight);
@@ -82,7 +81,7 @@ public class UnitRenderer extends AbstractRenderer {
                         uSize,
                         unit.getHp(),
                         unit.getMaximumHp(),
-                        isDetailed,
+                        getRenderContext().isDetailed(getCamera()),
                         unit == getGameState().getSelectedUnit()
                 );
 

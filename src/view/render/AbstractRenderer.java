@@ -8,10 +8,12 @@ import java.awt.*;
 public abstract class AbstractRenderer {
     private GameState gameState;
     private Camera camera;
+    private RenderContext renderContext;
 
-    public AbstractRenderer(GameState gameState, Camera camera) {
+    public AbstractRenderer(GameState gameState, Camera camera, RenderContext renderContext) {
         this.gameState = gameState;
         this.camera = camera;
+        this.renderContext = renderContext;
     }
 
     public abstract void render(Graphics2D g2, int screenWidth, int screenHeight);
@@ -30,5 +32,13 @@ public abstract class AbstractRenderer {
 
     public void setCamera(Camera camera) {
         this.camera = camera;
+    }
+
+    public RenderContext getRenderContext() {
+        return renderContext;
+    }
+
+    public void setRenderContext(RenderContext renderContext) {
+        this.renderContext = renderContext;
     }
 }

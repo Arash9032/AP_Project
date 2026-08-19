@@ -10,6 +10,7 @@ import model.map.hex.TerrainType;
 import util.HexMath;
 import view.camera.Camera;
 import view.render.AbstractRenderer;
+import view.render.RenderContext;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -33,8 +34,8 @@ public class HexRenderer extends AbstractRenderer {
     private final double[] cos = new double[6];
     private final Map<TerrainType, Color> terrainColors;
 
-    public HexRenderer(GameState gameState, Camera camera) {
-        super(gameState, camera);
+    public HexRenderer(GameState gameState, Camera camera, RenderContext renderContext) {
+        super(gameState, camera, renderContext);
         this.terrainColors = new EnumMap<>(TerrainType.class);
         initializeColors();
         initializeSinCos();
