@@ -235,7 +235,7 @@ public final class MapGenerator {
 
         for (int i = 0; i < Constants.RIVER_COUNT; i++) {
             EdgeKey currentEdgeKey = getRandomElement(allEdges);
-            int riverLength = RANDOM.nextInt(Constants.MINIMUM_RIVER_LENGTH , Constants.MAXIMUM_RIVER_LENGTH + 1);
+            int riverLength = Constants.MINIMUM_RIVER_LENGTH + RANDOM.nextInt(Constants.MAXIMUM_RIVER_LENGTH - Constants.MINIMUM_RIVER_LENGTH + 1);
 
             for (int step = 0; step < riverLength; step++) {
                 HexEdge edge = map.getEdge(currentEdgeKey);
