@@ -2,7 +2,7 @@ package model.map.edge;
 
 
 public class HexEdge {
-    private final boolean hasRiver;
+    private boolean hasRiver;
     private Wall wall = null;
 
     public HexEdge(boolean hasRiver) {
@@ -11,6 +11,10 @@ public class HexEdge {
 
     public boolean hasRiver() {
         return hasRiver;
+    }
+
+    public void setHasRiver(boolean hasRiver) {
+        this.hasRiver = hasRiver;
     }
 
     public Wall getWall() {
