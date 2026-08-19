@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -173,6 +174,9 @@ public enum BuildingTypeRenderer {
     private static final Color FIREBRICK = new Color(178, 34, 34);
     private static final Color GOLD = new Color(255, 215, 0);
 
+    private static final Map<BuildingTypeRenderer , BufferedImage> ICONS = new EnumMap<>(BuildingTypeRenderer.class);
+    private static final int DEFAULT_ICON_SIZE = 64;
+
     static {
         for (BuildingTypeRenderer e : BuildingTypeRenderer.values()) {
             MAP.put(e.getType(), e);
@@ -212,7 +216,7 @@ public enum BuildingTypeRenderer {
         double barWidth = size * 1.2;
         double barHeight = size / 8.0;
         double barX = -barWidth / 2;
-        double barY = size / 2 + 4;
+        double barY = size / 2 + 8;
 
         hpBgRect.setRect(barX, barY, barWidth, barHeight);
         g2.setColor(Color.RED);
@@ -225,5 +229,18 @@ public enum BuildingTypeRenderer {
         g2.setColor(Color.BLACK);
         g2.setStroke(THIN_STROKE);
         g2.draw(hpBgRect);
+    }
+
+    public BufferedImage getBuildingIcon(){
+        BufferedImage icon = ICONS.get(this);
+        if(icon != null) return icon;
+        icon = new BufferedImage(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = icon.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.translate(DEFAULT_ICON_SIZE / 2, DEFAULT_ICON_SIZE / 2);
+        drawBuilding(g2, DEFAULT_ICON_SIZE * 0.8, 0, 0, false);
+        g2.dispose();
+        ICONS.put(this, icon);
+        return icon;
     }
 }
