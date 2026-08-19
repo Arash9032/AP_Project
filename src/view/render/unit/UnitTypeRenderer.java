@@ -154,14 +154,19 @@ public enum UnitTypeRenderer {
     }
 
     public void drawUnit(Graphics2D g2, double size, int hp, int maxHp, boolean detailed, boolean isSelected) {
+        Paint originalPaint = g2.getPaint();
+
         if (isSelected && detailed) {
             int haloSize = (int) (size * 1.4);
             int haloOffset = -haloSize / 2;
             float radius = haloSize / 2f;
-            RadialGradientPaint gradient = new RadialGradientPaint(0f , 0f , radius, GLOW_FRACTIONS, GLOW_COLORS);
+            RadialGradientPaint gradient = new RadialGradientPaint(0f, 0f, radius, GLOW_FRACTIONS, GLOW_COLORS);
             g2.setPaint(gradient);
             g2.fillOval(haloOffset, haloOffset, haloSize, haloSize);
         }
+
+        g2.setPaint(originalPaint);
+
         if (icon != null) {
             int iconSize = (int) size;
             int centerOffset = -iconSize / 2;
@@ -170,13 +175,17 @@ public enum UnitTypeRenderer {
             drawShape(g2, size);
         }
 
-        if(detailed) drawHealthBar(g2, size / 1.5, hp, maxHp);
+        if (detailed) {
+            drawHealthBar(g2, size / 1.5, hp, maxHp);
+        }
     }
 
     protected abstract void drawShape(Graphics2D g2, double size);
 
     private void drawHealthBar(Graphics2D g2, double size, int hp, int maxHp) {
         if (maxHp <= 0) return;
+
+        Stroke originalStroke = g2.getStroke();
 
         double hpPercentage = Math.max(0, (double) hp / maxHp);
 
@@ -195,6 +204,8 @@ public enum UnitTypeRenderer {
         g2.setColor(Color.BLACK);
         g2.setStroke(THIN_STROKE);
         g2.draw(hpBgRect);
+
+        g2.setStroke(originalStroke);
     }
 
     public BufferedImage getIcon() {

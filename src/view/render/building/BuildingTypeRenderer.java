@@ -203,14 +203,26 @@ public enum BuildingTypeRenderer {
     }
 
     public void drawBuilding(Graphics2D g2, double size, int hp, int maxHp, boolean detailed) {
+        Stroke originalStroke = g2.getStroke();
+        Paint originalPaint = g2.getPaint();
+
         drawShape(g2, size);
-        if(detailed) drawHealthBar(g2, size / 1.5, hp, maxHp);
+
+        g2.setStroke(originalStroke);
+        g2.setPaint(originalPaint);
+
+        if (detailed) {
+            drawHealthBar(g2, size / 1.5, hp, maxHp);
+        }
     }
 
     protected abstract void drawShape(Graphics2D g2, double size);
 
     private void drawHealthBar(Graphics2D g2, double size, int hp, int maxHp) {
         if (maxHp <= 0) return;
+
+        Stroke originalStroke = g2.getStroke();
+        Paint originalPaint = g2.getPaint();
 
         double hpPercentage = Math.max(0, (double) hp / maxHp);
         double barWidth = size * 1.2;
@@ -229,6 +241,9 @@ public enum BuildingTypeRenderer {
         g2.setColor(Color.BLACK);
         g2.setStroke(THIN_STROKE);
         g2.draw(hpBgRect);
+
+        g2.setStroke(originalStroke);
+        g2.setPaint(originalPaint);
     }
 
     public BufferedImage getBuildingIcon(){
