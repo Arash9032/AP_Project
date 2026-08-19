@@ -233,7 +233,11 @@ public final class MapGenerator {
     private static void generateRivers(GameMap map) {
         List<EdgeKey> allEdges = new ArrayList<>(map.getEdges().keySet());
 
+        allEdges.removeIf(key -> isEdgeInTownHallSafeZone(map, key));
+
         for (int i = 0; i < Constants.RIVER_COUNT; i++) {
+            if (allEdges.isEmpty()) break;
+
             EdgeKey currentEdgeKey = getRandomElement(allEdges);
             int riverLength = Constants.MINIMUM_RIVER_LENGTH + RANDOM.nextInt(Constants.MAXIMUM_RIVER_LENGTH - Constants.MINIMUM_RIVER_LENGTH + 1);
 
@@ -247,7 +251,7 @@ public final class MapGenerator {
 
                 adjacentEdges.removeIf(key -> {
                     HexEdge e = map.getEdge(key);
-                    return e == null || e.hasRiver();
+                    return e == null || e.hasRiver() || isEdgeInTownHallSafeZone(map, key);
                 });
 
                 if (adjacentEdges.isEmpty()) {
@@ -257,5 +261,16 @@ public final class MapGenerator {
                 currentEdgeKey = getRandomElement(adjacentEdges);
             }
         }
+    }
+
+    private static boolean isEdgeInTownHallSafeZone(GameMap map, EdgeKey key) {
+        Hex centerHex = map.getHex(new Point(0, 0));
+        Hex h1 = map.getHex(key.getP1());
+        Hex h2 = map.getHex(key.getP2());
+
+        if (centerHex == null || h1 == null || h2 == null) return false;
+
+        int safeRadius = Math.max(1, Constants.TOWN_HALL_SAFE_RADIUS);
+        return h1.distanceTo(centerHex) <= safeRadius || h2.distanceTo(centerHex) <= safeRadius;
     }
 }
