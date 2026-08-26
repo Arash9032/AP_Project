@@ -20,7 +20,6 @@ import java.util.Map;
 
 public class HexRenderer extends AbstractRenderer {
 
-    private static final double BASE_HEX_SIZE = 100.0;
     private static final double HEX_DRAW_RATIO = 0.92;
 
     private final Path2D.Double baseHex = new Path2D.Double();
@@ -39,7 +38,7 @@ public class HexRenderer extends AbstractRenderer {
         this.terrainColors = new EnumMap<>(TerrainType.class);
         initializeColors();
         initializeSinCos();
-        adjustBaseHex(BASE_HEX_SIZE * HEX_DRAW_RATIO);
+        adjustBaseHex(Constants.BASE_HEX_SIZE * HEX_DRAW_RATIO);
     }
 
     private void initializeColors() {
@@ -65,7 +64,7 @@ public class HexRenderer extends AbstractRenderer {
         if (getGameState() == null || getGameState().getGameMap() == null) return;
 
         double hexSize = getCamera().getHexSize();
-        double zoom = hexSize / BASE_HEX_SIZE;
+        double zoom = hexSize / Constants.BASE_HEX_SIZE;
         double centerX = getCamera().getCenterX(screenWidth);
         double centerY = getCamera().getCenterY(screenHeight);
 
@@ -152,7 +151,7 @@ public class HexRenderer extends AbstractRenderer {
         double ux = -dy / length;
         double uy = dx / length;
 
-        double halfEdgeLength = BASE_HEX_SIZE / 2.0;
+        double halfEdgeLength = Constants.BASE_HEX_SIZE / 2.0;
 
         double x1 = mx + ux * halfEdgeLength;
         double y1 = my + uy * halfEdgeLength;
@@ -196,10 +195,10 @@ public class HexRenderer extends AbstractRenderer {
     }
 
     private double getWorldX(int q, int r) {
-        return BASE_HEX_SIZE * HexMath.SQRT_3 * (q + r / 2.0);
+        return Constants.BASE_HEX_SIZE * HexMath.SQRT_3 * (q + r / 2.0);
     }
 
     private double getWorldY(int r) {
-        return BASE_HEX_SIZE * 3.0 / 2.0 * r;
+        return Constants.BASE_HEX_SIZE * 3.0 / 2.0 * r;
     }
 }

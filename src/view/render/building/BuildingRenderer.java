@@ -12,9 +12,7 @@ import view.render.RenderContext;
 import java.awt.*;
 
 public class BuildingRenderer extends AbstractRenderer {
-
-    private static final double BASE_HEX_SIZE = 100.0;
-
+    
     public BuildingRenderer(GameState gameState, Camera camera, RenderContext renderContext) {
         super(gameState, camera, renderContext);
     }
@@ -24,11 +22,11 @@ public class BuildingRenderer extends AbstractRenderer {
         if (getGameState() == null || getCamera() == null) return;
 
         double hexSize = getCamera().getHexSize();
-        double zoom = hexSize / BASE_HEX_SIZE;
+        double zoom = hexSize / Constants.BASE_HEX_SIZE;
         double centerX = getCamera().getCenterX(screenWidth);
         double centerY = getCamera().getCenterY(screenHeight);
 
-        double bSize = BASE_HEX_SIZE * 0.5;
+        double bSize = Constants.BASE_HEX_SIZE * 0.5;
 
         for (Building building : getGameState().getBuildings()) {
             Hex hex = building.getLocation();
@@ -37,8 +35,8 @@ public class BuildingRenderer extends AbstractRenderer {
             int q = hex.getCoordinate().getQ();
             int r = hex.getCoordinate().getR();
 
-            double worldX = BASE_HEX_SIZE * HexMath.SQRT_3 * (q + r / 2.0);
-            double worldY = BASE_HEX_SIZE * 3.0 / 2.0 * r;
+            double worldX = Constants.BASE_HEX_SIZE * HexMath.SQRT_3 * (q + r / 2.0);
+            double worldY = Constants.BASE_HEX_SIZE * 3.0 / 2.0 * r;
 
             double screenX = centerX + worldX * zoom;
             double screenY = centerY + worldY * zoom;

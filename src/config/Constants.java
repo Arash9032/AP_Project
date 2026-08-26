@@ -181,4 +181,6 @@ public final class Constants {
     public static final int RIVER_COUNT = Math.max(1 , MAP_RADIUS / 2);
     public static final int MINIMUM_RIVER_LENGTH = RIVER_COUNT;
     public static final int MAXIMUM_RIVER_LENGTH = MAP_RADIUS * 2;
+
+    public static final double BASE_HEX_SIZE = 100;
 }

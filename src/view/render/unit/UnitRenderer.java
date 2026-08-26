@@ -17,7 +17,6 @@ import java.util.Map;
 
 public class UnitRenderer extends AbstractRenderer {
 
-    private static final double BASE_HEX_SIZE = 100.0;
     private final Map<Hex, List<Unit>> unitsByHex = new HashMap<>();
 
     public UnitRenderer(GameState gameState, Camera camera, RenderContext renderContext) {
@@ -28,12 +27,12 @@ public class UnitRenderer extends AbstractRenderer {
         if (getGameState() == null || getCamera() == null) return;
 
         double hexSize = getCamera().getHexSize();
-        double zoom = hexSize / BASE_HEX_SIZE;
+        double zoom = hexSize / Constants.BASE_HEX_SIZE;
         double centerX = getCamera().getCenterX(screenWidth);
         double centerY = getCamera().getCenterY(screenHeight);
 
-        double uSize = BASE_HEX_SIZE * 0.8;
-        double orbitRadius = BASE_HEX_SIZE * 0.6;
+        double uSize = Constants.BASE_HEX_SIZE * 0.8;
+        double orbitRadius = Constants.BASE_HEX_SIZE * 0.6;
 
         for (List<Unit> list : unitsByHex.values()) {
             list.clear();
@@ -55,8 +54,8 @@ public class UnitRenderer extends AbstractRenderer {
             int q = hex.getCoordinate().getQ();
             int r = hex.getCoordinate().getR();
 
-            double worldX = BASE_HEX_SIZE * HexMath.SQRT_3 * (q + r / 2.0);
-            double worldY = BASE_HEX_SIZE * 3.0 / 2.0 * r;
+            double worldX = Constants.BASE_HEX_SIZE * HexMath.SQRT_3 * (q + r / 2.0);
+            double worldY = Constants.BASE_HEX_SIZE * 3.0 / 2.0 * r;
 
             double screenX = centerX + worldX * zoom;
             double screenY = centerY + worldY * zoom;
