@@ -13,7 +13,7 @@ import java.util.List;
 
 public class WorldRenderer {
 
-    private static final double BASE_HEX_SIZE = 100.0;
+    public static final double BASE_HEX_SIZE = 100.0;
 
     private GameState gameState;
     private Camera camera;
@@ -32,6 +32,7 @@ public class WorldRenderer {
         layers.add(new HexRenderer(gameState, camera, renderContext));
         layers.add(new BuildingRenderer(gameState, camera, renderContext));
         layers.add(new UnitRenderer(gameState, camera, renderContext));
+        layers.add(new ShadowRenderer(gameState , camera , renderContext));
     }
 
     public void renderWorld(Graphics2D g2, int screenWidth, int screenHeight) {

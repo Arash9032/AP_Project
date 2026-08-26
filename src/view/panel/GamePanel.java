@@ -9,6 +9,8 @@ import view.render.WorldRenderer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GamePanel extends JPanel {
 
@@ -23,8 +25,19 @@ public class GamePanel extends JPanel {
 
         this.camera = new Camera(Camera.MIN_HEX_SIZE);
         worldRenderer = new WorldRenderer(gameState, camera);
+        setFocusable(true);
+        initFocusListener();
+        setFocusTraversalKeysEnabled(false);
     }
 
+    private void initFocusListener(){
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                requestFocusInWindow();
+            }
+        });
+    }
     public GameState getGameState() {
         return gameState;
     }

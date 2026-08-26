@@ -1,9 +1,6 @@
 package controller;
 
-import controller.uiux.CameraDragListener;
-import controller.uiux.SelectHexListener;
-import controller.uiux.SelectUnitListener;
-import controller.uiux.ZoomListener;
+import controller.uiux.*;
 import model.GameState;
 import view.GameContainer;
 
@@ -46,6 +43,9 @@ public final class GameController {
 
         SelectUnitListener selectUnitListener = new SelectUnitListener(gameState);
         gameContainer.getSideMenuPanel().getUnitList().addListSelectionListener(selectUnitListener);
+
+        ResourceOverlayListener resourceOverlayListener = new ResourceOverlayListener(gameContainer.getGamePanel().getWorldRenderer().getRenderContext());
+        gameContainer.getGamePanel().addKeyListener(resourceOverlayListener);
     }
 
 }

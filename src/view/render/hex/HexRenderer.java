@@ -118,6 +118,7 @@ public class HexRenderer extends AbstractRenderer {
     }
 
     private void renderHighlights(Graphics2D g2, int screenWidth, int screenHeight, double centerX, double centerY, double zoom, double hexSize) {
+        if(getRenderContext().isResourceOverlayActive()) return;
         Point selectedPoint = getGameState().getSelectedHexPoint();
         if (selectedPoint != null) {
             double worldX = getWorldX(selectedPoint.getQ(), selectedPoint.getR());
