@@ -54,8 +54,8 @@ public class UnitRenderer extends AbstractRenderer {
             int q = hex.getCoordinate().getQ();
             int r = hex.getCoordinate().getR();
 
-            double worldX = Constants.BASE_HEX_SIZE * HexMath.SQRT_3 * (q + r / 2.0);
-            double worldY = Constants.BASE_HEX_SIZE * 3.0 / 2.0 * r;
+            double worldX = HexMath.getWorldX(q , r);
+            double worldY = HexMath.getWorldY(r);
 
             double screenX = centerX + worldX * zoom;
             double screenY = centerY + worldY * zoom;

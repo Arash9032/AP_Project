@@ -75,8 +75,8 @@ public class HexRenderer extends AbstractRenderer {
 
     private void renderHexes(Graphics2D g2, int screenWidth, int screenHeight, double centerX, double centerY, double zoom, double hexSize) {
         for (Hex hex : getGameState().getGameMap().getHexes().values()) {
-            double worldX = getWorldX(hex.getCoordinate().getQ(), hex.getCoordinate().getR());
-            double worldY = getWorldY(hex.getCoordinate().getR());
+            double worldX = HexMath.getWorldX(hex.getCoordinate().getQ(), hex.getCoordinate().getR());
+            double worldY = HexMath.getWorldY(hex.getCoordinate().getR());
 
             if (!HexMath.isHexInSight(centerX + worldX * zoom, centerY + worldY * zoom, hexSize, screenWidth, screenHeight)) {
                 continue;
@@ -96,11 +96,11 @@ public class HexRenderer extends AbstractRenderer {
 
             EdgeKey key = entry.getKey();
 
-            double worldX1 = getWorldX(key.getP1().getQ(), key.getP1().getR());
-            double worldY1 = getWorldY(key.getP1().getR());
+            double worldX1 = HexMath.getWorldX(key.getP1().getQ(), key.getP1().getR());
+            double worldY1 = HexMath.getWorldY(key.getP1().getR());
 
-            double worldX2 = getWorldX(key.getP2().getQ(), key.getP2().getR());
-            double worldY2 = getWorldY(key.getP2().getR());
+            double worldX2 = HexMath.getWorldX(key.getP2().getQ(), key.getP2().getR());
+            double worldY2 = HexMath.getWorldY(key.getP2().getR());
 
             double screenX1 = centerX + worldX1 * zoom;
             double screenY1 = centerY + worldY1 * zoom;
@@ -120,8 +120,8 @@ public class HexRenderer extends AbstractRenderer {
         if(getRenderContext().isResourceOverlayActive()) return;
         Point selectedPoint = getGameState().getSelectedHexPoint();
         if (selectedPoint != null) {
-            double worldX = getWorldX(selectedPoint.getQ(), selectedPoint.getR());
-            double worldY = getWorldY(selectedPoint.getR());
+            double worldX = HexMath.getWorldX(selectedPoint.getQ(), selectedPoint.getR());
+            double worldY = HexMath.getWorldY(selectedPoint.getR());
 
             if (HexMath.isHexInSight(centerX + worldX * zoom, centerY + worldY * zoom, hexSize, screenWidth, screenHeight)) {
                 drawSelectionHighlight(g2, worldX, worldY);
@@ -194,11 +194,5 @@ public class HexRenderer extends AbstractRenderer {
         baseHex.closePath();
     }
 
-    private double getWorldX(int q, int r) {
-        return Constants.BASE_HEX_SIZE * HexMath.SQRT_3 * (q + r / 2.0);
-    }
-
-    private double getWorldY(int r) {
-        return Constants.BASE_HEX_SIZE * 3.0 / 2.0 * r;
-    }
+    
 }

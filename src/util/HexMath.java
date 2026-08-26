@@ -1,5 +1,6 @@
 package util;
 
+import config.Constants;
 import model.map.hex.Point;
 
 public final class HexMath {
@@ -40,5 +41,13 @@ public final class HexMath {
     public static boolean isHexInSight(double cx, double cy, double hexSize, int screenWidth, int screenHeight) {
         return !(cx + hexSize < 0 || cx - hexSize > screenWidth ||
                 cy + hexSize < 0 || cy - hexSize > screenHeight);
+    }
+
+    public static double getWorldX(int q, int r) {
+        return Constants.BASE_HEX_SIZE * HexMath.SQRT_3 * (q + r / 2.0);
+    }
+
+    public static double getWorldY(int r) {
+        return Constants.BASE_HEX_SIZE * 3.0 / 2.0 * r;
     }
 }
