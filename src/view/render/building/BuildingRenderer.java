@@ -43,7 +43,7 @@ public class BuildingRenderer extends AbstractRenderer {
             double screenX = centerX + worldX * zoom;
             double screenY = centerY + worldY * zoom;
 
-            if (!isHexInSight(screenX, screenY, hexSize, screenWidth, screenHeight)) {
+            if (!HexMath.isHexInSight(screenX, screenY, hexSize, screenWidth, screenHeight)) {
                 continue;
             }
 
@@ -55,10 +55,5 @@ public class BuildingRenderer extends AbstractRenderer {
 
             g2.translate(-worldX, -worldY);
         }
-    }
-
-    private boolean isHexInSight(double cx, double cy, double hexSize, int screenWidth, int screenHeight) {
-        return !(cx + hexSize < 0 || cx - hexSize > screenWidth ||
-                cy + hexSize < 0 || cy - hexSize > screenHeight);
     }
 }

@@ -79,7 +79,7 @@ public class HexRenderer extends AbstractRenderer {
             double worldX = getWorldX(hex.getCoordinate().getQ(), hex.getCoordinate().getR());
             double worldY = getWorldY(hex.getCoordinate().getR());
 
-            if (!isHexInSight(centerX + worldX * zoom, centerY + worldY * zoom, hexSize, screenWidth, screenHeight)) {
+            if (!HexMath.isHexInSight(centerX + worldX * zoom, centerY + worldY * zoom, hexSize, screenWidth, screenHeight)) {
                 continue;
             }
 
@@ -108,8 +108,8 @@ public class HexRenderer extends AbstractRenderer {
             double screenX2 = centerX + worldX2 * zoom;
             double screenY2 = centerY + worldY2 * zoom;
 
-            if (!isHexInSight(screenX1, screenY1, hexSize, screenWidth, screenHeight) &&
-                    !isHexInSight(screenX2, screenY2, hexSize, screenWidth, screenHeight)) {
+            if (!HexMath.isHexInSight(screenX1, screenY1, hexSize, screenWidth, screenHeight) &&
+                    !HexMath.isHexInSight(screenX2, screenY2, hexSize, screenWidth, screenHeight)) {
                 continue;
             }
 
@@ -124,7 +124,7 @@ public class HexRenderer extends AbstractRenderer {
             double worldX = getWorldX(selectedPoint.getQ(), selectedPoint.getR());
             double worldY = getWorldY(selectedPoint.getR());
 
-            if (isHexInSight(centerX + worldX * zoom, centerY + worldY * zoom, hexSize, screenWidth, screenHeight)) {
+            if (HexMath.isHexInSight(centerX + worldX * zoom, centerY + worldY * zoom, hexSize, screenWidth, screenHeight)) {
                 drawSelectionHighlight(g2, worldX, worldY);
             }
         }
@@ -193,11 +193,6 @@ public class HexRenderer extends AbstractRenderer {
             else baseHex.lineTo(x, y);
         }
         baseHex.closePath();
-    }
-
-    private boolean isHexInSight(double cx, double cy, double hexSize, int screenWidth, int screenHeight) {
-        return !(cx + hexSize < 0 || cx - hexSize > screenWidth ||
-                cy + hexSize < 0 || cy - hexSize > screenHeight);
     }
 
     private double getWorldX(int q, int r) {

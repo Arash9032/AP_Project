@@ -36,4 +36,9 @@ public final class HexMath {
         }
         return new Point(q, r);
     }
+
+    public static boolean isHexInSight(double cx, double cy, double hexSize, int screenWidth, int screenHeight) {
+        return !(cx + hexSize < 0 || cx - hexSize > screenWidth ||
+                cy + hexSize < 0 || cy - hexSize > screenHeight);
+    }
 }
