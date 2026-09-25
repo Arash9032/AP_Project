@@ -4,6 +4,7 @@ import model.GameState;
 import view.camera.Camera;
 import view.render.building.BuildingRenderer;
 import view.render.hex.HexRenderer;
+import view.render.hex.ResourceRenderer;
 import view.render.unit.UnitRenderer;
 
 import java.awt.*;
@@ -33,6 +34,7 @@ public class WorldRenderer {
         layers.add(new BuildingRenderer(gameState, camera, renderContext));
         layers.add(new UnitRenderer(gameState, camera, renderContext));
         layers.add(new ShadowRenderer(gameState , camera , renderContext));
+        layers.add(new ResourceRenderer(gameState , camera , renderContext));
     }
 
     public void renderWorld(Graphics2D g2, int screenWidth, int screenHeight) {
